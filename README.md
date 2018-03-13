@@ -1,5 +1,10 @@
 Insynsregistret
 ===============
+
+[![Build Status](https://travis-ci.org/w3stling/insynsregistret.svg?branch=master)](https://travis-ci.org/w3stling/insynsregistret)
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://apptastic-software.mit-license.org)
+
+
 [Insynsregistret](https://www.fi.se/sv/vara-register/insynsregistret) is a Swedish financial registry maintained by
 the [Swedish Finansinspektionen](http://www.fi.se) (FI). It contains information regarding insider trading on
 Nasdaq Stockholm and Nordic Growth Market (NGM) and other trading venues.
