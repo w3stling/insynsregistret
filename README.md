@@ -1,7 +1,7 @@
 Insynsregistret
 ===============
-`Insynsregistret <https://www.fi.se/sv/vara-register/insynsregistret>`_  is a Swedish financial registry maintained by
-the `Swedish Finansinspektionen <http://www.fi.se>`_ (FI). It contains information regarding insider trading on
+[Insynsregistret](https://www.fi.se/sv/vara-register/insynsregistret) is a Swedish financial registry maintained by
+the [Swedish Finansinspektionen](http://www.fi.se) (FI). It contains information regarding insider trading on
 Nasdaq Stockholm and Nordic Growth Market (NGM) and other trading venues.
 
 This registry publishes information about the trading activities that have taken place during the day performed by
