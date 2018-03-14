@@ -29,7 +29,6 @@ import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -37,7 +36,6 @@ import java.util.zip.GZIPInputStream;
 
 
 public class Insynsregistret {
-    private static final String MARKET_SEARCH_URL = "https://marknadssok.fi.se/publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
     private static final String[] COLUMN_PUBLICATION_DATE = {"Publicerings datum", "Publication date"};
     private static final String[] COLUMN_ISSUER = {"Utgivare", "Issuer"};
     private static final String[] COLUMN_LEI_CODE = {"LEI-kod", "LEI-code"};
@@ -59,13 +57,7 @@ public class Insynsregistret {
     private static final String[] COLUMN_CURRENCY = {"Valuta", "Currency"};
     private static final String[] COLUMN_TRADING_VENUE = {"Handelsplats", "Trading venue"};
     private static final String[] COLUMN_STATUS = {"Status", "Status"};
-    private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
-    private static final NumberFormat NUMNER_FORMATTER = NumberFormat.getInstance(new Locale("sv","SE"));
-
-
-    public Insynsregistret() {
-
-    }
+    private static final NumberFormat NUMBER_FORMATTER = NumberFormat.getInstance(new Locale("sv","SE"));
 
 
     public Stream<Transaction> search(Query query) throws IOException {
@@ -158,7 +150,7 @@ public class Insynsregistret {
             text = text.replace(".", ",");
 
         try {
-            Number number = NUMNER_FORMATTER.parse(text);
+            Number number = NUMBER_FORMATTER.parse(text);
             price = number.doubleValue();
         }
         catch (ParseException e) {

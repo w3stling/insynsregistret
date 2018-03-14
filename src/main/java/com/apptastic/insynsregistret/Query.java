@@ -29,9 +29,9 @@ import java.util.Date;
 
 public class Query {
     private static final String INSYNSREGISTERET_URL = "https://marknadssok.fi.se/publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
-    private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
-    private String url;
-    private Language language;
+    private final SimpleDateFormat dateFormatter;
+    private final String url;
+    private final Language language;
 
 
     Query(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
@@ -51,6 +51,7 @@ public class Query {
             language = Language.SWEDISH;
 
         this.language = language;
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
         url = String.format(INSYNSREGISTERET_URL, language.getName(), issuer, personDischargingManagerialResponsibilities,
                 toDateString(fromTransactionDate), toDateString(toTransactionDate),
@@ -61,7 +62,7 @@ public class Query {
         if (date == null)
             return "";
 
-        return DATE_FORMATTER.format(date);
+        return dateFormatter.format(date);
     }
 
     Language getLanguage() {
