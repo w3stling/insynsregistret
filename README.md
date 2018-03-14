@@ -2,7 +2,8 @@ Insynsregistret
 ===============
 
 [![Build Status](https://travis-ci.org/w3stling/insynsregistret.svg?branch=master)](https://travis-ci.org/w3stling/insynsregistret)
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://apptastic-software.mit-license.org)
+[![Download](https://api.bintray.com/packages/apptastic/maven/insynsregistret/images/download.svg?version=1.0.0)](https://bintray.com/apptastic/maven/insynsregistret/1.0.0/link)
+[![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)
 
 
 [Insynsregistret](https://www.fi.se/sv/vara-register/insynsregistret) is a Swedish financial registry maintained by
