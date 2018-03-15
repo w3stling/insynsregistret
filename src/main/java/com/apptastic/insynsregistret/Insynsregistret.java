@@ -27,8 +27,6 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -57,13 +55,10 @@ public class Insynsregistret {
     private static final String[] COLUMN_CURRENCY = {"Valuta", "Currency"};
     private static final String[] COLUMN_TRADING_VENUE = {"Handelsplats", "Trading venue"};
     private static final String[] COLUMN_STATUS = {"Status", "Status"};
-    private static final NumberFormat NUMBER_FORMATTER = NumberFormat.getInstance(new Locale("sv","SE"));
 
 
     public Stream<Transaction> search(Query query) throws IOException {
-        Language language = query.getLanguage();
-        int langIndex = (language != null) ? language.getIndex() : Language.SWEDISH.getIndex();
-
+        int langIndex = query.getLanguage().orElse(Language.SWEDISH).getIndex();
         BufferedReader result = doSearch(query.getUrl());
         return parseTransactions(result, langIndex);
     }
@@ -103,7 +98,7 @@ public class Insynsregistret {
 
 
     private boolean badTransactionFilter(Transaction transaction) {
-        return transaction != null && !Double.isNaN(transaction.getPrice()) && transaction.getQuantity() != Long.MIN_VALUE;
+        return !Double.isNaN(transaction.getPrice()) && transaction.getQuantity() != Long.MIN_VALUE;
     }
 
 
@@ -143,44 +138,41 @@ public class Insynsregistret {
     }
 
 
-    private double parseDouble(String text) {
-        double price;
-
-        if (text.contains("."))
-            text = text.replace(".", ",");
+    private double parseDouble(String value) {
+        double floatNumber;
 
         try {
-            Number number = NUMBER_FORMATTER.parse(text);
-            price = number.doubleValue();
+            value = value.replace(',', '.');
+            floatNumber = Double.valueOf(value);
         }
-        catch (ParseException e) {
+        catch (Exception e) {
             e.printStackTrace();
-            price = Double.NaN;
+            floatNumber = Double.NaN;
         }
 
-        return price;
+        return floatNumber;
     }
 
 
-    private long parseLong(String text) {
-        long value;
+    private long parseLong(String value) {
+        long number;
 
         try {
-            value = Long.valueOf(text);
+            number = Long.valueOf(value);
         }
         catch (NumberFormatException e) {
             e.printStackTrace();
-            value = Long.MIN_VALUE;
+            number = Long.MIN_VALUE;
         }
 
-        return value;
+        return number;
     }
 
 
     private boolean isTrue(String text, int langIndex) {
         if (langIndex == 1)
-            return text != null && !text.isEmpty() && ("Yes".equals(text) || "Yes".equalsIgnoreCase(text.trim()));
+            return "Yes".equalsIgnoreCase(text.trim());
         else
-            return text != null && !text.isEmpty() && ("Ja".equals(text) || "Ja".equalsIgnoreCase(text.trim()));
+            return "Ja".equalsIgnoreCase(text.trim());
     }
 }

@@ -25,17 +25,18 @@ package com.apptastic.insynsregistret;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 
 public class Query {
     private static final String INSYNSREGISTERET_URL = "https://marknadssok.fi.se/publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
     private final SimpleDateFormat dateFormatter;
     private final String url;
-    private final Language language;
+    private final Optional<Language> language;
 
 
     Query(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
-        String issuer, String personDischargingManagerialResponsibilities, Language language) {
+        String issuer, String personDischargingManagerialResponsibilities, Language lang) {
 
         if (issuer == null)
             issuer = "";
@@ -47,13 +48,11 @@ public class Query {
         else
             personDischargingManagerialResponsibilities = personDischargingManagerialResponsibilities.replaceAll(" ", "+");
 
-        if (language == null)
-            language = Language.SWEDISH;
-
-        this.language = language;
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        language = Optional.ofNullable(lang);
+        String langQueryParam = language.orElse(Language.SWEDISH).getName();
 
-        url = String.format(INSYNSREGISTERET_URL, language.getName(), issuer, personDischargingManagerialResponsibilities,
+        url = String.format(INSYNSREGISTERET_URL, langQueryParam, issuer, personDischargingManagerialResponsibilities,
                 toDateString(fromTransactionDate), toDateString(toTransactionDate),
                 toDateString(fromPublicationDate), toDateString(toPublicationDate));
     }
@@ -65,7 +64,7 @@ public class Query {
         return dateFormatter.format(date);
     }
 
-    Language getLanguage() {
+    Optional<Language> getLanguage() {
         return language;
     }
 
