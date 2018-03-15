@@ -77,6 +77,23 @@ double total = registry.search(query)
         .mapToDouble(t -> t.getQuantity() * t.getPrice())
         .sum();
 ```
+Download
+--------
+
+Download [the latest JAR][1] or grab via Maven:
+```xml
+<dependency>
+  <groupId>com.apptastic</groupId>
+  <artifactId>insynsregistret</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+or Gradle:
+```groovy
+implementation 'com.apptastic:insynsregistret:1.0.0'
+```
+
+Insynsregistret library requires at minimum Java 8.
 
 License
 -------
@@ -102,3 +119,6 @@ License
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
+
+
+[1]: https://bintray.com/apptastic/maven/insynsregistret/
