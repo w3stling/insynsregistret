@@ -3,7 +3,12 @@ Insynsregistret
 
 [![Build Status](https://travis-ci.org/w3stling/insynsregistret.svg?branch=master)](https://travis-ci.org/w3stling/insynsregistret)
 [![Download](https://api.bintray.com/packages/apptastic/maven/insynsregistret/images/download.svg?version=1.0.0)](https://bintray.com/apptastic/maven/insynsregistret/1.0.0/link)
-[![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)
+[![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)<br />
+                                                                                                                     [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.apptastic%3Ainsynsregistret)
+                                                                                                                     [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=coverage)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=Coverage)
+                                                                                                                     [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=bugs)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=bugs)
+                                                                                                                     [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=vulnerabilities)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=vulnerabilities)
+                                                                                                                     [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=code_smells)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=code_smells)
 
 
 [Insynsregistret](https://www.fi.se/sv/vara-register/insynsregistret) is a Swedish financial registry maintained by
