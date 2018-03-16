@@ -98,7 +98,7 @@ public class Insynsregistret {
 
 
     private boolean badTransactionFilter(Transaction transaction) {
-        return !Double.isNaN(transaction.getPrice()) && transaction.getQuantity() != Long.MIN_VALUE;
+        return !Double.isNaN(transaction.getPrice()) && !Double.isNaN(transaction.getQuantity());
     }
 
 
@@ -127,7 +127,7 @@ public class Insynsregistret {
         columnIndexMap.computeIfPresent(COLUMN_INSTRUMENT[langIndex], (key, index) -> { transaction.setInstrument(columns[index]); return index; } );
         columnIndexMap.computeIfPresent(COLUMN_ISIN[langIndex], (key, index) -> { transaction.setIsin(columns[index]); return index; } );
         columnIndexMap.computeIfPresent(COLUMN_TRANSACTION_DATE[langIndex], (key, index) -> { transaction.setTransactionDate(columns[index]); return index; } );
-        columnIndexMap.computeIfPresent(COLUMN_QUANTITY[langIndex], (key, index) -> { transaction.setQuantity(parseLong(columns[index])); return index; } );
+        columnIndexMap.computeIfPresent(COLUMN_QUANTITY[langIndex], (key, index) -> { transaction.setQuantity(parseDouble(columns[index])); return index; } );
         columnIndexMap.computeIfPresent(COLUMN_UNIT[langIndex], (key, index) -> { transaction.setUnit(columns[index]); return index; } );
         columnIndexMap.computeIfPresent(COLUMN_PRICE[langIndex], (key, index) -> { transaction.setPrice(parseDouble(columns[index])); return index; } );
         columnIndexMap.computeIfPresent(COLUMN_CURRENCY[langIndex], (key, index) -> { transaction.setCurrency(columns[index]); return index; } );
@@ -151,21 +151,6 @@ public class Insynsregistret {
         }
 
         return floatNumber;
-    }
-
-
-    private long parseLong(String value) {
-        long number;
-
-        try {
-            number = Long.valueOf(value);
-        }
-        catch (NumberFormatException e) {
-            e.printStackTrace();
-            number = Long.MIN_VALUE;
-        }
-
-        return number;
     }
 
 

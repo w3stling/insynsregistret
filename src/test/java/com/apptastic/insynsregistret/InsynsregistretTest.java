@@ -71,7 +71,7 @@ public class InsynsregistretTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void badTransactionToDate() throws IOException {
-        Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();;
+        Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = null;
 
         Query query = QueryBuilder.instance()
@@ -159,7 +159,7 @@ public class InsynsregistretTest {
         assertEquals("Empir Group AB", transaction.getInstrument());
         assertEquals("SE0010769182", transaction.getIsin());
         assertEquals("2018-03-11 00:00:00", transaction.getTransactionDate());
-        assertEquals(28227, transaction.getQuantity());
+        assertEquals(28227, transaction.getQuantity(), 0.0);
         assertEquals("Antal", transaction.getUnit());
         assertEquals(37.9, transaction.getPrice(), 0.0);
         assertEquals("SEK", transaction.getCurrency());
@@ -205,7 +205,7 @@ public class InsynsregistretTest {
         assertEquals("Empir Group AB", transaction.getInstrument());
         assertEquals("SE0010769182", transaction.getIsin());
         assertEquals("2018-03-11 00:00:00", transaction.getTransactionDate());
-        assertEquals(28227, transaction.getQuantity());
+        assertEquals(28227, transaction.getQuantity(), 0.0);
         assertEquals("Antal", transaction.getUnit());
         assertEquals(37.9, transaction.getPrice(), 0.0);
         assertEquals("SEK", transaction.getCurrency());
@@ -254,7 +254,7 @@ public class InsynsregistretTest {
                 .build();
 
         long transactionCount = msMock.search(query).count();
-        assertEquals(1, transactionCount);
+        assertEquals(1, transactionCount, 0.0);
     }
 
 

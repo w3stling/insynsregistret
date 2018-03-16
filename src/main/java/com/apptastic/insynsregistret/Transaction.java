@@ -40,7 +40,7 @@ public class Transaction {
     private String instrument;
     private String isin;
     private String transactionDate;
-    private long quantity;
+    private double quantity;
     private String unit;
     private double price;
     private String currency;
@@ -167,11 +167,11 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public long getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
