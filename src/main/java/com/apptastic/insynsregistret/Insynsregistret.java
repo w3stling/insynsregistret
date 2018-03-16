@@ -28,6 +28,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
@@ -55,7 +57,12 @@ public class Insynsregistret {
     private static final String[] COLUMN_CURRENCY = {"Valuta", "Currency"};
     private static final String[] COLUMN_TRADING_VENUE = {"Handelsplats", "Trading venue"};
     private static final String[] COLUMN_STATUS = {"Status", "Status"};
+    private Logger logger;
 
+
+    public Insynsregistret() {
+        logger = Logger.getGlobal();
+    }
 
     public Stream<Transaction> search(Query query) throws IOException {
         int langIndex = query.getLanguage().orElse(Language.SWEDISH).getIndex();
@@ -146,7 +153,9 @@ public class Insynsregistret {
             floatNumber = Double.valueOf(value);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            if (logger != null && logger.isLoggable(Level.WARNING))
+                logger.log(Level.WARNING, "Failed to parse double. ", e);
+
             floatNumber = Double.NaN;
         }
 
