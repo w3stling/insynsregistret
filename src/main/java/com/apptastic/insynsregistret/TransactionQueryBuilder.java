@@ -41,11 +41,24 @@ public class TransactionQueryBuilder {
 
     }
 
-    public static TransactionQueryBuilder instance() {
-        return new TransactionQueryBuilder();
+    public static TransactionQueryBuilder transactions(Date from, Date to) {
+        if (from == null)
+            throw new IllegalArgumentException("From transaction date is null");
+
+        if (to == null)
+            throw new IllegalArgumentException("To transaction date is null");
+
+        TransactionQueryBuilder builder = new TransactionQueryBuilder();
+        builder.fromTransactionDate = from;
+        builder.toTransactionDate = to;
+
+        return builder;
     }
 
     public static TransactionQueryBuilder transactionsPastXDays(int days) {
+        if (days < 0)
+            throw new IllegalArgumentException("Past transaction days must is a negative number");
+
         Calendar cal = Calendar.getInstance();
         Date to = cal.getTime();
         cal.add(Calendar.DAY_OF_YEAR, -days);
@@ -53,13 +66,30 @@ public class TransactionQueryBuilder {
 
         TransactionQueryBuilder builder = new TransactionQueryBuilder();
 
-        builder.fromTransactionDate(from)
-                .toTransactionDate(to);
+        builder.fromTransactionDate = from;
+        builder.toTransactionDate = to;
+
+        return builder;
+    }
+
+    public static TransactionQueryBuilder publications(Date from, Date to) {
+        if (from == null)
+            throw new IllegalArgumentException("From publication date is null");
+
+        if (to == null)
+            throw new IllegalArgumentException("To publication date is null");
+
+        TransactionQueryBuilder builder = new TransactionQueryBuilder();
+        builder.fromPublicationDate = from;
+        builder.toPublicationDate = to;
 
         return builder;
     }
 
     public static TransactionQueryBuilder publicationsPastXDays(int days) {
+        if (days < 0)
+            throw new IllegalArgumentException("Past publication days must is a negative number");
+
         Calendar cal = Calendar.getInstance();
         Date to = cal.getTime();
         cal.add(Calendar.DAY_OF_YEAR, -days);
@@ -67,30 +97,10 @@ public class TransactionQueryBuilder {
 
         TransactionQueryBuilder builder = new TransactionQueryBuilder();
 
-        builder.fromPublicationDate(from)
-                .toPublicationDate(to);
+        builder.fromPublicationDate = from;
+        builder.toPublicationDate = to;
 
         return builder;
-    }
-
-    public TransactionQueryBuilder fromTransactionDate(Date from) {
-        fromTransactionDate = from;
-        return this;
-    }
-
-    public TransactionQueryBuilder toTransactionDate(Date to) {
-        toTransactionDate = to;
-        return this;
-    }
-
-    public TransactionQueryBuilder fromPublicationDate(Date from) {
-        fromPublicationDate = from;
-        return this;
-    }
-
-    public TransactionQueryBuilder toPublicationDate(Date to) {
-        toPublicationDate = to;
-        return this;
     }
 
     public TransactionQueryBuilder issuer(String issuer) {
@@ -109,12 +119,6 @@ public class TransactionQueryBuilder {
     }
 
     public Query build() {
-        if ((fromTransactionDate == null || toTransactionDate == null) &&
-            (fromPublicationDate == null || toPublicationDate == null)) {
-
-            throw new IllegalArgumentException("Not both from and to transaction dates or from and to publication dates can be null");
-        }
-
         return new Query(fromTransactionDate, toTransactionDate,
                          fromPublicationDate, toPublicationDate,
                          issuer, personDischargingManagerialResponsibilities,

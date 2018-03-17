@@ -44,10 +44,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromTransactionDate(from)
-                .toTransactionDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.transactions(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -59,10 +56,7 @@ public class InsynsregistretTest {
         Date from = null;
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromTransactionDate(from)
-                .toTransactionDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.transactions(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -74,13 +68,16 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = null;
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromTransactionDate(from)
-                .toTransactionDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.transactions(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void badTransactionPastDays() {
+        TransactionQueryBuilder.transactionsPastXDays(-1).build();
     }
 
 
@@ -89,10 +86,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -104,10 +98,7 @@ public class InsynsregistretTest {
         Date from = null;
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -119,13 +110,16 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = null;
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void badPublicationsPastDays() {
+        TransactionQueryBuilder.publicationsPastXDays(-1).build();
     }
 
 
@@ -134,10 +128,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.publications(from, to).build();
 
         Optional<Transaction> firstTransaction = msMock.search(query).findFirst();
         assertTrue(firstTransaction.isPresent());
@@ -180,10 +171,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.publications(from, to).build();
 
         Optional<Transaction> firstTransaction = msMock.search(query).findFirst();
         assertTrue(firstTransaction.isPresent());
@@ -226,10 +214,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(1, transactionCount);
@@ -248,10 +233,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
-                .build();
+        Query query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(1, transactionCount, 0.0);
@@ -270,9 +252,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
+        Query query = TransactionQueryBuilder.publications(from, to)
                 .issuer("Examples")
                 .build();
 
@@ -293,9 +273,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.instance()
-                .fromPublicationDate(from)
-                .toPublicationDate(to)
+        Query query = TransactionQueryBuilder.publications(from, to)
                 .personDischargingManagerialResponsibilities("dummy")
                 .build();
 
