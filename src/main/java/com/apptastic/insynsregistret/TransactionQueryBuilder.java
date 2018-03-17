@@ -57,7 +57,7 @@ public class TransactionQueryBuilder {
 
     public static TransactionQueryBuilder transactionsPastXDays(int days) {
         if (days < 0)
-            throw new IllegalArgumentException("Past transaction days must is a negative number");
+            throw new IllegalArgumentException("Past transaction days is a negative number");
 
         Calendar cal = Calendar.getInstance();
         Date to = cal.getTime();
@@ -88,7 +88,7 @@ public class TransactionQueryBuilder {
 
     public static TransactionQueryBuilder publicationsPastXDays(int days) {
         if (days < 0)
-            throw new IllegalArgumentException("Past publication days must is a negative number");
+            throw new IllegalArgumentException("Past publication days is a negative number");
 
         Calendar cal = Calendar.getInstance();
         Date to = cal.getTime();
