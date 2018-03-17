@@ -56,9 +56,7 @@ Get the number of inside trades in Hexagon between given dates.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = TransactionQueryBuilder.instance()
-        .fromPublicationDate(getFrom())
-        .toPublicationDate(getTo())
+Query query = TransactionQueryBuilder.publications(getFrom(), getTo())
         .issuer("Hexagon AB")
         .build();
 
@@ -82,28 +80,37 @@ Download
 --------
 
 Download [the latest JAR][3] or grab via [Maven][4] or [Gradle][5].
+
 ### Maven
 Add repository for resolving artifact:
 ```xml
 <project>
-  ...
-  <repositories>
-    <repository>
-      <id>apptastic-maven-repo</id>
-      <url>https://dl.bintray.com/apptastic/maven-repo</url>
-    </repository>
-  </repositories>
-  ...
+    ...
+    <repositories>
+        <repository>
+            <id>apptastic-maven-repo</id>
+            <url>https://dl.bintray.com/apptastic/maven-repo</url>
+        </repository>
+    </repositories>
+    ...
 </project>
 ```
-Add dependency:
+
+Add dependency declaration:
 ```xml
-<dependency>
-  <groupId>com.apptastic</groupId>
-  <artifactId>insynsregistret</artifactId>
-  <version>1.0.0</version>
-</dependency>
+<project>
+    ...
+    <dependencies>
+        <dependency>
+            <groupId>com.apptastic</groupId>
+            <artifactId>insynsregistret</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+    ...
+</project>
 ```
+
 ### Gradle
 Add repository for resolving artifact:
 ```groovy
@@ -114,7 +121,7 @@ repositories {
 }
 ```
 
-Add dependency:
+Add dependency declaration:
 ```groovy
 dependencies {
     implementation 'com.apptastic:insynsregistret:1.0.0'
