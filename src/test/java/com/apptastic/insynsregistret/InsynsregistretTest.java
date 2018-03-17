@@ -44,7 +44,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromTransactionDate(from)
                 .toTransactionDate(to)
                 .build();
@@ -59,7 +59,7 @@ public class InsynsregistretTest {
         Date from = null;
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromTransactionDate(from)
                 .toTransactionDate(to)
                 .build();
@@ -74,7 +74,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = null;
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromTransactionDate(from)
                 .toTransactionDate(to)
                 .build();
@@ -89,7 +89,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .build();
@@ -104,7 +104,7 @@ public class InsynsregistretTest {
         Date from = null;
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .build();
@@ -119,7 +119,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = null;
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .build();
@@ -134,7 +134,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .build();
@@ -180,7 +180,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .build();
@@ -226,7 +226,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .build();
@@ -248,7 +248,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .build();
@@ -270,7 +270,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .issuer("Examples")
@@ -293,7 +293,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = QueryBuilder.instance()
+        Query query = TransactionQueryBuilder.instance()
                 .fromPublicationDate(from)
                 .toPublicationDate(to)
                 .personDischargingManagerialResponsibilities("dummy")
@@ -308,7 +308,7 @@ public class InsynsregistretTest {
     public void liveSvQueryByTransactionDate() throws IOException {
         Insynsregistret ms = new Insynsregistret();
 
-        Query transactionQuery = QueryBuilder.trasactionsPastXDays(10)
+        Query transactionQuery = TransactionQueryBuilder.transactionsPastXDays(10)
                 .build();
 
         long transactionCount = ms.search(transactionQuery).count();
@@ -320,7 +320,7 @@ public class InsynsregistretTest {
     public void liveSvQueryByPublicationDate() throws IOException {
         Insynsregistret ms = new Insynsregistret();
 
-        Query transactionQuery = QueryBuilder.publicationsPastXDays(10)
+        Query transactionQuery = TransactionQueryBuilder.publicationsPastXDays(10)
                 .build();
 
         long transactionCount = ms.search(transactionQuery).count();
@@ -332,7 +332,7 @@ public class InsynsregistretTest {
     public void liveEnQueryByTransactionDate() throws IOException {
         Insynsregistret ms = new Insynsregistret();
 
-        Query transactionQuery = QueryBuilder.trasactionsPastXDays(10)
+        Query transactionQuery = TransactionQueryBuilder.transactionsPastXDays(10)
                 .language(Language.ENGLISH)
                 .build();
 
@@ -345,7 +345,7 @@ public class InsynsregistretTest {
     public void liveEnQueryByPublicationDate() throws IOException {
         Insynsregistret ms = new Insynsregistret();
 
-        Query transactionQuery = QueryBuilder.publicationsPastXDays(10)
+        Query transactionQuery = TransactionQueryBuilder.publicationsPastXDays(10)
                 .language(Language.ENGLISH)
                 .build();
 

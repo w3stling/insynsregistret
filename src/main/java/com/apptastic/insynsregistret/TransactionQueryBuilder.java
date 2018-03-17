@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class QueryBuilder {
+public class TransactionQueryBuilder {
     private Date fromTransactionDate;
     private Date toTransactionDate;
     private Date fromPublicationDate;
@@ -37,21 +37,21 @@ public class QueryBuilder {
     private Language language;
 
 
-    private QueryBuilder() {
+    private TransactionQueryBuilder() {
 
     }
 
-    static QueryBuilder instance() {
-        return new QueryBuilder();
+    public static TransactionQueryBuilder instance() {
+        return new TransactionQueryBuilder();
     }
 
-    static QueryBuilder trasactionsPastXDays(int days) {
+    public static TransactionQueryBuilder transactionsPastXDays(int days) {
         Calendar cal = Calendar.getInstance();
         Date to = cal.getTime();
         cal.add(Calendar.DAY_OF_YEAR, -days);
         Date from = cal.getTime();
 
-        QueryBuilder builder = new QueryBuilder();
+        TransactionQueryBuilder builder = new TransactionQueryBuilder();
 
         builder.fromTransactionDate(from)
                 .toTransactionDate(to);
@@ -59,13 +59,13 @@ public class QueryBuilder {
         return builder;
     }
 
-    static QueryBuilder publicationsPastXDays(int days) {
+    public static TransactionQueryBuilder publicationsPastXDays(int days) {
         Calendar cal = Calendar.getInstance();
         Date to = cal.getTime();
         cal.add(Calendar.DAY_OF_YEAR, -days);
         Date from = cal.getTime();
 
-        QueryBuilder builder = new QueryBuilder();
+        TransactionQueryBuilder builder = new TransactionQueryBuilder();
 
         builder.fromPublicationDate(from)
                 .toPublicationDate(to);
@@ -73,37 +73,37 @@ public class QueryBuilder {
         return builder;
     }
 
-    public QueryBuilder fromTransactionDate(Date from) {
+    public TransactionQueryBuilder fromTransactionDate(Date from) {
         fromTransactionDate = from;
         return this;
     }
 
-    public QueryBuilder toTransactionDate(Date to) {
+    public TransactionQueryBuilder toTransactionDate(Date to) {
         toTransactionDate = to;
         return this;
     }
 
-    public QueryBuilder fromPublicationDate(Date from) {
+    public TransactionQueryBuilder fromPublicationDate(Date from) {
         fromPublicationDate = from;
         return this;
     }
 
-    public QueryBuilder toPublicationDate(Date to) {
+    public TransactionQueryBuilder toPublicationDate(Date to) {
         toPublicationDate = to;
         return this;
     }
 
-    public QueryBuilder issuer(String issuer) {
+    public TransactionQueryBuilder issuer(String issuer) {
         this.issuer = issuer;
         return this;
     }
 
-    public QueryBuilder personDischargingManagerialResponsibilities(String person) {
+    public TransactionQueryBuilder personDischargingManagerialResponsibilities(String person) {
         personDischargingManagerialResponsibilities = person;
         return this;
     }
 
-    public QueryBuilder language(Language language) {
+    public TransactionQueryBuilder language(Language language) {
         this.language = language;
         return this;
     }
