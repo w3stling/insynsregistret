@@ -25,12 +25,12 @@ dependencies {
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
-    publications = ['MyPublication']
+    publications = ['InsynsregistretPublication']
     dryRun = false
     publish = true
     override = true
     pkg {
-        repo = 'maven'
+        repo = 'maven-repo'
         name = 'insynsregistret'
         licenses = ['MIT']
         version {
@@ -41,7 +41,7 @@ bintray {
 
 publishing {
     publications {
-        MyPublication(MavenPublication) {
+        InsynsregistretPublication(MavenPublication) {
             from components.java
             groupId 'com.apptastic'
             artifactId 'insynsregistret'

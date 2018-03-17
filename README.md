@@ -2,7 +2,7 @@ Insynsregistret
 ===============
 
 [![Build Status](https://travis-ci.org/w3stling/insynsregistret.svg?branch=master)](https://travis-ci.org/w3stling/insynsregistret)
-[![Download](https://api.bintray.com/packages/apptastic/maven/insynsregistret/images/download.svg?version=1.0.0)](https://bintray.com/apptastic/maven/insynsregistret/1.0.0/link)
+[![Download](https://api.bintray.com/packages/apptastic/maven-repo/insynsregistret/images/download.svg)](https://bintray.com/apptastic/maven-repo/insynsregistret/_latestVersion)
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)   
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.apptastic%3Ainsynsregistret)
 [![Test](https://sonarcloud.io/api/badges/measure?key=com.apptastic%3Ainsynsregistret&metric=test_success_density)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=tests)
@@ -32,7 +32,7 @@ Get all insider trades published in the last 30 days.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = QueryBuilder.publicationsPastXDays(30).build();
+Query query = TransactionQueryBuilder.publicationsPastXDays(30).build();
 
 List<Transaction> transactions = registry.search(query)
         .collect(Collectors.toList());
@@ -43,7 +43,7 @@ and that is part of a share option programme.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = QueryBuilder.publicationsPastXDays(30).build();
+Query query = TransactionQueryBuilder.publicationsPastXDays(30).build();
 
 List<Transaction> transactions = registry.search(query)
         .filter(t -> t.getIsin().equals("SE0000310336"))
@@ -56,7 +56,7 @@ Get the number of inside trades in Hexagon between given dates.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = QueryBuilder.instance()
+Query query = TransactionQueryBuilder.instance()
         .fromPublicationDate(getFrom())
         .toPublicationDate(getTo())
         .issuer("Hexagon AB")
@@ -70,7 +70,7 @@ Total value of all inside trades in company Loomis the last month.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = QueryBuilder.trasactionsPastXDays(30)
+Query query = TransactionQueryBuilder.transactionsPastXDays(30)
         .issuer("Loomis AB")
         .build();
 
@@ -81,8 +81,22 @@ double total = registry.search(query)
 Download
 --------
 
-Download [the latest JAR][3] or grab via Maven:
-
+Download [the latest JAR][3] or grab via [Maven][4] or [Gradle][5].
+### Maven
+Add repository for resolving artifact:
+```xml
+<project>
+  ...
+  <repositories>
+    <repository>
+      <id>apptastic-maven-repo</id>
+      <url>https://dl.bintray.com/apptastic/maven-repo</url>
+    </repository>
+  </repositories>
+  ...
+</project>
+```
+Add dependency:
 ```xml
 <dependency>
   <groupId>com.apptastic</groupId>
@@ -90,9 +104,21 @@ Download [the latest JAR][3] or grab via Maven:
   <version>1.0.0</version>
 </dependency>
 ```
-or Gradle:
+### Gradle
+Add repository for resolving artifact:
 ```groovy
-implementation 'com.apptastic:insynsregistret:1.0.0'
+repositories {
+    maven {
+        url  "https://dl.bintray.com/apptastic/maven-repo" 
+    }
+}
+```
+
+Add dependency:
+```groovy
+dependencies {
+    implementation 'com.apptastic:insynsregistret:1.0.0'
+}
 ```
 
 Insynsregistret library requires at minimum Java 8.
@@ -125,4 +151,6 @@ License
 
 [1]: https://www.fi.se/sv/vara-register/insynsregistret
 [2]: https://www.fi.se
-[3]: https://bintray.com/apptastic/maven/insynsregistret
+[3]: https://bintray.com/apptastic/maven-repo/insynsregistret
+[4]: https://maven.apache.org
+[5]: https://gradle.org
