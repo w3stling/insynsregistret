@@ -58,7 +58,7 @@ Get the number of inside trades in Hexagon between given dates.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = TransactionQueryBuilder.publications(getFrom(), getTo())
+Query query = TransactionQueryBuilder.publications(getFromDate(), getToDate())
         .issuer("Hexagon AB")
         .build();
 
