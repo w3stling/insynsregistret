@@ -27,12 +27,14 @@ This Java library makes it easier to automate data extraction from Insynsregistr
 
 Examples
 --------
-Get all insider trades published in the last 30 days.
+Get all insider trades published in the last 30 days, presented in English. Default language is Swedish.
 
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = TransactionQueryBuilder.publicationsPastXDays(30).build();
+Query query = TransactionQueryBuilder.publicationsPastXDays(30)
+        .language(Language.ENGLISH)
+        .build();
 
 List<Transaction> transactions = registry.search(query)
         .collect(Collectors.toList());
