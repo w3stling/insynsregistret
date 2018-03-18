@@ -138,9 +138,6 @@ public class Insynsregistret {
 
 
     private Stream<String> splitString(final String text) {
-        if (text.length() <= 2)
-            return Stream.empty();
-
         LinkedList<String> tokens = new LinkedList<>();
 
         boolean found = true;
