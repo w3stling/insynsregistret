@@ -73,6 +73,15 @@ public class FreeTextQueryTest {
     }
 
 
+    @Test
+    public void getIssuer_EmptyString() throws IOException {
+        FreeTextQuery query = FreeTextQueryBuilder.issuer("").build();
+
+        Insynsregistret ir = new Insynsregistret();
+        long resultCount = ir.search(query).count();
+        assertEquals(resultCount, 0);
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void getIssuer_null() throws UnsupportedEncodingException {
         FreeTextQueryBuilder.issuer(null).build();
@@ -111,5 +120,17 @@ public class FreeTextQueryTest {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("test").build();
         long count = mock.search(query).count();
         assertEquals(2, count);
+    }
+
+    @Test
+    public void emptyResponse() throws IOException {
+        BufferedReader reader = new BufferedReader(new StringReader("[]"));
+
+        Insynsregistret mock = spy(Insynsregistret.class);
+        doReturn(reader).when(mock).sendRequest(anyString(), any());
+
+        FreeTextQuery query = FreeTextQueryBuilder.issuer("test").build();
+        long count = mock.search(query).count();
+        assertEquals(0, count);
     }
 }
