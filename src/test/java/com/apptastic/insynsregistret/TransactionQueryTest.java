@@ -245,7 +245,7 @@ public class TransactionQueryTest {
             assertEquals(1, transactionCount);
         }
         finally {
-            Logger.getGlobal().setLevel(defaultLevel);
+            Logger.getLogger("com.apptastic.insynsregistret").setLevel(defaultLevel);
         }
     }
 
