@@ -25,7 +25,6 @@ package com.apptastic.insynsregistret;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
 
 
 /**
@@ -168,7 +167,7 @@ public class TransactionQueryBuilder {
     public TransactionQuery build() {
         return new TransactionQuery(fromTransactionDate, toTransactionDate,
                          fromPublicationDate, toPublicationDate,
-                         Optional.ofNullable(issuer), Optional.ofNullable(personDischargingManagerialResponsibilities),
-                         Optional.ofNullable(language));
+                         issuer, personDischargingManagerialResponsibilities,
+                         language);
     }
 }

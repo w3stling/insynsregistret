@@ -36,7 +36,7 @@ public class TransactionQuery {
     private static final String INSYNSREGISTERET_URL = "https://marknadssok.fi.se/publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
     private final SimpleDateFormat dateFormatter;
     private final String url;
-    private final Optional<Language> language;
+    private final Language language;
 
 
     /**
@@ -47,17 +47,18 @@ public class TransactionQuery {
      * @param fromPublicationDate from publication date
      * @param toPublicationDate to publication date
      * @param issuer - issuer name
-     * @param personDischargingManagerialResponsibilities person discharging managerial responsibilities (PDMR) name
+     * @param pdmr person discharging managerial responsibilities (PDMR) name
      * @param language - language
      */
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
-                     Optional<String> issuer, Optional<String> personDischargingManagerialResponsibilities, Optional<Language> language) {
+                     String issuer, String pdmr, Language language) {
 
-        String issuerName = issuer.orElse("").replace(" ", "+");
-        String pdmrName = personDischargingManagerialResponsibilities.orElse("").replaceAll(" ", "+");
+        Optional<String> a = Optional.empty();
+        String issuerName = orDefault(issuer, "").replace(" ", "+");
+        String pdmrName = orDefault(pdmr, "").replace(" ", "+");
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        this.language = Optional.of(language.orElse(Language.SWEDISH));
-        String languageName = this.language.get().getName();
+        this.language = orDefault(language, Language.SWEDISH);
+        String languageName = this.language.getName();
 
         url = String.format(INSYNSREGISTERET_URL, languageName, issuerName, pdmrName,
                 toDateString(fromTransactionDate), toDateString(toTransactionDate),
@@ -71,12 +72,16 @@ public class TransactionQuery {
         return dateFormatter.format(date);
     }
 
+    private static <T> T orDefault(T value, T defaultValue) {
+        return (value != null) ? value : defaultValue;
+    }
+
     /**
      * In what language the inside trade transaction should be presented in.
-     * @return
+     * @return language
      */
     Language getLanguage() {
-        return language.get();
+        return language;
     }
 
     /**
