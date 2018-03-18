@@ -32,9 +32,9 @@ import java.net.URLEncoder;
  * Object of this class is created via {@link FreeTextQueryBuilder} class.
  */
 public class FreeTextQuery {
-    private final static String ISSUER_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/AutoComplete/H%C3%A4mtaAutoCompleteLista?sokfunktion=Insyn&falt=Utgivare&sokterm=";
-    private final static String PDMR_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/AutoComplete/H%C3%A4mtaAutoCompleteLista?sokfunktion=Insyn&falt=PersonILedandeSt%C3%A4llningNamn&sokterm=";
-    private final static String ENCODING = "UTF-8";
+    private static final String ISSUER_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/AutoComplete/H%C3%A4mtaAutoCompleteLista?sokfunktion=Insyn&falt=Utgivare&sokterm=";
+    private static final String PDMR_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/AutoComplete/H%C3%A4mtaAutoCompleteLista?sokfunktion=Insyn&falt=PersonILedandeSt%C3%A4llningNamn&sokterm=";
+    private static final String ENCODING = "UTF-8";
     private String url;
 
     /**

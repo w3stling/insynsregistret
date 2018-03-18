@@ -52,8 +52,7 @@ public class TransactionQuery {
      */
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
                      String issuer, String pdmr, Language language) {
-
-        Optional<String> a = Optional.empty();
+        
         String issuerName = orDefault(issuer, "").replace(" ", "+");
         String pdmrName = orDefault(pdmr, "").replace(" ", "+");
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
