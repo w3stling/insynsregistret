@@ -27,6 +27,27 @@ This Java library makes it easier to automate data extraction from Insynsregistr
 
 Examples
 --------
+### Search issuer
+Find all names of issuers that contains the word "fing" in its name and prints it.
+Issuer can be used to refine the transaction search, see example below.
+```java
+Insynsregistret registry = new Insynsregistret();
+
+FreeTextQuery query = FreeTextQueryBuilder.issuer("fing").build();
+registry.search(query).forEach(System.out::println);
+```
+
+### Search persons discharging managerial responsibilities (PDMR)
+Find the first name of PDMRs that contains the word "Carl" in its name.
+PDMR can be used to refine the transaction search.
+```java
+Insynsregistret registry = new Insynsregistret();
+
+FreeTextQuery query = FreeTextQueryBuilder.personDischargingManagerialResponsibilities("Carl").build();
+Optional<String> pdmr = registry.search(query).findFirst();
+```
+
+### Search transactions
 Get all insider trades published in the last 30 days, presented in English. Default language is Swedish.
 
 ```java
