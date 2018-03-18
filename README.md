@@ -60,8 +60,12 @@ TransactionQuery query = TransactionQueryBuilder.publicationsPastXDays(30)
 List<Transaction> transactions = registry.search(query)
         .collect(Collectors.toList());
 ```
+
 Get all insider trades published in the last 30 days in Swedish Match (ISIN SE0000310336)
 and that is part of a share option programme.
+
+A better way of achieving the same result is to refine the search with an issuer query parameter to
+limit the search instead of filtering the search result. See next example with Hexagon AB.
 
 ```java
 Insynsregistret registry = new Insynsregistret();
