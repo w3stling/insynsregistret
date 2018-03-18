@@ -224,10 +224,10 @@ public class TransactionQueryTest {
 
     @Test
     public void badPriceNoLogging() throws IOException {
-        Level defaultLevel = Logger.getGlobal().getLevel();
+        Level defaultLevel = Logger.getLogger("com.apptastic.insynsregistret").getLevel();
 
         try {
-            Logger.getGlobal().setLevel(Level.SEVERE);
+            Logger.getLogger("com.apptastic.insynsregistret").setLevel(Level.SEVERE);
 
             ClassLoader classLoader = getClass().getClassLoader();
             reader = TestUtil.getExportedTransactionFile(classLoader, "badPrice.csv");
