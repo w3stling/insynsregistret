@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -218,6 +220,33 @@ public class TransactionQueryTest {
 
         long transactionCount = msMock.search(query).count();
         assertEquals(1, transactionCount);
+    }
+
+    @Test
+    public void badPriceNoLogging() throws IOException {
+        Level defaultLevel = Logger.getGlobal().getLevel();
+
+        try {
+            Logger.getGlobal().setLevel(Level.SEVERE);
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            reader = TestUtil.getExportedTransactionFile(classLoader, "badPrice.csv");
+
+            msMock = spy(Insynsregistret.class);
+            doReturn(reader).when(msMock).sendRequest(anyString(), any());
+
+
+            Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
+            Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
+
+            TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
+
+            long transactionCount = msMock.search(query).count();
+            assertEquals(1, transactionCount);
+        }
+        finally {
+            Logger.getGlobal().setLevel(defaultLevel);
+        }
     }
 
 
