@@ -35,6 +35,21 @@ import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
 
+/**
+ * Class makes it easier to automate data extraction from <a href="https://www.fi.se/sv/vara-register/insynsregistret">Insynsregistret</a>.
+ *
+ *
+ * Insynsregistret is a Swedish financial registry maintained by the <a href="https://www.fi.se">Finansinspektionen</a> (FI).
+ * It contains information regarding insider trading on <a href="http://www.nasdaqomxnordic.com">Nasdaq Stockholm</a> and
+ * <a href="http://www.ngm.se">Nordic Growth Market</a> (NGM) and other trading venues.
+ *
+ * This registry publishes information about the trading activities that have taken place during
+ * the day performed by the insiders and people close to them. The registry includes information
+ * concerning the position the insider involved in a certain trading activity has, what kind of
+ * activity it is (sell, buy or gift etc.), what kind of security that is traded and the quantity.
+ *
+ * All insider trading is reported to FI, which publishes the data on a daily basis to this public database.
+ */
 public class Insynsregistret {
     private static final String[] COLUMN_PUBLICATION_DATE = {"Publicerings datum", "Publication date"};
     private static final String[] COLUMN_ISSUER = {"Utgivare", "Issuer"};
@@ -60,11 +75,21 @@ public class Insynsregistret {
     private Logger logger;
 
 
+    /**
+     * Default constructor.
+     */
     public Insynsregistret() {
         logger = Logger.getGlobal();
     }
 
 
+    /**
+     * Free text search for issuer names or person discharging managerial responsibilities (PDMR).
+     * {@link FreeTextQuery} object is created by {@link FreeTextQueryBuilder} class.
+     * @param query free text query
+     * @return A {@link java.util.stream.Stream} of {@link java.lang.String} objects representing issuer names or PDMR names
+     * @throws IOException exception
+     */
     public Stream<String> search(FreeTextQuery query) throws IOException {
         BufferedReader response = sendRequest(query.getUrl(), Charset.forName("UTF-8"));
 
@@ -72,14 +97,27 @@ public class Insynsregistret {
     }
 
 
+    /**
+     * Search transaction in insynsregistret.
+     * {@link TransactionQuery} object is created by {@link TransactionQueryBuilder} class.
+     * @param query transaction query
+     * @return A {@link java.util.stream.Stream} of {@link Transaction} objects
+     * @throws IOException exception
+     */
     public Stream<Transaction> search(TransactionQuery query) throws IOException {
-        int langIndex = query.getLanguage().orElse(Language.SWEDISH).getIndex();
+        int langIndex = query.getLanguage().getIndex();
         BufferedReader response = sendRequest(query.getUrl(), Charset.forName("UTF-16LE"));
 
         return parseTransactions(response, langIndex);
     }
 
-
+    /**
+     * Internal method for sending the http request.
+     * @param url URL to send the request
+     * @param encoding encoding for the payload in the response
+     * @return The response for the request
+     * @throws IOException exception
+     */
     protected BufferedReader sendRequest(String url, Charset encoding) throws IOException {
         URLConnection connection = new URL(url).openConnection();
         connection.setRequestProperty("Accept-Encoding", "gzip");

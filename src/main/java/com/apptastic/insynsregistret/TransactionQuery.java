@@ -28,6 +28,10 @@ import java.util.Date;
 import java.util.Optional;
 
 
+/**
+ * Class that represents the query for inside trade transaction. It is used when searching for transactions.
+ * Object of this class is created via {@link TransactionQueryBuilder} class.
+ */
 public class TransactionQuery {
     private static final String INSYNSREGISTERET_URL = "https://marknadssok.fi.se/publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
     private final SimpleDateFormat dateFormatter;
@@ -35,24 +39,27 @@ public class TransactionQuery {
     private final Optional<Language> language;
 
 
+    /**
+     * Constructor for inside trade transaction query.
+     * Query either transactions or publication between dates. Optional parameters issue, PDMR and language parameters.
+     * @param fromTransactionDate from transaction date
+     * @param toTransactionDate to transaction date
+     * @param fromPublicationDate from publication date
+     * @param toPublicationDate to publication date
+     * @param issuer - issuer name
+     * @param personDischargingManagerialResponsibilities person discharging managerial responsibilities (PDMR) name
+     * @param language - language
+     */
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
-                     String issuer, String personDischargingManagerialResponsibilities, Language lang) {
+                     Optional<String> issuer, Optional<String> personDischargingManagerialResponsibilities, Optional<Language> language) {
 
-        if (issuer == null)
-            issuer = "";
-        else
-            issuer = issuer.replaceAll(" ", "+");
-
-        if (personDischargingManagerialResponsibilities == null)
-            personDischargingManagerialResponsibilities = "";
-        else
-            personDischargingManagerialResponsibilities = personDischargingManagerialResponsibilities.replaceAll(" ", "+");
-
+        String issuerName = issuer.orElse("").replace(" ", "+");
+        String pdmrName = personDischargingManagerialResponsibilities.orElse("").replaceAll(" ", "+");
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        language = Optional.ofNullable(lang);
-        String langQueryParam = language.orElse(Language.SWEDISH).getName();
+        this.language = Optional.of(language.orElse(Language.SWEDISH));
+        String languageName = this.language.get().getName();
 
-        url = String.format(INSYNSREGISTERET_URL, langQueryParam, issuer, personDischargingManagerialResponsibilities,
+        url = String.format(INSYNSREGISTERET_URL, languageName, issuerName, pdmrName,
                 toDateString(fromTransactionDate), toDateString(toTransactionDate),
                 toDateString(fromPublicationDate), toDateString(toPublicationDate));
     }
@@ -64,10 +71,18 @@ public class TransactionQuery {
         return dateFormatter.format(date);
     }
 
-    Optional<Language> getLanguage() {
-        return language;
+    /**
+     * In what language the inside trade transaction should be presented in.
+     * @return
+     */
+    Language getLanguage() {
+        return language.get();
     }
 
+    /**
+     * Get the URL for the inside trade transaction query.
+     * @return URL
+     */
     public String getUrl() {
         return url;
     }

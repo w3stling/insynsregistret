@@ -24,6 +24,9 @@
 package com.apptastic.insynsregistret;
 
 
+/**
+ * Represents a language.
+ */
 public enum Language {
     SWEDISH(0, "sv-SE"),
     ENGLISH(1, "en-GB");
@@ -31,15 +34,28 @@ public enum Language {
     private int index;
     private String name;
 
+    /**
+     * Language
+     * @param index index
+     * @param name name
+     */
     Language(int index, String name) {
         this.index = index;
         this.name = name;
     }
 
+    /**
+     * Returns an index representation of the language.
+     * @return index
+     */
     int getIndex() {
         return index;
     }
 
+    /**
+     * Returns the name representation of the language.
+     * @return name
+     */
     String getName() {
         return name;
     }

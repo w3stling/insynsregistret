@@ -27,12 +27,23 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 
+/**
+ * Class that represents the free test query. It is used when searching for issuer names and person discharging managerial responsibilities (PDMR) names.
+ * Object of this class is created via {@link FreeTextQueryBuilder} class.
+ */
 public class FreeTextQuery {
     private final static String ISSUER_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/AutoComplete/H%C3%A4mtaAutoCompleteLista?sokfunktion=Insyn&falt=Utgivare&sokterm=";
     private final static String PDMR_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/AutoComplete/H%C3%A4mtaAutoCompleteLista?sokfunktion=Insyn&falt=PersonILedandeSt%C3%A4llningNamn&sokterm=";
     private final static String ENCODING = "UTF-8";
     private String url;
 
+    /**
+     * Constructor for free text query.
+     * Query either issuer names or PDMR names.
+     * @param issuer issuer name
+     * @param personDischargingManagerialResponsibilities PDMR name
+     * @throws UnsupportedEncodingException
+     */
     FreeTextQuery(String issuer, String personDischargingManagerialResponsibilities) throws UnsupportedEncodingException {
         url = "";
 
@@ -42,6 +53,10 @@ public class FreeTextQuery {
             url = PDMR_URL + URLEncoder.encode(personDischargingManagerialResponsibilities, ENCODING);
     }
 
+    /**
+     * Get the URL for the issuer names and PDMR names query.
+     * @return URL
+     */
     public String getUrl() {
         return url;
     }

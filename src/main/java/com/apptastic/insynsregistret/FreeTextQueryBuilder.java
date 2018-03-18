@@ -26,6 +26,9 @@ package com.apptastic.insynsregistret;
 import java.io.UnsupportedEncodingException;
 
 
+/**
+ * Builder class for creating a query for searching issuer names and person discharging managerial responsibilities (PDMR) names.
+ */
 public class FreeTextQueryBuilder {
     private String issuer;
     private String personDischargingManagerialResponsibilities;
@@ -34,6 +37,11 @@ public class FreeTextQueryBuilder {
 
     }
 
+    /**
+     * Creates an instance of {@link FreeTextQueryBuilder} that is used for building a query for issuer names.
+     * @param freeText text to search for that is part of the issuer name
+     * @return Builder object
+     */
     public static FreeTextQueryBuilder issuer(String freeText) {
         if (freeText == null)
             throw new IllegalArgumentException("Issuer free text is null");
@@ -43,6 +51,11 @@ public class FreeTextQueryBuilder {
         return builder;
     }
 
+    /**
+     * Creates an instance of {@link FreeTextQueryBuilder} that is used for building a query for person discharging managerial responsibilities (PDMR) names.
+     * @param freeText text to search for that is part of the PDMR name
+     * @return Builder object
+     */
     public static FreeTextQueryBuilder personDischargingManagerialResponsibilities(String freeText) {
         if (freeText == null)
             throw new IllegalArgumentException("Issuer free text is null");
@@ -52,6 +65,11 @@ public class FreeTextQueryBuilder {
         return builder;
     }
 
+    /**
+     * Creates the query object for searching issuer names and PDMR names via {@link Insynsregistret} class
+     * @return query object
+     * @throws UnsupportedEncodingException exception
+     */
     public FreeTextQuery build() throws UnsupportedEncodingException {
         return new FreeTextQuery(issuer, personDischargingManagerialResponsibilities);
     }

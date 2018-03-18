@@ -25,8 +25,12 @@ package com.apptastic.insynsregistret;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 
+/**
+ * Builder class for creating a query for searching inside trade transactions via the {@link Insynsregistret} class.
+ */
 public class TransactionQueryBuilder {
     private Date fromTransactionDate;
     private Date toTransactionDate;
@@ -41,6 +45,12 @@ public class TransactionQueryBuilder {
 
     }
 
+    /**
+     * Query inside trade transactions between the given dates.
+     * @param from from date (Year, month and day resolution)
+     * @param to to date (Year, month and day resolution)
+     * @return builder object
+     */
     public static TransactionQueryBuilder transactions(Date from, Date to) {
         if (from == null)
             throw new IllegalArgumentException("From transaction date is null");
@@ -55,6 +65,11 @@ public class TransactionQueryBuilder {
         return builder;
     }
 
+    /**
+     * Query inside trade transactions from a given number of days back in time from today's date.
+     * @param days number of days back in time
+     * @return builder object
+     */
     public static TransactionQueryBuilder transactionsPastXDays(int days) {
         if (days < 0)
             throw new IllegalArgumentException("Past transaction days is a negative number");
@@ -72,6 +87,13 @@ public class TransactionQueryBuilder {
         return builder;
     }
 
+    /**
+     * Query between the given dates from when inside trade transactions was published.
+     * Usually transactions are published with 3 days from then the transaction occurred.
+     * @param from from date  (Year, month and day resolution)
+     * @param to to date (Year, month and day resolution)
+     * @return builder object
+     */
     public static TransactionQueryBuilder publications(Date from, Date to) {
         if (from == null)
             throw new IllegalArgumentException("From publication date is null");
@@ -86,6 +108,12 @@ public class TransactionQueryBuilder {
         return builder;
     }
 
+    /**
+     * Query inside trade transactions publications from a given number of days back in time from today's date.
+     * Usually transactions are published with 3 days from then the transaction occurred.
+     * @param days number of days back in time
+     * @return builder object
+     */
     public static TransactionQueryBuilder publicationsPastXDays(int days) {
         if (days < 0)
             throw new IllegalArgumentException("Past publication days is a negative number");
@@ -103,25 +131,44 @@ public class TransactionQueryBuilder {
         return builder;
     }
 
+    /**
+     * Limit the transaction to the this issuer.
+     * @param issuer name of the issuer
+     * @return builder object
+     */
     public TransactionQueryBuilder issuer(String issuer) {
         this.issuer = issuer;
         return this;
     }
 
-    public TransactionQueryBuilder personDischargingManagerialResponsibilities(String person) {
-        personDischargingManagerialResponsibilities = person;
+    /**
+     * Limit the transaction to the this person discharging managerial responsibilities (PDMR).
+     * @param pdmr name of the PDMR
+     * @return builder object
+     */
+    public TransactionQueryBuilder personDischargingManagerialResponsibilities(String pdmr) {
+        personDischargingManagerialResponsibilities = pdmr;
         return this;
     }
 
+    /**
+     * In what language the inside trade transaction should be presented in. Default is Swedish.
+     * @param language language to use.
+     * @return builder object
+     */
     public TransactionQueryBuilder language(Language language) {
         this.language = language;
         return this;
     }
 
+    /**
+     * Creates the query object for searching transactions via {@link Insynsregistret} class
+     * @return query object
+     */
     public TransactionQuery build() {
         return new TransactionQuery(fromTransactionDate, toTransactionDate,
                          fromPublicationDate, toPublicationDate,
-                         issuer, personDischargingManagerialResponsibilities,
-                         language);
+                         Optional.ofNullable(issuer), Optional.ofNullable(personDischargingManagerialResponsibilities),
+                         Optional.ofNullable(language));
     }
 }
