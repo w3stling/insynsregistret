@@ -72,15 +72,6 @@ public class Insynsregistret {
     private static final String[] COLUMN_CURRENCY = {"Valuta", "Currency"};
     private static final String[] COLUMN_TRADING_VENUE = {"Handelsplats", "Trading venue"};
     private static final String[] COLUMN_STATUS = {"Status", "Status"};
-    private Logger logger;
-
-
-    /**
-     * Default constructor.
-     */
-    public Insynsregistret() {
-        logger = Logger.getGlobal();
-    }
 
 
     /**
@@ -231,7 +222,9 @@ public class Insynsregistret {
             floatNumber = Double.valueOf(value);
         }
         catch (Exception e) {
-            if (logger != null && logger.isLoggable(Level.WARNING))
+            Logger logger = Logger.getLogger("com.apptastic.insynsregistret");
+
+            if (logger.isLoggable(Level.WARNING))
                 logger.log(Level.WARNING, "Failed to parse double. ", e);
 
             floatNumber = Double.NaN;
