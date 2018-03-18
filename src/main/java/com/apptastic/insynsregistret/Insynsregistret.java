@@ -64,24 +64,65 @@ public class Insynsregistret {
         logger = Logger.getGlobal();
     }
 
-    public Stream<Transaction> search(Query query) throws IOException {
-        int langIndex = query.getLanguage().orElse(Language.SWEDISH).getIndex();
-        BufferedReader result = doSearch(query.getUrl());
-        return parseTransactions(result, langIndex);
+
+    public Stream<String> search(FreeTextQuery query) throws IOException {
+        BufferedReader response = sendRequest(query.getUrl(), Charset.forName("UTF-8"));
+
+        return parseStringArray(response);
     }
 
 
-    protected BufferedReader doSearch(String marketSearchUrl) throws IOException {
-        URLConnection connection = new URL(marketSearchUrl).openConnection();
+    public Stream<Transaction> search(TransactionQuery query) throws IOException {
+        int langIndex = query.getLanguage().orElse(Language.SWEDISH).getIndex();
+        BufferedReader response = sendRequest(query.getUrl(), Charset.forName("UTF-16LE"));
+
+        return parseTransactions(response, langIndex);
+    }
+
+
+    protected BufferedReader sendRequest(String url, Charset encoding) throws IOException {
+        URLConnection connection = new URL(url).openConnection();
         connection.setRequestProperty("Accept-Encoding", "gzip");
         InputStream inputStream = connection.getInputStream();
 
         if ("gzip".equals(connection.getContentEncoding()))
             inputStream = new GZIPInputStream(inputStream);
 
-        Reader reader = new InputStreamReader(inputStream, Charset.forName("UTF-16LE"));
+        Reader reader = new InputStreamReader(inputStream, encoding);
 
         return new BufferedReader(reader);
+    }
+
+
+    private Stream<String> parseStringArray(BufferedReader reader) {
+        return reader.lines().flatMap(this::splitString).distinct();
+    }
+
+
+    private Stream<String> splitString(final String text) {
+        if (text.length() <= 2)
+            return Stream.empty();
+
+        LinkedList<String> tokens = new LinkedList<>();
+
+        boolean found = true;
+        int start;
+        int end = 0;
+
+        while (found) {
+            start = text.indexOf('"', end + 1);
+            end = text.indexOf('"', start + 1);
+            found = start != -1 && end != -1;
+
+            if (found) {
+                String token = text.substring(start + 1, end);
+                token = token.replace("\\u0026", "&").trim();
+
+                tokens.add(token);
+            }
+        }
+
+        return tokens.stream();
     }
 
 
@@ -97,7 +138,6 @@ public class Insynsregistret {
         parseHeaderLine(headerColumns, columnIndex);
 
         return reader.lines()
-                //.map(l -> {System.out.println(l); return pattern.split(l);})
                 .map(pattern::split)
                 .map(columns -> toTransaction(columns, columnIndex, langIndex))
                 .filter(this::badTransactionFilter);

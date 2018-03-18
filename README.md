@@ -32,7 +32,7 @@ Get all insider trades published in the last 30 days, presented in English. Defa
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = TransactionQueryBuilder.publicationsPastXDays(30)
+TransactionQuery query = TransactionQueryBuilder.publicationsPastXDays(30)
         .language(Language.ENGLISH)
         .build();
 
@@ -45,7 +45,7 @@ and that is part of a share option programme.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = TransactionQueryBuilder.publicationsPastXDays(30).build();
+TransactionQuery query = TransactionQueryBuilder.publicationsPastXDays(30).build();
 
 List<Transaction> transactions = registry.search(query)
         .filter(t -> t.getIsin().equals("SE0000310336"))
@@ -58,7 +58,7 @@ Get the number of inside trades in Hexagon between given dates.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = TransactionQueryBuilder.publications(getFromDate(), getToDate())
+TransactionQuery query = TransactionQueryBuilder.publications(getFromDate(), getToDate())
         .issuer("Hexagon AB")
         .build();
 
@@ -70,7 +70,7 @@ Total value of all inside trades in company Loomis the last month.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-Query query = TransactionQueryBuilder.transactionsPastXDays(30)
+TransactionQuery query = TransactionQueryBuilder.transactionsPastXDays(30)
         .issuer("Loomis AB")
         .build();
 

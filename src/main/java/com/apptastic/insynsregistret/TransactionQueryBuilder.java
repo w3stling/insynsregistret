@@ -118,8 +118,8 @@ public class TransactionQueryBuilder {
         return this;
     }
 
-    public Query build() {
-        return new Query(fromTransactionDate, toTransactionDate,
+    public TransactionQuery build() {
+        return new TransactionQuery(fromTransactionDate, toTransactionDate,
                          fromPublicationDate, toPublicationDate,
                          issuer, personDischargingManagerialResponsibilities,
                          language);

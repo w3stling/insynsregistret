@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 
-public class InsynsregistretTest {
+public class TransactionQueryTest {
     private BufferedReader reader;
     private Insynsregistret msMock;
 
@@ -28,7 +28,7 @@ public class InsynsregistretTest {
         reader = TestUtil.getExportedTransactionFile(classLoader, "insynSample1.csv");
 
         msMock = spy(Insynsregistret.class);
-        doReturn(reader).when(msMock).doSearch(anyString());
+        doReturn(reader).when(msMock).sendRequest(anyString(), any());
     }
 
 
@@ -44,7 +44,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.transactions(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.transactions(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -56,7 +56,7 @@ public class InsynsregistretTest {
         Date from = null;
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.transactions(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.transactions(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -68,7 +68,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = null;
 
-        Query query = TransactionQueryBuilder.transactions(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.transactions(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -86,7 +86,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.publications(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -98,7 +98,7 @@ public class InsynsregistretTest {
         Date from = null;
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.publications(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -110,7 +110,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = null;
 
-        Query query = TransactionQueryBuilder.publications(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(375, transactionCount);
@@ -128,7 +128,7 @@ public class InsynsregistretTest {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.publications(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
 
         Optional<Transaction> firstTransaction = msMock.search(query).findFirst();
         assertTrue(firstTransaction.isPresent());
@@ -165,13 +165,13 @@ public class InsynsregistretTest {
         reader = TestUtil.getExportedTransactionFile(classLoader, "pricePointInsteadOfComma.csv");
 
         msMock = spy(Insynsregistret.class);
-        doReturn(reader).when(msMock).doSearch(anyString());
+        doReturn(reader).when(msMock).sendRequest(anyString(), any());
 
 
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.publications(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
 
         Optional<Transaction> firstTransaction = msMock.search(query).findFirst();
         assertTrue(firstTransaction.isPresent());
@@ -208,13 +208,13 @@ public class InsynsregistretTest {
         reader = TestUtil.getExportedTransactionFile(classLoader, "badPrice.csv");
 
         msMock = spy(Insynsregistret.class);
-        doReturn(reader).when(msMock).doSearch(anyString());
+        doReturn(reader).when(msMock).sendRequest(anyString(), any());
 
 
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.publications(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(1, transactionCount);
@@ -227,13 +227,13 @@ public class InsynsregistretTest {
         reader = TestUtil.getExportedTransactionFile(classLoader, "badQuantity.csv");
 
         msMock = spy(Insynsregistret.class);
-        doReturn(reader).when(msMock).doSearch(anyString());
+        doReturn(reader).when(msMock).sendRequest(anyString(), any());
 
 
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.publications(from, to).build();
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
 
         long transactionCount = msMock.search(query).count();
         assertEquals(1, transactionCount, 0.0);
@@ -246,13 +246,13 @@ public class InsynsregistretTest {
         reader = TestUtil.getExportedTransactionFile(classLoader, "empty.csv");
 
         msMock = spy(Insynsregistret.class);
-        doReturn(reader).when(msMock).doSearch(anyString());
+        doReturn(reader).when(msMock).sendRequest(anyString(), any());
 
 
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.publications(from, to)
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to)
                 .issuer("Examples")
                 .build();
 
@@ -267,13 +267,13 @@ public class InsynsregistretTest {
         reader = TestUtil.getExportedTransactionFile(classLoader, "noTransactions.csv");
 
         msMock = spy(Insynsregistret.class);
-        doReturn(reader).when(msMock).doSearch(anyString());
+        doReturn(reader).when(msMock).sendRequest(anyString(), any());
 
 
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
-        Query query = TransactionQueryBuilder.publications(from, to)
+        TransactionQuery query = TransactionQueryBuilder.publications(from, to)
                 .personDischargingManagerialResponsibilities("dummy")
                 .build();
 
@@ -286,7 +286,7 @@ public class InsynsregistretTest {
     public void liveSvQueryByTransactionDate() throws IOException {
         Insynsregistret ms = new Insynsregistret();
 
-        Query transactionQuery = TransactionQueryBuilder.transactionsPastXDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsPastXDays(10)
                 .build();
 
         long transactionCount = ms.search(transactionQuery).count();
@@ -298,7 +298,7 @@ public class InsynsregistretTest {
     public void liveSvQueryByPublicationDate() throws IOException {
         Insynsregistret ms = new Insynsregistret();
 
-        Query transactionQuery = TransactionQueryBuilder.publicationsPastXDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsPastXDays(10)
                 .build();
 
         long transactionCount = ms.search(transactionQuery).count();
@@ -310,7 +310,7 @@ public class InsynsregistretTest {
     public void liveEnQueryByTransactionDate() throws IOException {
         Insynsregistret ms = new Insynsregistret();
 
-        Query transactionQuery = TransactionQueryBuilder.transactionsPastXDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsPastXDays(10)
                 .language(Language.ENGLISH)
                 .build();
 
@@ -323,7 +323,7 @@ public class InsynsregistretTest {
     public void liveEnQueryByPublicationDate() throws IOException {
         Insynsregistret ms = new Insynsregistret();
 
-        Query transactionQuery = TransactionQueryBuilder.publicationsPastXDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsPastXDays(10)
                 .language(Language.ENGLISH)
                 .build();
 
