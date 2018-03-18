@@ -79,7 +79,7 @@ public class FreeTextQueryTest {
 
         Insynsregistret ir = new Insynsregistret();
         long resultCount = ir.search(query).count();
-        assertEquals(resultCount, 0);
+        assertEquals(0, resultCount);
     }
 
     @Test(expected = IllegalArgumentException.class)
