@@ -51,6 +51,7 @@ public class TransactionQuery {
      * @param issuer - issuer name
      * @param pdmr person discharging managerial responsibilities (PDMR) name
      * @param language - language
+     * @throws UnsupportedEncodingException exception
      */
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
                      String issuer, String pdmr, Language language) throws UnsupportedEncodingException {

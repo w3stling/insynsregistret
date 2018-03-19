@@ -42,7 +42,7 @@ public class FreeTextQuery {
      * Query either issuer names or PDMR names.
      * @param issuer issuer name
      * @param personDischargingManagerialResponsibilities PDMR name
-     * @throws UnsupportedEncodingException
+     * @throws UnsupportedEncodingException exception
      */
     FreeTextQuery(String issuer, String personDischargingManagerialResponsibilities) throws UnsupportedEncodingException {
         url = "";

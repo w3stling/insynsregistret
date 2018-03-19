@@ -167,6 +167,7 @@ public class TransactionQueryBuilder {
     /**
      * Creates the query object for searching transactions via {@link Insynsregistret} class
      * @return query object
+     * @throws UnsupportedEncodingException exception
      */
     public TransactionQuery build() throws UnsupportedEncodingException {
         return new TransactionQuery(fromTransactionDate, toTransactionDate,
