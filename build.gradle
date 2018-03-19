@@ -22,6 +22,21 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.15.0'
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
@@ -29,12 +44,18 @@ bintray {
     dryRun = false
     publish = true
     override = true
+
     pkg {
         repo = 'maven-repo'
         name = 'insynsregistret'
+        desc = 'Java library for extracting data from the Financial Supervisory Authority (Finansinspektionen) insider registry.'
+        issueTrackerUrl = 'https://github.com/w3stling/insynsregistret/issues'
+        vcsUrl = 'https://github.com/w3stling/insynsregistret.git'
         licenses = ['MIT']
+
         version {
-            name = "1.0.0"
+            name = '1.0.0'
+            released  = new Date()
         }
     }
 }
@@ -46,6 +67,9 @@ publishing {
             groupId 'com.apptastic'
             artifactId 'insynsregistret'
             version '1.0.0'
+
+            artifact sourcesJar
+            artifact javadocJar
         }
     }
 }
