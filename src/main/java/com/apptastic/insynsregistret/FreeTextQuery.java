@@ -34,7 +34,7 @@ import java.net.URLEncoder;
 public class FreeTextQuery {
     private static final String ISSUER_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/AutoComplete/H%C3%A4mtaAutoCompleteLista?sokfunktion=Insyn&falt=Utgivare&sokterm=";
     private static final String PDMR_URL = "https://marknadssok.fi.se/Publiceringsklient/sv-SE/AutoComplete/H%C3%A4mtaAutoCompleteLista?sokfunktion=Insyn&falt=PersonILedandeSt%C3%A4llningNamn&sokterm=";
-    private static final String ENCODING = "UTF-8";
+    private static final String URL_ENCODING = "UTF-8";
     private String url;
 
     /**
@@ -48,9 +48,9 @@ public class FreeTextQuery {
         url = "";
 
         if (issuer != null)
-            url = ISSUER_URL + URLEncoder.encode(issuer, ENCODING);
+            url = ISSUER_URL + URLEncoder.encode(issuer, URL_ENCODING);
         else if (personDischargingManagerialResponsibilities != null)
-            url = PDMR_URL + URLEncoder.encode(personDischargingManagerialResponsibilities, ENCODING);
+            url = PDMR_URL + URLEncoder.encode(personDischargingManagerialResponsibilities, URL_ENCODING);
     }
 
     /**

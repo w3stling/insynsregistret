@@ -23,6 +23,7 @@
  */
 package com.apptastic.insynsregistret;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -167,7 +168,7 @@ public class TransactionQueryBuilder {
      * Creates the query object for searching transactions via {@link Insynsregistret} class
      * @return query object
      */
-    public TransactionQuery build() {
+    public TransactionQuery build() throws UnsupportedEncodingException {
         return new TransactionQuery(fromTransactionDate, toTransactionDate,
                          fromPublicationDate, toPublicationDate,
                          issuer, personDischargingManagerialResponsibilities,

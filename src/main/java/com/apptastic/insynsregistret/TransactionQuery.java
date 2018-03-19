@@ -23,9 +23,10 @@
  */
 package com.apptastic.insynsregistret;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
 
 
 /**
@@ -34,6 +35,7 @@ import java.util.Optional;
  */
 public class TransactionQuery {
     private static final String INSYNSREGISTERET_URL = "https://marknadssok.fi.se/publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
+    private static final String URL_ENCODING = "UTF-8";
     private final SimpleDateFormat dateFormatter;
     private final String url;
     private final Language language;
@@ -51,10 +53,10 @@ public class TransactionQuery {
      * @param language - language
      */
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
-                     String issuer, String pdmr, Language language) {
+                     String issuer, String pdmr, Language language) throws UnsupportedEncodingException {
         
-        String issuerName = orDefault(issuer, "").replace(" ", "+");
-        String pdmrName = orDefault(pdmr, "").replace(" ", "+");
+        String issuerName = URLEncoder.encode(orDefault(issuer, ""), URL_ENCODING);
+        String pdmrName = URLEncoder.encode(orDefault(pdmr, ""), URL_ENCODING);
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         this.language = orDefault(language, Language.SWEDISH);
         String languageName = this.language.getName();
