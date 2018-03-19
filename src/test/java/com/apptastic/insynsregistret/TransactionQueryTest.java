@@ -360,4 +360,20 @@ public class TransactionQueryTest {
         assertTrue(transactionCount > 0);
     }
 
+
+    @Test(expected = IllegalArgumentException.class)
+    public void publicationsFromAfterToDate() {
+        Date from = new GregorianCalendar(2018, Calendar.MARCH,2).getTime();
+        Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
+        TransactionQueryBuilder.publications(from, to);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void transactionsFromAfterToDate() {
+        Date from = new GregorianCalendar(2018, Calendar.MARCH,2).getTime();
+        Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
+        TransactionQueryBuilder.transactions(from, to);
+    }
+
 }

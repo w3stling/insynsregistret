@@ -23,8 +23,10 @@
  */
 package com.apptastic.insynsregistret;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -53,9 +55,10 @@ public class TransactionQueryBuilder {
     public static TransactionQueryBuilder transactions(Date from, Date to) {
         if (from == null)
             throw new IllegalArgumentException("From transaction date is null");
-
-        if (to == null)
+        else if (to == null)
             throw new IllegalArgumentException("To transaction date is null");
+        else if (TimeUnit.MILLISECONDS.toDays(from.getTime()) > TimeUnit.MILLISECONDS.toDays(to.getTime()))
+            throw new IllegalArgumentException("From date after to date is not allowed");
 
         TransactionQueryBuilder builder = new TransactionQueryBuilder();
         builder.fromTransactionDate = from;
@@ -96,9 +99,10 @@ public class TransactionQueryBuilder {
     public static TransactionQueryBuilder publications(Date from, Date to) {
         if (from == null)
             throw new IllegalArgumentException("From publication date is null");
-
-        if (to == null)
+        else if (to == null)
             throw new IllegalArgumentException("To publication date is null");
+        else if (TimeUnit.MILLISECONDS.toDays(from.getTime()) > TimeUnit.MILLISECONDS.toDays(to.getTime()))
+            throw new IllegalArgumentException("From date after to date is not allowed");
 
         TransactionQueryBuilder builder = new TransactionQueryBuilder();
         builder.fromPublicationDate = from;
