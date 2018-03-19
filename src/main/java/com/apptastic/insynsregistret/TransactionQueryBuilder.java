@@ -23,7 +23,6 @@
  */
 package com.apptastic.insynsregistret;
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
