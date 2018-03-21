@@ -54,7 +54,7 @@ Get all insider trades published in the last 30 days, presented in English. Defa
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-TransactionQuery query = TransactionQueryBuilder.publicationsPastXDays(30)
+TransactionQuery query = TransactionQueryBuilder.publicationsLastDays(30)
         .language(Language.ENGLISH)
         .build();
 
@@ -71,7 +71,7 @@ limit the search instead of filtering the search result. See next example with H
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-TransactionQuery query = TransactionQueryBuilder.publicationsPastXDays(30).build();
+TransactionQuery query = TransactionQueryBuilder.publicationsLastDays(30).build();
 
 List<Transaction> transactions = registry.search(query)
         .filter(t -> t.getIsin().equals("SE0000310336"))
@@ -96,7 +96,7 @@ Total value of all inside trades in company Loomis the last month.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-TransactionQuery query = TransactionQueryBuilder.transactionsPastXDays(30)
+TransactionQuery query = TransactionQueryBuilder.transactionsLastDays(30)
         .issuer("Loomis AB")
         .build();
 
