@@ -28,7 +28,7 @@ import java.net.URLEncoder;
 
 
 /**
- * Class that represents the free test query. It is used when searching for issuer names and person discharging managerial responsibilities (PDMR) names.
+ * Class that represents the free text query. It is used when searching for issuer names and person discharging managerial responsibilities (PDMR) names.
  * Object of this class is created via {@link FreeTextQueryBuilder} class.
  */
 public class FreeTextQuery {

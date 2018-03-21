@@ -79,7 +79,7 @@ public class TransactionQueryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void badTransactionPastDays() throws UnsupportedEncodingException {
-        TransactionQueryBuilder.transactionsPastXDays(-1).build();
+        TransactionQueryBuilder.transactionsLastDays(-1).build();
     }
 
 
@@ -121,7 +121,7 @@ public class TransactionQueryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void badPublicationsPastDays() throws UnsupportedEncodingException {
-        TransactionQueryBuilder.publicationsPastXDays(-1).build();
+        TransactionQueryBuilder.publicationsLastDays(-1).build();
     }
 
 
@@ -315,7 +315,7 @@ public class TransactionQueryTest {
     public void liveSvQueryByTransactionDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsPastXDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsLastDays(10)
                 .build();
 
         long transactionCount = ir.search(transactionQuery).count();
@@ -327,7 +327,7 @@ public class TransactionQueryTest {
     public void liveSvQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsPastXDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(10)
                 .build();
 
         long transactionCount = ir.search(transactionQuery).count();
@@ -339,7 +339,7 @@ public class TransactionQueryTest {
     public void liveEnQueryByTransactionDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsPastXDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsLastDays(10)
                 .language(Language.ENGLISH)
                 .build();
 
@@ -352,7 +352,7 @@ public class TransactionQueryTest {
     public void liveEnQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsPastXDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(10)
                 .language(Language.ENGLISH)
                 .build();
 
@@ -381,7 +381,7 @@ public class TransactionQueryTest {
     public void urlEncodingWithAmpersand() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery query = TransactionQueryBuilder.publicationsPastXDays(365 * 2)
+        TransactionQuery query = TransactionQueryBuilder.publicationsLastDays(365 * 2)
                 .issuer("H&M Hennes & Mauritz AB")
                 .build();
 

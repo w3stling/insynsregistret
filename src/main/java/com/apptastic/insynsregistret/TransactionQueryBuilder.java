@@ -72,7 +72,7 @@ public class TransactionQueryBuilder {
      * @param days number of days back in time
      * @return builder object
      */
-    public static TransactionQueryBuilder transactionsPastXDays(int days) {
+    public static TransactionQueryBuilder transactionsLastDays(int days) {
         if (days < 0)
             throw new IllegalArgumentException("Past transaction days is a negative number");
 
@@ -90,7 +90,7 @@ public class TransactionQueryBuilder {
     }
 
     /**
-     * Query between the given dates from when inside trade transactions was published.
+     * Query inside trade transactions was published between the given dates.
      * Usually transactions are published with 3 days from then the transaction occurred.
      * @param from from date  (Year, month and day resolution)
      * @param to to date (Year, month and day resolution)
@@ -112,12 +112,12 @@ public class TransactionQueryBuilder {
     }
 
     /**
-     * Query inside trade transactions publications from a given number of days back in time from today's date.
+     * Query inside trade transactions that as publications from a given number of days back in time from today's date.
      * Usually transactions are published with 3 days from then the transaction occurred.
      * @param days number of days back in time
      * @return builder object
      */
-    public static TransactionQueryBuilder publicationsPastXDays(int days) {
+    public static TransactionQueryBuilder publicationsLastDays(int days) {
         if (days < 0)
             throw new IllegalArgumentException("Past publication days is a negative number");
 
