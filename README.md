@@ -65,9 +65,6 @@ List<Transaction> transactions = registry.search(query)
 Get all insider trades published in the last 30 days in Swedish Match (ISIN SE0000310336)
 and that is part of a share option programme.
 
-A better way of achieving the same result is to refine the search with an issuer query parameter to
-limit the search instead of filtering the search result. See next example with Hexagon AB.
-
 ```java
 Insynsregistret registry = new Insynsregistret();
 
@@ -78,6 +75,10 @@ List<Transaction> transactions = registry.search(query)
         .filter(Transaction::isLinkedToShareOptionProgramme)
         .collect(Collectors.toList());
 ```
+
+A better way to achieve the same result as in the example above is to refine the search
+with an issuer query parameter to limit the search instead of filtering the search result.
+See next example with Hexagon AB.
 
 Get the number of inside trades in Hexagon between given dates.
 
@@ -91,7 +92,7 @@ TransactionQuery query = TransactionQueryBuilder.publications(getFromDate(), get
 long nofTransactions = registry.search(query).count();
 ```
 
-Total value of all inside trades in company Loomis the last month.
+Total value of all inside trades in company Loomis the last 30 days.
 
 ```java
 Insynsregistret registry = new Insynsregistret();
