@@ -15,7 +15,7 @@ script:
   - ./gradlew sonarqube -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN
 
 after_success:
-  - ./gradlew bintrayUpload gitPublishPush -Dorg.ajoberstar.grgit.auth.username=$GIT_NAME
+  - ./gradlew bintrayUpload gitPublishPush
 
 before_deploy:
   - git config --local user.name $GIT_NAME
