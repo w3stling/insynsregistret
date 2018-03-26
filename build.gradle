@@ -1,7 +1,9 @@
 plugins {
     id 'org.sonarqube' version '2.6.2'
     id 'com.jfrog.bintray' version '1.7.3'
+    id 'com.jfrog.artifactory' version '4.7.0'
     id 'org.ajoberstar.git-publish' version '0.3.3'
+    id 'net.researchgate.release' version '2.6.0'
 }
 
 apply plugin: 'java'
@@ -12,11 +14,17 @@ apply plugin: 'distribution'
 
 group 'com.apptastic'
 version "${version}"
+
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
     jcenter()
+
+    maven {
+        url  "https://jcenter.bintray.com"
+    }
 }
 
 dependencies {
@@ -80,6 +88,25 @@ bintray {
     }
 }
 
+artifactory {
+    contextUrl = 'https://oss.jfrog.org/artifactory'
+    publish {
+        repository {
+            if (project.version.endsWith("-SNAPSHOT")) {
+                repoKey = 'oss-snapshot-local'
+            } else {
+                repoKey = 'oss-release-local'
+            }
+            username = System.getenv('ARTIFACTORY_USERNAME')
+            password = System.getenv('ARTIFACTORY_PASSWORD')
+            maven = true
+        }
+        defaults {
+            publications ('InsynsregistretPublication')
+        }
+    }
+}
+
 publishing {
     publications {
         InsynsregistretPublication(MavenPublication) {
@@ -105,4 +132,8 @@ gitPublish {
     }
 
     commitMessage = 'Publishing javadoc'
+}
+
+release {
+    tagTemplate = '$version'
 }
