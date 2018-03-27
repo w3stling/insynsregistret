@@ -133,6 +133,10 @@ gitPublish {
         }
     }
 
+    preserve {
+        include 'javadoc/**'
+    }
+
     commitMessage = 'Publishing javadoc'
 }
 
