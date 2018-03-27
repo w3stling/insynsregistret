@@ -12,8 +12,8 @@ cache:
     - $HOME/.gradle
 
 script:
-  - ./gradlew sonarqube -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN
+  - ./gradlew clean build sonarqube -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN
 
 after_success:
-  - ./gradlew publish
+  - ./gradlew gitPublishPush artifactoryPublish bintrayUpload
 
