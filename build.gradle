@@ -66,24 +66,26 @@ artifacts {
 }
 
 bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['InsynsregistretPublication']
-    dryRun = false
-    publish = true
-    override = true
+    if (!project.version.endsWith("-SNAPSHOT")) {
+        user = System.getenv('BINTRAY_USER')
+        key = System.getenv('BINTRAY_KEY')
+        publications = ['InsynsregistretPublication']
+        dryRun = false
+        publish = true
+        override = true
 
-    pkg {
-        repo = 'maven-repo'
-        name = 'insynsregistret'
-        desc = 'Java library for extracting data from the Financial Supervisory Authority (Finansinspektionen) insider registry.'
-        issueTrackerUrl = 'https://github.com/w3stling/insynsregistret/issues'
-        vcsUrl = 'https://github.com/w3stling/insynsregistret.git'
-        licenses = ['MIT']
+        pkg {
+            repo = 'maven-repo'
+            name = 'insynsregistret'
+            desc = 'Java library for extracting data from the Financial Supervisory Authority (Finansinspektionen) insider registry.'
+            issueTrackerUrl = 'https://github.com/w3stling/insynsregistret/issues'
+            vcsUrl = 'https://github.com/w3stling/insynsregistret.git'
+            licenses = ['MIT']
 
-        version {
-            name = System.properties['version']
-            released = new Date()
+            version {
+                name = System.properties['version']
+                released = new Date()
+            }
         }
     }
 }
@@ -135,5 +137,5 @@ gitPublish {
 }
 
 release {
-    tagTemplate = '$version'
+    tagTemplate = 'v$version'
 }

@@ -15,19 +15,5 @@ script:
   - ./gradlew sonarqube -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN
 
 after_success:
-  - ./gradlew bintrayUpload gitPublishPush
+  - ./gradlew publish
 
-before_deploy:
-  - git config --local user.name $GIT_NAME
-  - git config --local user.email $GIT_EMAIL
-  - ./gradlew assembleDist
-
-deploy:
-  provider: releases
-  api_key: $GRGIT_USER
-  file:
-    - $TRAVIS_BUILD_DIR/build/distributions/insynsregistret*.zip
-    - $TRAVIS_BUILD_DIR/build/distributions/insynsregistret*.tar.gz
-  skip_cleanup: true
-  on:
-    tags: true
