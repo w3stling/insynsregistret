@@ -23,7 +23,7 @@ public class InsynsregistretBenchmark {
     public void transactions(ThreadState state) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
         BufferedReader reader = TestUtil.getExportedTransactionFile(classLoader, "insynSample1.csv");
-        Stream<Transaction> transactions = state.registry.parseTransactionResponse(reader, Language.SWEDISH.getIndex());
+        Stream<Transaction> transactions = state.registry.parseTransactionResponse(reader);
         long nofTransactions = transactions.count();
         System.out.println("Number of transactions: " + nofTransactions);
     }
@@ -31,7 +31,7 @@ public class InsynsregistretBenchmark {
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(".*" + InsynsregistretBenchmark.class.getSimpleName() + ".*")
+                .include(".*" + InsynsregistretBenchmark.class.getSimpleName() + "*")
                 .forks(1)
                 .build();
 
