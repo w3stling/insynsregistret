@@ -161,6 +161,7 @@ gitPublish {
 
     preserve {
         include 'javadoc/**'
+        exclude 'javadoc/*-SNAPSHOT/**'
     }
 
     commitMessage = 'Publishing javadoc'
