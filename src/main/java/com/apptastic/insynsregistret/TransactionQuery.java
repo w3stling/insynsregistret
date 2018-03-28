@@ -79,14 +79,6 @@ public class TransactionQuery {
     }
 
     /**
-     * In what language the inside trade transaction should be presented in.
-     * @return language
-     */
-    Language getLanguage() {
-        return language;
-    }
-
-    /**
      * Get the URL for the inside trade transaction query.
      * @return URL
      */
