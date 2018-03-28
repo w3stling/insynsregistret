@@ -25,7 +25,6 @@ public class InsynsregistretBenchmark {
         BufferedReader reader = TestUtil.getExportedTransactionFile(classLoader, "insynSample1.csv");
         Stream<Transaction> transactions = state.registry.parseTransactionResponse(reader);
         long nofTransactions = transactions.count();
-        System.out.println("Number of transactions: " + nofTransactions);
     }
 
 
