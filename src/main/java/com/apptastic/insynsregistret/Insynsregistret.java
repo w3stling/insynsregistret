@@ -73,10 +73,9 @@ public class Insynsregistret {
      * @throws IOException exception
      */
     public Stream<Transaction> search(TransactionQuery query) throws IOException {
-        int langIndex = query.getLanguage().getIndex();
         BufferedReader response = sendRequest(query.getUrl(), Charset.forName("UTF-16LE"));
 
-        return parseTransactionResponse(response, langIndex);
+        return parseTransactionResponse(response);
     }
 
     /**
@@ -132,7 +131,7 @@ public class Insynsregistret {
     }
 
 
-    Stream<Transaction> parseTransactionResponse(BufferedReader reader, int langIndex) throws IOException {
+    Stream<Transaction> parseTransactionResponse(BufferedReader reader) throws IOException {
         String header = reader.readLine();
 
         if (header == null)
@@ -140,7 +139,7 @@ public class Insynsregistret {
 
         String[] headerColumns = splitLine(header, 32);
         TransactionAssigner assigner = new TransactionAssigner();
-        int nofColumns = assigner.initialize(headerColumns, langIndex);
+        int nofColumns = assigner.initialize(headerColumns);
 
         // Read the rest of the lines after the header
         return reader.lines()
@@ -161,10 +160,10 @@ public class Insynsregistret {
 
         while (found && index < nofColumns) {
             end = text.indexOf(';', start);
-            found = end != -1;
+            found = (end != -1);
 
             if (found && text.codePointAt(start) == '"') {
-                // Data in column element is with quotation marks. Find the ending quote mark.
+                // Data in column element is surounded with quotation marks. Find the ending quote mark.
                 ++start;
 
                 if (start == end)
@@ -221,8 +220,8 @@ public class Insynsregistret {
         private static final String[] COLUMN_CURRENCY = {"Valuta", "Currency"};
         private static final String[] COLUMN_TRADING_VENUE = {"Handelsplats", "Trading venue"};
         private static final String[] COLUMN_STATUS = {"Status", "Status"};
-
-        private ArrayList<BiConsumer<Transaction, String>> columnLookup;
+        private static final HashMap<String, BiConsumer<Transaction, String>> COLUMN_NAME_FIELD_MAPPER;
+        private final ArrayList<BiConsumer<Transaction, String>> columnLookup;
 
 
         TransactionAssigner() {
@@ -230,7 +229,7 @@ public class Insynsregistret {
         }
 
 
-        int initialize(String[] header, int langIndex) {
+        int initialize(String[] header) {
             int i;
 
             for (i = 0; i < header.length; ++i) {
@@ -239,51 +238,7 @@ public class Insynsregistret {
                     break;
 
                 String headerColumnText = header[i].trim();
-
-                if (COLUMN_PUBLICATION_DATE[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setPublicationDate);
-                else if (COLUMN_ISSUER[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setIssuer);
-                else if (COLUMN_LEI_CODE[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setLeiCode);
-                else if (COLUMN_NOTIFIER[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setNotifier);
-                else if (COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setPersonDischargingManagerialResponsibilities);
-                else if (COLUMN_POSITION[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setPosition);
-                else if (COLUMN_IS_CLOSELY_ASSOCIATE[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, (t, v) -> t.setCloselyAssociated(isTrue(v, langIndex)) );
-                else if (COLUMN_IS_AMENDMENT[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, (t, v) -> t.setAmendment(isTrue(v, langIndex)) );
-                else if (COLUMN_DETAILS_OF_AMENDMENT[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setDetailsOfAmendment);
-                else if (COLUMN_IS_INITIAL_NOTIFICATION[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, (t, v) -> t.setInitialNotification(isTrue(v, langIndex)) );
-                else if (COLUMN_IS_LINKED_TO_SHARE_OPTION_PROGRAMME[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, (t, v) -> t.setLinkedToShareOptionProgramme(isTrue(v, langIndex)) );
-                else if (COLUMN_NATURE_OF_TRANSACTION[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setNatureOfTransaction);
-                else if (COLUMN_INSTRUMENT[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setInstrument);
-                else if (COLUMN_ISIN[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setIsin);
-                else if (COLUMN_TRANSACTION_DATE[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setTransactionDate);
-                else if (COLUMN_QUANTITY[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, (t, v) -> t.setQuantity(parseDouble(v)) );
-                else if (COLUMN_UNIT[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setUnit);
-                else if (COLUMN_PRICE[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, (t, v) -> t.setPrice(parseDouble(v)) );
-                else if (COLUMN_CURRENCY[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setCurrency);
-                else if (COLUMN_TRADING_VENUE[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setTradingVenue);
-                else if (COLUMN_STATUS[langIndex].equals(headerColumnText))
-                    columnLookup.add(i, Transaction::setStatus);
-                else
-                    columnLookup.add(i, null);
+                columnLookup.add(i, COLUMN_NAME_FIELD_MAPPER.get(headerColumnText));
             }
 
             return i;
@@ -305,7 +260,7 @@ public class Insynsregistret {
         }
 
 
-        private double parseDouble(String value) {
+        private static double parseDouble(String value) {
             double floatNumber;
 
             try {
@@ -325,13 +280,101 @@ public class Insynsregistret {
         }
 
 
-        private boolean isTrue(String text, int langIndex) {
+        private static boolean isTrue(String text, int langIndex) {
             if (langIndex == 1)
                 return "Yes".equalsIgnoreCase(text.trim());
             else
                 return "Ja".equalsIgnoreCase(text.trim());
         }
 
+
+        static {
+            COLUMN_NAME_FIELD_MAPPER = new HashMap<>(64);
+
+            // Publication date
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PUBLICATION_DATE[Language.SWEDISH.getIndex()], Transaction::setPublicationDate);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PUBLICATION_DATE[Language.ENGLISH.getIndex()], Transaction::setPublicationDate);
+
+            // Issuer
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_ISSUER[Language.SWEDISH.getIndex()], Transaction::setIssuer);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_ISSUER[Language.ENGLISH.getIndex()], Transaction::setIssuer);
+
+            // LEI Code
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_LEI_CODE[Language.SWEDISH.getIndex()], Transaction::setLeiCode);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_LEI_CODE[Language.ENGLISH.getIndex()], Transaction::setLeiCode);
+
+            // Notifier
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_NOTIFIER[Language.SWEDISH.getIndex()], Transaction::setNotifier);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_NOTIFIER[Language.ENGLISH.getIndex()], Transaction::setNotifier);
+
+            // PDMR
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.SWEDISH.getIndex()], Transaction::setPersonDischargingManagerialResponsibilities);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.ENGLISH.getIndex()], Transaction::setPersonDischargingManagerialResponsibilities);
+
+            // Position
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_POSITION[Language.SWEDISH.getIndex()], Transaction::setPosition);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_POSITION[Language.ENGLISH.getIndex()], Transaction::setPosition);
+
+            // Is closely associated
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_CLOSELY_ASSOCIATE[Language.SWEDISH.getIndex()], (t, v) -> t.setCloselyAssociated(isTrue(v, Language.SWEDISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_CLOSELY_ASSOCIATE[Language.ENGLISH.getIndex()], (t, v) -> t.setCloselyAssociated(isTrue(v, Language.ENGLISH.getIndex())) );
+
+            // Is amendment
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_AMENDMENT[Language.SWEDISH.getIndex()], (t, v) -> t.setAmendment(isTrue(v, Language.SWEDISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_AMENDMENT[Language.ENGLISH.getIndex()], (t, v) -> t.setAmendment(isTrue(v, Language.ENGLISH.getIndex())) );
+
+            // Details of amendment
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_DETAILS_OF_AMENDMENT[Language.SWEDISH.getIndex()], Transaction::setDetailsOfAmendment);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_DETAILS_OF_AMENDMENT[Language.ENGLISH.getIndex()], Transaction::setDetailsOfAmendment);
+
+            // Is initial notification
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_INITIAL_NOTIFICATION[Language.SWEDISH.getIndex()], (t, v) -> t.setInitialNotification(isTrue(v, Language.SWEDISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_INITIAL_NOTIFICATION[Language.ENGLISH.getIndex()], (t, v) -> t.setInitialNotification(isTrue(v, Language.ENGLISH.getIndex())) );
+
+            // Is linked to share option programme
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_LINKED_TO_SHARE_OPTION_PROGRAMME[Language.SWEDISH.getIndex()], (t, v) -> t.setLinkedToShareOptionProgramme(isTrue(v, Language.SWEDISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_LINKED_TO_SHARE_OPTION_PROGRAMME[Language.ENGLISH.getIndex()], (t, v) -> t.setLinkedToShareOptionProgramme(isTrue(v, Language.ENGLISH.getIndex())) );
+
+            // Nature of transaction
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_NATURE_OF_TRANSACTION[Language.SWEDISH.getIndex()], Transaction::setNatureOfTransaction);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_NATURE_OF_TRANSACTION[Language.ENGLISH.getIndex()], Transaction::setNatureOfTransaction);
+
+            // Nature of transaction
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_INSTRUMENT[Language.SWEDISH.getIndex()], Transaction::setInstrument);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_INSTRUMENT[Language.ENGLISH.getIndex()], Transaction::setInstrument);
+
+            // ISIN
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_ISIN[Language.SWEDISH.getIndex()], Transaction::setIsin);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_ISIN[Language.ENGLISH.getIndex()], Transaction::setIsin);
+
+            // Transaction date
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_TRANSACTION_DATE[Language.SWEDISH.getIndex()], Transaction::setTransactionDate);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_TRANSACTION_DATE[Language.ENGLISH.getIndex()], Transaction::setTransactionDate);
+
+            // Quantity
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_QUANTITY[Language.SWEDISH.getIndex()], (t, v) -> t.setQuantity(parseDouble(v)) );
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_QUANTITY[Language.ENGLISH.getIndex()], (t, v) -> t.setQuantity(parseDouble(v)) );
+
+            // Transaction date
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_UNIT[Language.SWEDISH.getIndex()], Transaction::setUnit);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_UNIT[Language.ENGLISH.getIndex()], Transaction::setUnit);
+
+            // Price
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PRICE[Language.SWEDISH.getIndex()], (t, v) -> t.setPrice(parseDouble(v)) );
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PRICE[Language.ENGLISH.getIndex()], (t, v) -> t.setPrice(parseDouble(v)) );
+
+            // Currency
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_CURRENCY[Language.SWEDISH.getIndex()], Transaction::setCurrency);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_CURRENCY[Language.ENGLISH.getIndex()], Transaction::setCurrency);
+
+            // Trading venue
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_TRADING_VENUE[Language.SWEDISH.getIndex()], Transaction::setTradingVenue);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_TRADING_VENUE[Language.ENGLISH.getIndex()], Transaction::setTradingVenue);
+
+            // Status
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_STATUS[Language.SWEDISH.getIndex()], Transaction::setStatus);
+            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_STATUS[Language.ENGLISH.getIndex()], Transaction::setStatus);
+        }
     }
 
 }
