@@ -151,7 +151,7 @@ public class Insynsregistret {
     }
 
 
-    private String[] splitLine(String text, int nofColumns) {
+    String[] splitLine(String text, int nofColumns) {
         int index = 0;
         boolean found = true;
         int extraForQuotationMark = 0;
@@ -199,7 +199,7 @@ public class Insynsregistret {
     }
 
 
-    static private class TransactionAssigner {
+    static class TransactionAssigner {
         private static final String[] COLUMN_PUBLICATION_DATE = {"Publicerings datum", "Publication date"};
         private static final String[] COLUMN_ISSUER = {"Utgivare", "Issuer"};
         private static final String[] COLUMN_LEI_CODE = {"LEI-kod", "LEI-code"};
@@ -234,10 +234,11 @@ public class Insynsregistret {
             int i;
 
             for (i = 0; i < header.length; ++i) {
-                String headerColumnText = header[i];
 
-                if (headerColumnText == null)
+                if (header[i] == null)
                     break;
+
+                String headerColumnText = header[i].trim();
 
                 if (COLUMN_PUBLICATION_DATE[langIndex].equals(headerColumnText))
                     columnLookup.add(i, Transaction::setPublicationDate);
@@ -281,6 +282,8 @@ public class Insynsregistret {
                     columnLookup.add(i, Transaction::setTradingVenue);
                 else if (COLUMN_STATUS[langIndex].equals(headerColumnText))
                     columnLookup.add(i, Transaction::setStatus);
+                else
+                    columnLookup.add(i, null);
             }
 
             return i;
@@ -291,8 +294,12 @@ public class Insynsregistret {
             Transaction transaction = new Transaction();
             int length = Math.min(columns.length, columnLookup.size());
 
-            for (int i = 0; i < length; ++i)
-                columnLookup.get(i).accept(transaction, columns[i]);
+            for (int i = 0; i < length; ++i) {
+                BiConsumer<Transaction, String> consumer = columnLookup.get(i);
+
+                if (consumer != null)
+                    consumer.accept(transaction, columns[i]);
+            }
 
             return transaction;
         }

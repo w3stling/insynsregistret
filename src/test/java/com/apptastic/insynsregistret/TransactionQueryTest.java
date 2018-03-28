@@ -12,9 +12,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -390,6 +388,47 @@ public class TransactionQueryTest {
                 .count();
 
         assertTrue(count > 0);
+    }
+
+    @Test
+    public void splitLineTest() {
+        Insynsregistret ir = new Insynsregistret();
+
+        String[] columns = ir.splitLine("Test1;Test2;Test3;Test4;Test5;", 5);
+        assertEquals(5, columns.length);
+
+        columns = ir.splitLine("Test1;;Test3;Test4;Test5;", 5);
+        assertEquals(5, columns.length);
+
+        columns = ir.splitLine(";;;;;", 5);
+        assertEquals(5, columns.length);
+
+        columns = ir.splitLine("Test1;\"Test2.1;Test2.2;Test2.3\";Test3;Test4;Test5;", 5);
+        assertEquals(5, columns.length);
+
+        columns = ir.splitLine("Test1;\";\";Test3;Test4;Test5;", 5);
+        assertEquals(5, columns.length);
+
+        columns = ir.splitLine("2018-03-16 05:39:06;A City Media AB;549300ZUOH6WG0H70883;Velocita AB;Oskar Lindström;Styrelseledamot/suppleant;Ja;Ja;\"Korrigering av finansiellt instrument till \"\"Aktier\"\" \";;;Avyttring;Aktier;SE0001920760;2018-03-14 00:00:00;30000;Antal;120;SEK;Utanför handelsplats;Aktuell;", 21);
+        assertEquals(21, columns.length);
+
+        columns = ir.splitLine("2018-03-16 05:39:06;\"Korrigering av finansiellt instrument till \"\"Aktier\"\" \";", 2);
+        assertEquals(2, columns.length);
+    }
+
+
+    @Test
+    public void transactionAssignerTest() {
+        String[] headerColumns = new String[] {"Hepp1", "Utgivare", "ISIN"};
+        String[] dataColumns = new String[] {"Test1", "Swedish Match", "SE0000310336"};
+
+        Insynsregistret.TransactionAssigner assigner = new Insynsregistret.TransactionAssigner();
+        assigner.initialize(headerColumns, Language.SWEDISH.getIndex());
+        Transaction transaction = assigner.createTransaction(dataColumns);
+
+        assertNotNull(transaction);
+        assertEquals("Swedish Match", transaction.getIssuer());
+        assertEquals("SE0000310336", transaction.getIsin());
     }
 
 }
