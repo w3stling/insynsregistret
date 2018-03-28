@@ -187,6 +187,6 @@ License
 
 [1]: https://www.fi.se/sv/vara-register/insynsregistret
 [2]: https://www.fi.se
-[3]: https://bintray.com/apptastic/maven-repo/insynsregistret
+[3]: https://bintray.com/apptastic/maven-repo/insynsregistret/_latestVersion
 [4]: https://maven.apache.org
 [5]: https://gradle.org
