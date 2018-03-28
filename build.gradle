@@ -4,6 +4,7 @@ plugins {
     id 'com.jfrog.artifactory' version '4.7.0'
     id 'org.ajoberstar.git-publish' version '0.3.3'
     id 'net.researchgate.release' version '2.6.0'
+    id 'me.champeau.gradle.jmh' version '0.4.5'
 }
 
 apply plugin: 'java'
@@ -11,6 +12,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'jacoco'
 apply plugin: 'distribution'
+apply plugin: 'me.champeau.gradle.jmh'
 
 group 'com.apptastic'
 version "${version}"
@@ -30,6 +32,30 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.15.0'
+}
+
+jmh {
+    include = ['.*InsynsregistretBenchmark*']
+    humanOutputFile = project.file("${project.buildDir}/reports/jmh/human.txt")
+    resultsFile = project.file("${project.buildDir}/reports/jmh/results.csv")
+
+    //benchmarkMode = 'thrpt'//'thrpt' // Benchmark mode. Available modes are: [Throughput/thrpt, AverageTime/avgt, SampleTime/sample, SingleShotTime/ss, All/all]
+    forceGC = true // Should JMH force GC between iterations?
+    //profilers = ['COMP', 'STACK'] //['COMP','GC', 'STACK','CL'] // Use profilers
+    timeUnit = 's' // Output time unit. Available time units are: [m, s, ms, us, ns].
+    verbosity = 'NORMAL' // Verbosity mode. Available modes are: [SILENT, NORMAL, EXTRA]
+
+    timeOnIteration = '5s' // Time to spend at each measurement iteration.
+    batchSize = 1 // Batch size: number of benchmark method calls per operation. (some benchmark modes can ignore this setting)
+    fork = 5 // How many times to forks a single benchmark. Use 0 to disable forking altogether
+    iterations = 1 // Number of measurement iterations to do.
+    threads = 1 // Number of worker threads to run with.
+
+    warmup = '3s' // Time to spend at each warmup iteration.
+    warmupBatchSize = 1 // Warmup batch size: number of benchmark method calls per operation.
+    warmupForks = 1 // How many warmup forks to make for a single benchmark. 0 to disable warmup forks.
+    warmupIterations = 1 // Number of warmup iterations to do.
+    warmupMode = 'INDI' // Warmup mode for warming up selected benchmarks. Warmup modes are: [INDI, BULK, BULK_INDI].
 }
 
 distTar {
