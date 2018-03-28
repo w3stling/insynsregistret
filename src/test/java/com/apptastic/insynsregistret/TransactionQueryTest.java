@@ -414,6 +414,10 @@ public class TransactionQueryTest {
 
         columns = ir.splitLine("2018-03-16 05:39:06;\"Korrigering av finansiellt instrument till \"\"Aktier\"\" \";", 2);
         assertEquals(2, columns.length);
+
+        columns = ir.splitLine("Test1;\"Test2.1;Test2.2;Test2.3\"", 2);
+        assertEquals(2, columns.length);
+
     }
 
 
@@ -423,7 +427,7 @@ public class TransactionQueryTest {
         String[] dataColumns = new String[] {"Test1", "Swedish Match", "SE0000310336"};
 
         Insynsregistret.TransactionAssigner assigner = new Insynsregistret.TransactionAssigner();
-        assigner.initialize(headerColumns, Language.SWEDISH.getIndex());
+        assigner.initialize(headerColumns);
         Transaction transaction = assigner.createTransaction(dataColumns);
 
         assertNotNull(transaction);
