@@ -15,5 +15,5 @@ script:
   - ./gradlew clean build sonarqube -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN
 
 after_success:
-  - ./gradlew gitPublishPush artifactoryPublish bintrayUpload
+  - if [[${TRAVIS_EVENT_TYPE} != "cron"]] ; then ./gradlew gitPublishPush artifactoryPublish bintrayUpload ; fi
 
