@@ -51,6 +51,13 @@ import java.util.zip.GZIPInputStream;
  * All insider trading is reported to FI, which publishes the data on a daily basis to this public database.
  */
 public class Insynsregistret {
+    private boolean processTransactionInParallel;
+
+    public Insynsregistret() {
+        String parallelProperty = System.getProperty("insynsregistret.parallel", "false");
+        processTransactionInParallel = parallelProperty.equalsIgnoreCase("true");
+    }
+
     /**
      * Free text search for issuer names or person discharging managerial responsibilities (PDMR).
      * {@link FreeTextQuery} object is created by {@link FreeTextQueryBuilder} class.
@@ -132,20 +139,24 @@ public class Insynsregistret {
 
 
     Stream<Transaction> parseTransactionResponse(BufferedReader reader) throws IOException {
+        // Read header
         String header = reader.readLine();
 
         if (header == null)
             return Stream.empty();
 
         String[] headerColumns = splitLine(header, 32);
-        TransactionAssigner assigner = new TransactionAssigner();
-        int nofColumns = assigner.initialize(headerColumns);
+        TransactionMapper mapper = new TransactionMapper();
+        int nofColumns = mapper.initialize(headerColumns);
 
         // Read the rest of the lines after the header
-        return reader.lines()
-                .parallel()
-                .map(l -> splitLine(l, nofColumns))
-                .map(assigner::createTransaction)
+        Stream<String> lineStream = reader.lines();
+
+        if (processTransactionInParallel)
+            lineStream = lineStream.parallel();
+
+        return lineStream.map(l -> splitLine(l, nofColumns))
+                .map(mapper::createTransaction)
                 .filter(this::badTransactionFilter);
     }
 
@@ -198,7 +209,7 @@ public class Insynsregistret {
     }
 
 
-    static class TransactionAssigner {
+    static class TransactionMapper {
         private static final String[] COLUMN_PUBLICATION_DATE = {"Publicerings datum", "Publication date"};
         private static final String[] COLUMN_ISSUER = {"Utgivare", "Issuer"};
         private static final String[] COLUMN_LEI_CODE = {"LEI-kod", "LEI-code"};
@@ -220,12 +231,12 @@ public class Insynsregistret {
         private static final String[] COLUMN_CURRENCY = {"Valuta", "Currency"};
         private static final String[] COLUMN_TRADING_VENUE = {"Handelsplats", "Trading venue"};
         private static final String[] COLUMN_STATUS = {"Status", "Status"};
-        private static final HashMap<String, BiConsumer<Transaction, String>> COLUMN_NAME_FIELD_MAPPER;
-        private final ArrayList<BiConsumer<Transaction, String>> columnLookup;
+        private static final HashMap<String, BiConsumer<Transaction, String>> COLUMN_NAME_FIELD_MAPPING;
+        private final ArrayList<BiConsumer<Transaction, String>> columnIndexFieldMapping;
 
 
-        TransactionAssigner() {
-            columnLookup = new ArrayList<>();
+        TransactionMapper() {
+            columnIndexFieldMapping = new ArrayList<>();
         }
 
 
@@ -238,7 +249,7 @@ public class Insynsregistret {
                     break;
 
                 String headerColumnText = header[i].trim();
-                columnLookup.add(i, COLUMN_NAME_FIELD_MAPPER.get(headerColumnText));
+                columnIndexFieldMapping.add(i, COLUMN_NAME_FIELD_MAPPING.get(headerColumnText));
             }
 
             return i;
@@ -247,13 +258,13 @@ public class Insynsregistret {
 
         Transaction createTransaction(String[] columns) {
             Transaction transaction = new Transaction();
-            int length = Math.min(columns.length, columnLookup.size());
+            int length = Math.min(columns.length, columnIndexFieldMapping.size());
 
             for (int i = 0; i < length; ++i) {
-                BiConsumer<Transaction, String> consumer = columnLookup.get(i);
+                BiConsumer<Transaction, String> fieldMapping = columnIndexFieldMapping.get(i);
 
-                if (consumer != null)
-                    consumer.accept(transaction, columns[i]);
+                if (fieldMapping != null)
+                    fieldMapping.accept(transaction, columns[i]);
             }
 
             return transaction;
@@ -289,91 +300,91 @@ public class Insynsregistret {
 
 
         static {
-            COLUMN_NAME_FIELD_MAPPER = new HashMap<>(64);
+            COLUMN_NAME_FIELD_MAPPING = new HashMap<>(64);
 
             // Publication date
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PUBLICATION_DATE[Language.SWEDISH.getIndex()], Transaction::setPublicationDate);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PUBLICATION_DATE[Language.ENGLISH.getIndex()], Transaction::setPublicationDate);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PUBLICATION_DATE[Language.SWEDISH.getIndex()], Transaction::setPublicationDate);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PUBLICATION_DATE[Language.ENGLISH.getIndex()], Transaction::setPublicationDate);
 
             // Issuer
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_ISSUER[Language.SWEDISH.getIndex()], Transaction::setIssuer);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_ISSUER[Language.ENGLISH.getIndex()], Transaction::setIssuer);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_ISSUER[Language.SWEDISH.getIndex()], Transaction::setIssuer);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_ISSUER[Language.ENGLISH.getIndex()], Transaction::setIssuer);
 
             // LEI Code
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_LEI_CODE[Language.SWEDISH.getIndex()], Transaction::setLeiCode);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_LEI_CODE[Language.ENGLISH.getIndex()], Transaction::setLeiCode);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_LEI_CODE[Language.SWEDISH.getIndex()], Transaction::setLeiCode);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_LEI_CODE[Language.ENGLISH.getIndex()], Transaction::setLeiCode);
 
             // Notifier
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_NOTIFIER[Language.SWEDISH.getIndex()], Transaction::setNotifier);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_NOTIFIER[Language.ENGLISH.getIndex()], Transaction::setNotifier);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_NOTIFIER[Language.SWEDISH.getIndex()], Transaction::setNotifier);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_NOTIFIER[Language.ENGLISH.getIndex()], Transaction::setNotifier);
 
             // PDMR
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.SWEDISH.getIndex()], Transaction::setPersonDischargingManagerialResponsibilities);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.ENGLISH.getIndex()], Transaction::setPersonDischargingManagerialResponsibilities);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.SWEDISH.getIndex()], Transaction::setPersonDischargingManagerialResponsibilities);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.ENGLISH.getIndex()], Transaction::setPersonDischargingManagerialResponsibilities);
 
             // Position
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_POSITION[Language.SWEDISH.getIndex()], Transaction::setPosition);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_POSITION[Language.ENGLISH.getIndex()], Transaction::setPosition);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_POSITION[Language.SWEDISH.getIndex()], Transaction::setPosition);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_POSITION[Language.ENGLISH.getIndex()], Transaction::setPosition);
 
             // Is closely associated
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_CLOSELY_ASSOCIATE[Language.SWEDISH.getIndex()], (t, v) -> t.setCloselyAssociated(isTrue(v, Language.SWEDISH.getIndex())) );
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_CLOSELY_ASSOCIATE[Language.ENGLISH.getIndex()], (t, v) -> t.setCloselyAssociated(isTrue(v, Language.ENGLISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_IS_CLOSELY_ASSOCIATE[Language.SWEDISH.getIndex()], (t, v) -> t.setCloselyAssociated(isTrue(v, Language.SWEDISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_IS_CLOSELY_ASSOCIATE[Language.ENGLISH.getIndex()], (t, v) -> t.setCloselyAssociated(isTrue(v, Language.ENGLISH.getIndex())) );
 
             // Is amendment
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_AMENDMENT[Language.SWEDISH.getIndex()], (t, v) -> t.setAmendment(isTrue(v, Language.SWEDISH.getIndex())) );
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_AMENDMENT[Language.ENGLISH.getIndex()], (t, v) -> t.setAmendment(isTrue(v, Language.ENGLISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_IS_AMENDMENT[Language.SWEDISH.getIndex()], (t, v) -> t.setAmendment(isTrue(v, Language.SWEDISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_IS_AMENDMENT[Language.ENGLISH.getIndex()], (t, v) -> t.setAmendment(isTrue(v, Language.ENGLISH.getIndex())) );
 
             // Details of amendment
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_DETAILS_OF_AMENDMENT[Language.SWEDISH.getIndex()], Transaction::setDetailsOfAmendment);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_DETAILS_OF_AMENDMENT[Language.ENGLISH.getIndex()], Transaction::setDetailsOfAmendment);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_DETAILS_OF_AMENDMENT[Language.SWEDISH.getIndex()], Transaction::setDetailsOfAmendment);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_DETAILS_OF_AMENDMENT[Language.ENGLISH.getIndex()], Transaction::setDetailsOfAmendment);
 
             // Is initial notification
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_INITIAL_NOTIFICATION[Language.SWEDISH.getIndex()], (t, v) -> t.setInitialNotification(isTrue(v, Language.SWEDISH.getIndex())) );
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_INITIAL_NOTIFICATION[Language.ENGLISH.getIndex()], (t, v) -> t.setInitialNotification(isTrue(v, Language.ENGLISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_IS_INITIAL_NOTIFICATION[Language.SWEDISH.getIndex()], (t, v) -> t.setInitialNotification(isTrue(v, Language.SWEDISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_IS_INITIAL_NOTIFICATION[Language.ENGLISH.getIndex()], (t, v) -> t.setInitialNotification(isTrue(v, Language.ENGLISH.getIndex())) );
 
             // Is linked to share option programme
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_LINKED_TO_SHARE_OPTION_PROGRAMME[Language.SWEDISH.getIndex()], (t, v) -> t.setLinkedToShareOptionProgramme(isTrue(v, Language.SWEDISH.getIndex())) );
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_IS_LINKED_TO_SHARE_OPTION_PROGRAMME[Language.ENGLISH.getIndex()], (t, v) -> t.setLinkedToShareOptionProgramme(isTrue(v, Language.ENGLISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_IS_LINKED_TO_SHARE_OPTION_PROGRAMME[Language.SWEDISH.getIndex()], (t, v) -> t.setLinkedToShareOptionProgramme(isTrue(v, Language.SWEDISH.getIndex())) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_IS_LINKED_TO_SHARE_OPTION_PROGRAMME[Language.ENGLISH.getIndex()], (t, v) -> t.setLinkedToShareOptionProgramme(isTrue(v, Language.ENGLISH.getIndex())) );
 
             // Nature of transaction
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_NATURE_OF_TRANSACTION[Language.SWEDISH.getIndex()], Transaction::setNatureOfTransaction);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_NATURE_OF_TRANSACTION[Language.ENGLISH.getIndex()], Transaction::setNatureOfTransaction);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_NATURE_OF_TRANSACTION[Language.SWEDISH.getIndex()], Transaction::setNatureOfTransaction);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_NATURE_OF_TRANSACTION[Language.ENGLISH.getIndex()], Transaction::setNatureOfTransaction);
 
             // Nature of transaction
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_INSTRUMENT[Language.SWEDISH.getIndex()], Transaction::setInstrument);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_INSTRUMENT[Language.ENGLISH.getIndex()], Transaction::setInstrument);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_INSTRUMENT[Language.SWEDISH.getIndex()], Transaction::setInstrument);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_INSTRUMENT[Language.ENGLISH.getIndex()], Transaction::setInstrument);
 
             // ISIN
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_ISIN[Language.SWEDISH.getIndex()], Transaction::setIsin);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_ISIN[Language.ENGLISH.getIndex()], Transaction::setIsin);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_ISIN[Language.SWEDISH.getIndex()], Transaction::setIsin);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_ISIN[Language.ENGLISH.getIndex()], Transaction::setIsin);
 
             // Transaction date
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_TRANSACTION_DATE[Language.SWEDISH.getIndex()], Transaction::setTransactionDate);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_TRANSACTION_DATE[Language.ENGLISH.getIndex()], Transaction::setTransactionDate);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_TRANSACTION_DATE[Language.SWEDISH.getIndex()], Transaction::setTransactionDate);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_TRANSACTION_DATE[Language.ENGLISH.getIndex()], Transaction::setTransactionDate);
 
             // Quantity
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_QUANTITY[Language.SWEDISH.getIndex()], (t, v) -> t.setQuantity(parseDouble(v)) );
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_QUANTITY[Language.ENGLISH.getIndex()], (t, v) -> t.setQuantity(parseDouble(v)) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_QUANTITY[Language.SWEDISH.getIndex()], (t, v) -> t.setQuantity(parseDouble(v)) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_QUANTITY[Language.ENGLISH.getIndex()], (t, v) -> t.setQuantity(parseDouble(v)) );
 
             // Transaction date
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_UNIT[Language.SWEDISH.getIndex()], Transaction::setUnit);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_UNIT[Language.ENGLISH.getIndex()], Transaction::setUnit);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_UNIT[Language.SWEDISH.getIndex()], Transaction::setUnit);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_UNIT[Language.ENGLISH.getIndex()], Transaction::setUnit);
 
             // Price
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PRICE[Language.SWEDISH.getIndex()], (t, v) -> t.setPrice(parseDouble(v)) );
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_PRICE[Language.ENGLISH.getIndex()], (t, v) -> t.setPrice(parseDouble(v)) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PRICE[Language.SWEDISH.getIndex()], (t, v) -> t.setPrice(parseDouble(v)) );
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PRICE[Language.ENGLISH.getIndex()], (t, v) -> t.setPrice(parseDouble(v)) );
 
             // Currency
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_CURRENCY[Language.SWEDISH.getIndex()], Transaction::setCurrency);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_CURRENCY[Language.ENGLISH.getIndex()], Transaction::setCurrency);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_CURRENCY[Language.SWEDISH.getIndex()], Transaction::setCurrency);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_CURRENCY[Language.ENGLISH.getIndex()], Transaction::setCurrency);
 
             // Trading venue
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_TRADING_VENUE[Language.SWEDISH.getIndex()], Transaction::setTradingVenue);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_TRADING_VENUE[Language.ENGLISH.getIndex()], Transaction::setTradingVenue);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_TRADING_VENUE[Language.SWEDISH.getIndex()], Transaction::setTradingVenue);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_TRADING_VENUE[Language.ENGLISH.getIndex()], Transaction::setTradingVenue);
 
             // Status
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_STATUS[Language.SWEDISH.getIndex()], Transaction::setStatus);
-            COLUMN_NAME_FIELD_MAPPER.put(COLUMN_STATUS[Language.ENGLISH.getIndex()], Transaction::setStatus);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_STATUS[Language.SWEDISH.getIndex()], Transaction::setStatus);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_STATUS[Language.ENGLISH.getIndex()], Transaction::setStatus);
         }
     }
 
