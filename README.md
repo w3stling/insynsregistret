@@ -111,8 +111,8 @@ Java System Properties
 | Key | Description | Default |
 | :--- | :--- | :--- |
 | insynsregistret.parallel | Process inside trade transaction in parallel. Values **true** or **false**. | false |
-| https.proxyHost | the host name of the proxy server. |   |
-| https.proxyPort | the port number of the proxy server. |   |
+| https.proxyHost | The host name of the proxy server. |   |
+| https.proxyPort | The port number of the proxy server. |   |
 
 Download
 --------
