@@ -17,7 +17,3 @@ script:
 after_success:
   - ./gradlew gitPublishPush artifactoryPublish bintrayUpload
     if: type != cron
-
-notifications:
-  email:
-    on_failure: always
