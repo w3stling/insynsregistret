@@ -220,6 +220,7 @@ public class TransactionQueryTest {
         assertEquals(1, transactionCount);
     }
 
+
     @Test
     public void badPriceNoLogging() throws IOException {
         Level defaultLevel = Logger.getLogger("com.apptastic.insynsregistret").getLevel();
@@ -359,6 +360,20 @@ public class TransactionQueryTest {
     }
 
 
+    @Test
+    public void bigSampleTransaction() throws IOException {
+        System.setProperty("insynsregistret.parallel", "true");
+        Insynsregistret ir = new Insynsregistret();
+        System.setProperty("insynsregistret.parallel", "false");
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        BufferedReader reader = TestUtil.getExportedTransactionFile(classLoader, "insynBigSample.csv");
+        long transactionCount = ir.parseTransactionResponse(reader).count();
+
+        assertEquals(20436, transactionCount);
+    }
+
+
     @Test(expected = IllegalArgumentException.class)
     public void publicationsFromAfterToDate() {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,2).getTime();
@@ -389,6 +404,7 @@ public class TransactionQueryTest {
 
         assertTrue(count > 0);
     }
+
 
     @Test
     public void splitLineTest() {
@@ -426,7 +442,7 @@ public class TransactionQueryTest {
         String[] headerColumns = new String[] {"Hepp1", "Utgivare", "ISIN"};
         String[] dataColumns = new String[] {"Test1", "Swedish Match", "SE0000310336"};
 
-        Insynsregistret.TransactionAssigner assigner = new Insynsregistret.TransactionAssigner();
+        Insynsregistret.TransactionMapper assigner = new Insynsregistret.TransactionMapper();
         assigner.initialize(headerColumns);
         Transaction transaction = assigner.createTransaction(dataColumns);
 
