@@ -71,8 +71,8 @@ Insynsregistret registry = new Insynsregistret();
 TransactionQuery query = TransactionQueryBuilder.publicationsLastDays(30).build();
 
 List<Transaction> transactions = registry.search(query)
-        .filter(t -> t.getIsin().equals("SE0000310336"))
         .filter(Transaction::isLinkedToShareOptionProgramme)
+        .filter(t -> t.getIsin().equals("SE0000310336"))
         .collect(Collectors.toList());
 ```
 
@@ -105,6 +105,15 @@ double total = registry.search(query)
         .mapToDouble(t -> t.getQuantity() * t.getPrice())
         .sum();
 ```
+
+Java System Properties
+----------------------
+| Key | Description | Default |
+| :--- | :--- | :--- |
+| insynsregistret.parallel | Process inside trade transaction in parallel. Values **true** or **false**. | false |
+| https.proxyHost | the host name of the proxy server. |   |
+| https.proxyPort | the port number of the proxy server. |   |
+
 Download
 --------
 
