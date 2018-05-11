@@ -6,7 +6,6 @@ Insynsregistret
 [![Javadoc](https://img.shields.io/badge/javadoc-1.0.1-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/1.0.1)
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)   
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.apptastic%3Ainsynsregistret)
-[![Test](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=test_success_density)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=tests)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=coverage)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=Coverage)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=bugs)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=bugs)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=vulnerabilities)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=vulnerabilities)
