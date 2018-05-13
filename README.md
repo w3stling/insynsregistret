@@ -43,7 +43,7 @@ PDMR can be used to refine the transaction search.
 ```java
 Insynsregistret registry = new Insynsregistret();
 
-FreeTextQuery query = FreeTextQueryBuilder.personDischargingManagerialResponsibilities("Carl").build();
+FreeTextQuery query = FreeTextQueryBuilder.pdmr("Carl").build();
 Optional<String> pdmr = registry.search(query).findFirst();
 ```
 
