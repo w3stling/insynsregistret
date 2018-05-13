@@ -24,15 +24,17 @@
 package com.apptastic.insynsregistret;
 
 
+import java.util.Objects;
+
 /**
  * Represents a inside trade transaction.
  */
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
     private String publicationDate;
     private String issuer;
     private String leiCode;
     private String notifier;
-    private String personDischargingManagerialResponsibilities;
+    private String pdmr;
     private String position;
     private boolean isCloselyAssociated;
     private boolean isAmendment;
@@ -117,18 +119,38 @@ public class Transaction {
 
     /**
      * Get the person discharging managerial responsibilities (PDMR) name for the transaction.
+     * @deprecated As of Insynsregistret 1.0.2, use {@link #getPdmr()} instead.
      * @return PDMR name
      */
+    @Deprecated
     public String getPersonDischargingManagerialResponsibilities() {
-        return personDischargingManagerialResponsibilities;
+        return pdmr;
+    }
+
+    /**
+     * Get the person discharging managerial responsibilities (PDMR) name for the transaction.
+     * @return PDMR name
+     */
+    public String getPdmr() {
+        return pdmr;
     }
 
     /**
      * Set the person discharging managerial responsibilities (PDMR) name for the transaction.
+     * @deprecated As of Insynsregistret 1.0.2, use {@link #setPdmr} instead.
      * @param personDischargingManagerialResponsibilities PDMR name
      */
+    @Deprecated
     public void setPersonDischargingManagerialResponsibilities(String personDischargingManagerialResponsibilities) {
-        this.personDischargingManagerialResponsibilities = personDischargingManagerialResponsibilities;
+        this.pdmr = personDischargingManagerialResponsibilities;
+    }
+
+    /**
+     * Set the person discharging managerial responsibilities (PDMR) name for the transaction.
+     * @param pdmr PDMR name
+     */
+    public void setPdmr(String pdmr) {
+        this.pdmr = pdmr;
     }
 
     /**
@@ -385,5 +407,49 @@ public class Transaction {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Transaction)) return false;
+
+        Transaction that = (Transaction) o;
+        return isCloselyAssociated() == that.isCloselyAssociated() &&
+                isAmendment() == that.isAmendment() &&
+                isInitialNotification() == that.isInitialNotification() &&
+                isLinkedToShareOptionProgramme() == that.isLinkedToShareOptionProgramme() &&
+                Double.compare(that.getQuantity(), getQuantity()) == 0 &&
+                Double.compare(that.getPrice(), getPrice()) == 0 &&
+                Objects.equals(getPublicationDate(), that.getPublicationDate()) &&
+                Objects.equals(getIssuer(), that.getIssuer()) &&
+                Objects.equals(getLeiCode(), that.getLeiCode()) &&
+                Objects.equals(getNotifier(), that.getNotifier()) &&
+                Objects.equals(getPdmr(), that.getPdmr()) &&
+                Objects.equals(getPosition(), that.getPosition()) &&
+                Objects.equals(getDetailsOfAmendment(), that.getDetailsOfAmendment()) &&
+                Objects.equals(getNatureOfTransaction(), that.getNatureOfTransaction()) &&
+                Objects.equals(getInstrument(), that.getInstrument()) &&
+                Objects.equals(getIsin(), that.getIsin()) &&
+                Objects.equals(getTransactionDate(), that.getTransactionDate()) &&
+                Objects.equals(getUnit(), that.getUnit()) &&
+                Objects.equals(getCurrency(), that.getCurrency()) &&
+                Objects.equals(getTradingVenue(), that.getTradingVenue()) &&
+                Objects.equals(getStatus(), that.getStatus());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPublicationDate(), getIssuer(), getLeiCode(), getNotifier(), getPdmr(), getPosition(),
+                isCloselyAssociated(), isAmendment(), getDetailsOfAmendment(), isInitialNotification(),
+                isLinkedToShareOptionProgramme(), getNatureOfTransaction(), getInstrument(), getIsin(),
+                getTransactionDate(), getQuantity(), getUnit(), getPrice(), getCurrency(), getTradingVenue(),
+                getStatus());
+    }
+
+    @Override
+    public int compareTo(Transaction o) {
+        return transactionDate.compareTo(o.transactionDate);
     }
 }
