@@ -194,7 +194,7 @@ License
 
 
 [1]: https://www.fi.se/en/our-registers/pdmr-transactions
-[2]: https://www.fi.se
+[2]: https://www.fi.se/en
 [3]: https://bintray.com/apptastic/maven-repo/insynsregistret/_latestVersion
 [4]: https://maven.apache.org
 [5]: https://gradle.org
