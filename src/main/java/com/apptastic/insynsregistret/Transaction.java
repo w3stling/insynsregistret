@@ -54,6 +54,42 @@ public class Transaction implements Comparable<Transaction> {
 
 
     /**
+     * Default constructor.
+     */
+    public Transaction() {
+
+    }
+
+    /**
+     * Copy constructor.
+     * @param o - copy
+     */
+    public Transaction(Transaction o) {
+        publicationDate = o.publicationDate;
+        issuer = o.issuer;
+        leiCode = o.leiCode;
+        notifier = o.notifier;
+        pdmr = o.pdmr;
+        position = o.position;
+        isCloselyAssociated = o.isCloselyAssociated;
+        isAmendment = o.isAmendment;
+        detailsOfAmendment = o.detailsOfAmendment;
+        isInitialNotification = o.isInitialNotification;
+        isLinkedToShareOptionProgramme = o.isLinkedToShareOptionProgramme;
+        natureOfTransaction = o.natureOfTransaction;
+        instrument = o.instrument;
+        isin = o.isin;
+        transactionDate = o.transactionDate;
+        quantity = o.quantity;
+        unit = o.unit;
+        price = o.price;
+        currency = o.currency;
+        tradingVenue = o.tradingVenue;
+        status = o.status;
+    }
+
+
+    /**
      * Get the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).
      * @return publication date
      */
