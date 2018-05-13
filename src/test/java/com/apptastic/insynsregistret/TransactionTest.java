@@ -44,6 +44,7 @@ public class TransactionTest {
         assertTrue(transaction1.equals(transaction1));
         assertFalse(transaction1.equals("Transaction"));
         assertEquals(transaction1, getDefaultTransaction());
+        assertEquals(transaction1, new Transaction(transaction1));
 
         {
             Transaction transaction2 = getDefaultTransaction();
@@ -159,21 +160,17 @@ public class TransactionTest {
 
 
     @Test
-    public void sortTest() {
-        List<Transaction> transactions = new ArrayList<>();
-
+    public void testSort() {
         Transaction transaction1 = getDefaultTransaction();
         transaction1.setTransactionDate("2018-05-02");
-        transactions.add(transaction1);
 
         Transaction transaction2 = getDefaultTransaction();
         transaction2.setTransactionDate("2018-05-04");
-        transactions.add(transaction2);
 
         Transaction transaction3 = getDefaultTransaction();
         transaction3.setTransactionDate("2018-05-03");
-        transactions.add(transaction3);
 
+        List<Transaction> transactions = Arrays.asList(transaction1, transaction2, transaction3);
         Collections.sort(transactions);
 
         assertEquals("2018-05-02", transactions.get(0).getTransactionDate());
@@ -182,7 +179,7 @@ public class TransactionTest {
     }
 
     @Test
-    public void hashMapTest() {
+    public void testHashMap() {
         Map<Transaction, String> transactions = new HashMap<>();
 
         Transaction transaction1 = getDefaultTransaction();
@@ -203,7 +200,7 @@ public class TransactionTest {
     }
 
     @Test
-    public void treeMapTest() {
+    public void testTreeMap() {
         Map<Transaction, String> transactions = new TreeMap<>();
 
         Transaction transaction1 = getDefaultTransaction();
