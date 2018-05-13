@@ -319,8 +319,8 @@ public class Insynsregistret {
             COLUMN_NAME_FIELD_MAPPING.put(COLUMN_NOTIFIER[Language.ENGLISH.getIndex()], Transaction::setNotifier);
 
             // PDMR
-            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.SWEDISH.getIndex()], Transaction::setPersonDischargingManagerialResponsibilities);
-            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.ENGLISH.getIndex()], Transaction::setPersonDischargingManagerialResponsibilities);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.SWEDISH.getIndex()], Transaction::setPdmr);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES[Language.ENGLISH.getIndex()], Transaction::setPdmr);
 
             // Position
             COLUMN_NAME_FIELD_MAPPING.put(COLUMN_POSITION[Language.SWEDISH.getIndex()], Transaction::setPosition);

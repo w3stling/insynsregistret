@@ -31,7 +31,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class FreeTextQueryBuilder {
     private String issuer;
-    private String personDischargingManagerialResponsibilities;
+    private String pdmr;
 
     private FreeTextQueryBuilder() {
 
@@ -53,15 +53,26 @@ public class FreeTextQueryBuilder {
 
     /**
      * Creates an instance of {@link FreeTextQueryBuilder} that is used for building a query for person discharging managerial responsibilities (PDMR) names.
+     * @deprecated As of Insynsregistret 1.0.2, use {@link #pdmr} instead.
      * @param freeText text to search for that is part of the PDMR name
      * @return Builder object
      */
+    @Deprecated
     public static FreeTextQueryBuilder personDischargingManagerialResponsibilities(String freeText) {
+        return pdmr(freeText);
+    }
+
+    /**
+     * Creates an instance of {@link FreeTextQueryBuilder} that is used for building a query for person discharging managerial responsibilities (PDMR) names.
+     * @param freeText text to search for that is part of the PDMR name
+     * @return Builder object
+     */
+    public static FreeTextQueryBuilder pdmr(String freeText) {
         if (freeText == null)
             throw new IllegalArgumentException("Issuer free text is null");
 
         FreeTextQueryBuilder builder = new FreeTextQueryBuilder();
-        builder.personDischargingManagerialResponsibilities = freeText;
+        builder.pdmr = freeText;
         return builder;
     }
 
@@ -71,6 +82,6 @@ public class FreeTextQueryBuilder {
      * @throws UnsupportedEncodingException exception
      */
     public FreeTextQuery build() throws UnsupportedEncodingException {
-        return new FreeTextQuery(issuer, personDischargingManagerialResponsibilities);
+        return new FreeTextQuery(issuer, pdmr);
     }
 }

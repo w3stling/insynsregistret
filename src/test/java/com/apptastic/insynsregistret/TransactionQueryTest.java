@@ -139,6 +139,7 @@ public class TransactionQueryTest {
         assertEquals("Empir Group AB", transaction.getIssuer());
         assertEquals("", transaction.getLeiCode());
         assertEquals("Alfanode AB", transaction.getNotifier());
+        assertEquals("Alfanode AB", transaction.getPdmr());
         assertEquals("Alfanode AB", transaction.getPersonDischargingManagerialResponsibilities());
         assertEquals("VD", transaction.getPosition());
         assertEquals(false, transaction.isCloselyAssociated());
@@ -182,7 +183,7 @@ public class TransactionQueryTest {
         assertEquals("Empir Group AB", transaction.getIssuer());
         assertEquals("", transaction.getLeiCode());
         assertEquals("Alfanode AB", transaction.getNotifier());
-        assertEquals("Alfanode AB", transaction.getPersonDischargingManagerialResponsibilities());
+        assertEquals("Alfanode AB", transaction.getPdmr());
         assertEquals("VD", transaction.getPosition());
         assertEquals(false, transaction.isCloselyAssociated());
         assertEquals(false, transaction.isAmendment());
@@ -302,11 +303,26 @@ public class TransactionQueryTest {
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
         TransactionQuery query = TransactionQueryBuilder.publications(from, to)
-                .personDischargingManagerialResponsibilities("dummy")
+                .pdmr("dummy")
                 .build();
 
         Optional<Transaction> firstTransaction = irMock.search(query).findFirst();
         assertFalse(firstTransaction.isPresent());
+    }
+
+    @Test
+    public void transactionQueryBuilder() throws IOException {
+        TransactionQuery query1 = TransactionQueryBuilder.publicationsLastDays(30)
+                .pdmr("test1")
+                .build();
+
+        assertTrue(query1.getUrl().contains("test1"));
+
+        TransactionQuery query2 = TransactionQueryBuilder.publicationsLastDays(30)
+                .personDischargingManagerialResponsibilities("test2")
+                .build();
+
+        assertTrue(query2.getUrl().contains("test2"));
     }
 
 

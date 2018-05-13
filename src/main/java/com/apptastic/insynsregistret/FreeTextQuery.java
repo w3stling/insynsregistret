@@ -41,16 +41,16 @@ public class FreeTextQuery {
      * Constructor for free text query.
      * Query either issuer names or PDMR names.
      * @param issuer issuer name
-     * @param personDischargingManagerialResponsibilities PDMR name
+     * @param pdmr person discharging managerial responsibilities (PDMR) name
      * @throws UnsupportedEncodingException exception
      */
-    FreeTextQuery(String issuer, String personDischargingManagerialResponsibilities) throws UnsupportedEncodingException {
+    FreeTextQuery(String issuer, String pdmr) throws UnsupportedEncodingException {
         url = "";
 
         if (issuer != null)
             url = ISSUER_URL + URLEncoder.encode(issuer, URL_ENCODING);
-        else if (personDischargingManagerialResponsibilities != null)
-            url = PDMR_URL + URLEncoder.encode(personDischargingManagerialResponsibilities, URL_ENCODING);
+        else if (pdmr != null)
+            url = PDMR_URL + URLEncoder.encode(pdmr, URL_ENCODING);
     }
 
     /**

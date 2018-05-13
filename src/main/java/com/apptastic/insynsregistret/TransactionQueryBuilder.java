@@ -38,7 +38,7 @@ public class TransactionQueryBuilder {
     private Date fromPublicationDate;
     private Date toPublicationDate;
     private String issuer;
-    private String personDischargingManagerialResponsibilities;
+    private String pdmr;
     private Language language;
 
 
@@ -146,11 +146,23 @@ public class TransactionQueryBuilder {
 
     /**
      * Limit the transaction to the this person discharging managerial responsibilities (PDMR).
+     * @deprecated As of Insynsregistret 1.0.2, use {@link #pdmr} instead.
      * @param pdmr name of the PDMR
      * @return builder object
      */
+    @Deprecated
     public TransactionQueryBuilder personDischargingManagerialResponsibilities(String pdmr) {
-        personDischargingManagerialResponsibilities = pdmr;
+        pdmr(pdmr);
+        return this;
+    }
+
+    /**
+     * Limit the transaction to the this person discharging managerial responsibilities (PDMR).
+     * @param pdmr name of the PDMR
+     * @return builder object
+     */
+    public TransactionQueryBuilder pdmr(String pdmr) {
+        this.pdmr = pdmr;
         return this;
     }
 
@@ -172,7 +184,7 @@ public class TransactionQueryBuilder {
     public TransactionQuery build() throws UnsupportedEncodingException {
         return new TransactionQuery(fromTransactionDate, toTransactionDate,
                          fromPublicationDate, toPublicationDate,
-                         issuer, personDischargingManagerialResponsibilities,
+                         issuer, pdmr,
                          language);
     }
 }

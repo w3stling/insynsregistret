@@ -124,7 +124,7 @@ public class Transaction implements Comparable<Transaction> {
      */
     @Deprecated
     public String getPersonDischargingManagerialResponsibilities() {
-        return pdmr;
+        return getPdmr();
     }
 
     /**
@@ -142,7 +142,7 @@ public class Transaction implements Comparable<Transaction> {
      */
     @Deprecated
     public void setPersonDischargingManagerialResponsibilities(String personDischargingManagerialResponsibilities) {
-        this.pdmr = personDischargingManagerialResponsibilities;
+        setPdmr(personDischargingManagerialResponsibilities);
     }
 
     /**
