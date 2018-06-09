@@ -23,7 +23,7 @@ public class FreeTextQueryTest {
         Optional<String> issuer = ir.search(query).findFirst();
 
         assertTrue(issuer.isPresent());
-        assertEquals("LeoVegas", issuer.get());
+        assertTrue(issuer.get().toLowerCase().contains("leovegas"));
     }
 
 
