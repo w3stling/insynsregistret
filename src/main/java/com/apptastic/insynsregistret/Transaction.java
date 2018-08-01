@@ -91,6 +91,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).
+     * Date string format: yyyy-MM-dd HH:mm:ss
      * @return publication date
      */
     public String getPublicationDate() {
@@ -99,6 +100,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).
+     * Date string format: yyyy-MM-dd HH:mm:ss
      * @param publicationDate publication
      */
     public void setPublicationDate(String publicationDate) {
@@ -106,7 +108,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Get the issuer name for the transaction.
+     * Get the issuer name for the transaction, for example Kinnevik AB.
      * @return issuer name
      */
     public String getIssuer() {
@@ -114,7 +116,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Set the issuer name for the transaction.
+     * Set the issuer name for the transaction, for example Kinnevik AB.
      * @param issuer issuer name
      */
     public void setIssuer(String issuer) {
@@ -122,7 +124,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Get the Legal Entity Identifier (LEI) code for the transaction.
+     * Get the Legal Entity Identifier (LEI) code for the transaction, for example 2138006PZH76JOS6MN27.
      * @return LEI-code
      */
     public String getLeiCode() {
@@ -130,7 +132,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Set the Legal Entity Identifier (LEI) code for the transaction.
+     * Set the Legal Entity Identifier (LEI) code for the transaction, for example 2138006PZH76JOS6MN27.
      * @param leiCode LEI-code
      */
     public void setLeiCode(String leiCode) {
@@ -164,7 +166,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Get the person discharging managerial responsibilities (PDMR) name for the transaction.
+     * Get the person discharging managerial responsibilities (PDMR) name for the transaction, for example Stefan Persson.
      * @return PDMR name
      */
     public String getPdmr() {
@@ -182,7 +184,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Set the person discharging managerial responsibilities (PDMR) name for the transaction.
+     * Set the person discharging managerial responsibilities (PDMR) name for the transaction, for example Stefan Persson.
      * @param pdmr PDMR name
      */
     public void setPdmr(String pdmr) {
@@ -190,7 +192,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Get the position.
+     * Get the position, for example CFO or VD.
      * @return position
      */
     public String getPosition() {
@@ -198,7 +200,7 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Set the position.
+     * Set the position, for example CFO or VD.
      * @param position position
      */
     public void setPosition(String position) {
@@ -239,6 +241,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get details of amendment for the transaction.
+     * Example value: "Uppgift om person i ledande ställning"
      * @return details of amendment
      */
     public String getDetailsOfAmendment() {
@@ -247,6 +250,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set details of amendment for the transaction.
+     * Example value: "Uppgift om person i ledande ställning"
      * @param detailsOfAmendment details of amendment
      */
     public void setDetailsOfAmendment(String detailsOfAmendment) {
@@ -287,6 +291,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the nature of the transaction.
+     * Example value: Förvärv, Avyttring, Teckning eller Tilldelning.
      * @return nature of transaction
      */
     public String getNatureOfTransaction() {
@@ -295,6 +300,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set the nature of the transaction.
+     * Example value: Förvärv, Avyttring, Teckning eller Tilldelning.
      * @param natureOfTransaction nature of transaction
      */
     public void setNatureOfTransaction(String natureOfTransaction) {
@@ -303,6 +309,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get instrument long name.
+     * Exmaple value: Kinnevik AB ser. A
      * @return instrument name
      */
     public String getInstrument() {
@@ -311,6 +318,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set instrument long name.
+     * Example value: Kinnevik AB ser. A
      * @param instrument instrument name
      */
     public void setInstrument(String instrument) {
@@ -319,6 +327,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get International Securities Identification Number (ISIN) code.
+     * Example value: SE0008373898
      * @return ISIN-code
      */
     public String getIsin() {
@@ -327,6 +336,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set International Securities Identification Number (ISIN) code.
+     * Example value: SE0008373898
      * @param isin ISIN-code
      */
     public void setIsin(String isin) {
@@ -335,6 +345,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the date when the transaction was made.
+     * Date string format: yyyy-MM-dd HH:mm:ss
      * @return transaction date
      */
     public String getTransactionDate() {
@@ -343,6 +354,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set the date when the transaction was made.
+     * Date string format: yyyy-MM-dd HH:mm:ss
      * @param transactionDate transaction date
      */
     public void setTransactionDate(String transactionDate) {
@@ -367,6 +379,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the quantity unit.
+     * Example value: Antal
      * @return unit
      */
     public String getUnit() {
@@ -375,6 +388,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set the quantity unit.
+     * Example value: Antal
      * @param unit unit
      */
     public void setUnit(String unit) {
@@ -399,6 +413,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the currency.
+     * Example value: SEK
      * @return currency
      */
     public String getCurrency() {
@@ -407,6 +422,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set the currency
+     * Example value: SEK
      * @param currency currency.
      */
     public void setCurrency(String currency) {
@@ -415,6 +431,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the trading venue, (e.g., Nordic Growth Market (NGM) or Nasdaq Stockholm) from where the transaction was made.
+     * Example value: NASDAQ STOCKHOLM AB or Utanför handelsplats
      * @return trading venue
      */
     public String getTradingVenue() {
@@ -423,6 +440,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the trading venue, (e.g., Nordic Growth Market (NGM) or Nasdaq Stockholm) from where the transaction was made.
+     * Example value: NASDAQ STOCKHOLM AB or Utanför handelsplats
      * @param tradingVenue trading venue
      */
     public void setTradingVenue(String tradingVenue) {
@@ -431,6 +449,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get status for the transaction.
+     * Example values: Aktuell, Reviderad, Makulerad
      * @return status
      */
     public String getStatus() {
@@ -439,6 +458,7 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Set status for the transaction.
+     * Example values: Aktuell, Reviderad, Makulerad
      * @param status status
      */
     public void setStatus(String status) {
