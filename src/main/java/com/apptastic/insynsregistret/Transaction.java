@@ -23,7 +23,6 @@
  */
 package com.apptastic.insynsregistret;
 
-
 import java.util.Objects;
 
 /**
@@ -42,7 +41,8 @@ public class Transaction implements Comparable<Transaction> {
     private boolean isInitialNotification;
     private boolean isLinkedToShareOptionProgramme;
     private String natureOfTransaction;
-    private String instrument;
+    private String instrumentType;
+    private String instrumentName;
     private String isin;
     private String transactionDate;
     private double quantity;
@@ -77,7 +77,8 @@ public class Transaction implements Comparable<Transaction> {
         isInitialNotification = o.isInitialNotification;
         isLinkedToShareOptionProgramme = o.isLinkedToShareOptionProgramme;
         natureOfTransaction = o.natureOfTransaction;
-        instrument = o.instrument;
+        instrumentType = o.instrumentType;
+        instrumentName = o.instrumentName;
         isin = o.isin;
         transactionDate = o.transactionDate;
         quantity = o.quantity;
@@ -308,21 +309,59 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
+     * Get instrument type.
+     * @return instrument type
+     */
+    public String getInstrumentType() {
+        return instrumentType;
+    }
+
+    /**
+     * Set instrument type.
+     * @param instrumentType instrument type
+     */
+    public void setInstrumentType(String instrumentType) {
+        this.instrumentType = instrumentType;
+    }
+
+    /**
      * Get instrument long name.
      * Exmaple value: Kinnevik AB ser. A
      * @return instrument name
      */
-    public String getInstrument() {
-        return instrument;
+    public String getInstrumentName() {
+        return instrumentName;
     }
 
     /**
      * Set instrument long name.
      * Example value: Kinnevik AB ser. A
+     * @param instrumentName instrument name
+     */
+    public void setInstrumentName(String instrumentName) {
+        this.instrumentName = instrumentName;
+    }
+
+    /**
+     * Get instrument long name.
+     * Exmaple value: Kinnevik AB ser. A
+     * @deprecated As of Insynsregistret 1.0.5, use {@link #getInstrumentName()} instead.
+     * @return instrument name
+     */
+    @Deprecated
+    public String getInstrument() {
+        return instrumentName;
+    }
+
+    /**
+     * Set instrument long name.
+     * Example value: Kinnevik AB ser. A
+     * @deprecated As of Insynsregistret 1.0.5, use {@link #setInstrumentName(String)} instead.
      * @param instrument instrument name
      */
+    @Deprecated
     public void setInstrument(String instrument) {
-        this.instrument = instrument;
+        this.instrumentName = instrument;
     }
 
     /**
@@ -486,7 +525,8 @@ public class Transaction implements Comparable<Transaction> {
                 Objects.equals(getPosition(), that.getPosition()) &&
                 Objects.equals(getDetailsOfAmendment(), that.getDetailsOfAmendment()) &&
                 Objects.equals(getNatureOfTransaction(), that.getNatureOfTransaction()) &&
-                Objects.equals(getInstrument(), that.getInstrument()) &&
+                Objects.equals(getInstrumentType(), that.getInstrumentType()) &&
+                Objects.equals(getInstrumentName(), that.getInstrumentName()) &&
                 Objects.equals(getIsin(), that.getIsin()) &&
                 Objects.equals(getTransactionDate(), that.getTransactionDate()) &&
                 Objects.equals(getUnit(), that.getUnit()) &&
@@ -499,8 +539,8 @@ public class Transaction implements Comparable<Transaction> {
     public int hashCode() {
         return Objects.hash(getPublicationDate(), getIssuer(), getLeiCode(), getNotifier(), getPdmr(), getPosition(),
                 isCloselyAssociated(), isAmendment(), getDetailsOfAmendment(), isInitialNotification(),
-                isLinkedToShareOptionProgramme(), getNatureOfTransaction(), getInstrument(), getIsin(),
-                getTransactionDate(), getQuantity(), getUnit(), getPrice(), getCurrency(), getTradingVenue(),
+                isLinkedToShareOptionProgramme(), getNatureOfTransaction(), getInstrumentType(), getInstrumentName(),
+                getIsin(), getTransactionDate(), getQuantity(), getUnit(), getPrice(), getCurrency(), getTradingVenue(),
                 getStatus());
     }
 

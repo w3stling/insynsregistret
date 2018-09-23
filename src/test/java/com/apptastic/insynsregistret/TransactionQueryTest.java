@@ -140,7 +140,6 @@ public class TransactionQueryTest {
         assertEquals("", transaction.getLeiCode());
         assertEquals("Alfanode AB", transaction.getNotifier());
         assertEquals("Alfanode AB", transaction.getPdmr());
-        assertEquals("Alfanode AB", transaction.getPersonDischargingManagerialResponsibilities());
         assertEquals("VD", transaction.getPosition());
         assertEquals(false, transaction.isCloselyAssociated());
         assertEquals(false, transaction.isAmendment());
@@ -148,7 +147,7 @@ public class TransactionQueryTest {
         assertEquals(true, transaction.isInitialNotification());
         assertEquals(false, transaction.isLinkedToShareOptionProgramme());
         assertEquals("Förvärv", transaction.getNatureOfTransaction());
-        assertEquals("Empir Group AB", transaction.getInstrument());
+        //assertEquals("Empir Group AB", transaction.getInstrumentName());
         assertEquals("SE0010769182", transaction.getIsin());
         assertEquals("2018-03-11 00:00:00", transaction.getTransactionDate());
         assertEquals(28227, transaction.getQuantity(), 0.0);
@@ -191,7 +190,7 @@ public class TransactionQueryTest {
         assertEquals(true, transaction.isInitialNotification());
         assertEquals(false, transaction.isLinkedToShareOptionProgramme());
         assertEquals("Förvärv", transaction.getNatureOfTransaction());
-        assertEquals("Empir Group AB", transaction.getInstrument());
+        //assertEquals("Empir Group AB", transaction.getInstrumentName());
         assertEquals("SE0010769182", transaction.getIsin());
         assertEquals("2018-03-11 00:00:00", transaction.getTransactionDate());
         assertEquals(28227, transaction.getQuantity(), 0.0);
@@ -319,7 +318,7 @@ public class TransactionQueryTest {
         assertTrue(query1.getUrl().contains("test1"));
 
         TransactionQuery query2 = TransactionQueryBuilder.publicationsLastDays(30)
-                .personDischargingManagerialResponsibilities("test2")
+                .pdmr("test2")
                 .build();
 
         assertTrue(query2.getUrl().contains("test2"));
@@ -466,5 +465,7 @@ public class TransactionQueryTest {
         assertEquals("Swedish Match", transaction.getIssuer());
         assertEquals("SE0000310336", transaction.getIsin());
     }
+
+
 
 }

@@ -225,7 +225,8 @@ public class Insynsregistret {
         private static final String[] COLUMN_IS_INITIAL_NOTIFICATION = {"Är förstagångsrapportering", "Initial notification"};
         private static final String[] COLUMN_IS_LINKED_TO_SHARE_OPTION_PROGRAMME = {"Är kopplad till aktieprogram", "Linked to share option programme"};
         private static final String[] COLUMN_NATURE_OF_TRANSACTION = {"Karaktär", "Nature of transaction"};
-        private static final String[] COLUMN_INSTRUMENT = {"Instrument", "Instrument"};
+        private static final String[] COLUMN_INSTRUMENT_TYPE = {"Instrumenttyp", "Intrument type"};
+        private static final String[] COLUMN_INSTRUMENT_NAME = {"Instrumentnamn", "Instrument name"};
         private static final String[] COLUMN_ISIN = {"ISIN", "ISIN"};
         private static final String[] COLUMN_TRANSACTION_DATE = {"Transaktions datum", "Transaction date"};
         private static final String[] COLUMN_QUANTITY = {"Volym", "Volume"};
@@ -235,7 +236,7 @@ public class Insynsregistret {
         private static final String[] COLUMN_TRADING_VENUE = {"Handelsplats", "Trading venue"};
         private static final String[] COLUMN_STATUS = {"Status", "Status"};
         private static final HashMap<String, BiConsumer<Transaction, String>> COLUMN_NAME_FIELD_MAPPING;
-        private final ArrayList<BiConsumer<Transaction, String>> columnIndexFieldMapping;
+        final ArrayList<BiConsumer<Transaction, String>> columnIndexFieldMapping;
 
 
         TransactionMapper() {
@@ -353,9 +354,13 @@ public class Insynsregistret {
             COLUMN_NAME_FIELD_MAPPING.put(COLUMN_NATURE_OF_TRANSACTION[Language.SWEDISH.getIndex()], Transaction::setNatureOfTransaction);
             COLUMN_NAME_FIELD_MAPPING.put(COLUMN_NATURE_OF_TRANSACTION[Language.ENGLISH.getIndex()], Transaction::setNatureOfTransaction);
 
-            // Nature of transaction
-            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_INSTRUMENT[Language.SWEDISH.getIndex()], Transaction::setInstrument);
-            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_INSTRUMENT[Language.ENGLISH.getIndex()], Transaction::setInstrument);
+            // Instrument type
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_INSTRUMENT_TYPE[Language.SWEDISH.getIndex()], Transaction::setInstrumentType);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_INSTRUMENT_TYPE[Language.ENGLISH.getIndex()], Transaction::setInstrumentType);
+
+            // Instrument name
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_INSTRUMENT_NAME[Language.SWEDISH.getIndex()], Transaction::setInstrumentName);
+            COLUMN_NAME_FIELD_MAPPING.put(COLUMN_INSTRUMENT_NAME[Language.ENGLISH.getIndex()], Transaction::setInstrumentName);
 
             // ISIN
             COLUMN_NAME_FIELD_MAPPING.put(COLUMN_ISIN[Language.SWEDISH.getIndex()], Transaction::setIsin);
