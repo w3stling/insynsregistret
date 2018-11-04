@@ -123,22 +123,6 @@ public class Insynsregistret {
             Thread.currentThread().interrupt();
             throw new IOException(e);
         }
-
-        /*
-        URLConnection connection = new URL(url).openConnection();
-
-        connection.setConnectTimeout(15 * 1000);
-        connection.setReadTimeout(15 * 1000);
-        connection.setRequestProperty("Accept-Encoding", "gzip");
-        InputStream inputStream = connection.getInputStream();
-
-        if ("gzip".equals(connection.getContentEncoding()))
-            inputStream = new GZIPInputStream(inputStream);
-
-        Reader reader = new InputStreamReader(inputStream, encoding);
-
-        return new BufferedReader(reader);
-        */
     }
 
 
