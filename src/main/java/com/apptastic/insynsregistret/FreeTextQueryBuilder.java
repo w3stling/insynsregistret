@@ -53,17 +53,6 @@ public class FreeTextQueryBuilder {
 
     /**
      * Creates an instance of {@link FreeTextQueryBuilder} that is used for building a query for person discharging managerial responsibilities (PDMR) names.
-     * @deprecated As of Insynsregistret 1.0.2, use {@link #pdmr} instead.
-     * @param freeText text to search for that is part of the PDMR name
-     * @return Builder object
-     */
-    @Deprecated
-    public static FreeTextQueryBuilder personDischargingManagerialResponsibilities(String freeText) {
-        return pdmr(freeText);
-    }
-
-    /**
-     * Creates an instance of {@link FreeTextQueryBuilder} that is used for building a query for person discharging managerial responsibilities (PDMR) names.
      * @param freeText text to search for that is part of the PDMR name
      * @return Builder object
      */

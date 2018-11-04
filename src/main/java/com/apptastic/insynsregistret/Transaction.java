@@ -157,31 +157,11 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Get the person discharging managerial responsibilities (PDMR) name for the transaction.
-     * @deprecated As of Insynsregistret 1.0.2, use {@link #getPdmr()} instead.
-     * @return PDMR name
-     */
-    @Deprecated
-    public String getPersonDischargingManagerialResponsibilities() {
-        return getPdmr();
-    }
-
-    /**
      * Get the person discharging managerial responsibilities (PDMR) name for the transaction, for example Stefan Persson.
      * @return PDMR name
      */
     public String getPdmr() {
         return pdmr;
-    }
-
-    /**
-     * Set the person discharging managerial responsibilities (PDMR) name for the transaction.
-     * @deprecated As of Insynsregistret 1.0.2, use {@link #setPdmr} instead.
-     * @param personDischargingManagerialResponsibilities PDMR name
-     */
-    @Deprecated
-    public void setPersonDischargingManagerialResponsibilities(String personDischargingManagerialResponsibilities) {
-        setPdmr(personDischargingManagerialResponsibilities);
     }
 
     /**
@@ -340,28 +320,6 @@ public class Transaction implements Comparable<Transaction> {
      */
     public void setInstrumentName(String instrumentName) {
         this.instrumentName = instrumentName;
-    }
-
-    /**
-     * Get instrument long name.
-     * Exmaple value: Kinnevik AB ser. A
-     * @deprecated As of Insynsregistret 1.0.5, use {@link #getInstrumentName()} instead.
-     * @return instrument name
-     */
-    @Deprecated
-    public String getInstrument() {
-        return instrumentName;
-    }
-
-    /**
-     * Set instrument long name.
-     * Example value: Kinnevik AB ser. A
-     * @deprecated As of Insynsregistret 1.0.5, use {@link #setInstrumentName(String)} instead.
-     * @param instrument instrument name
-     */
-    @Deprecated
-    public void setInstrument(String instrument) {
-        this.instrumentName = instrument;
     }
 
     /**

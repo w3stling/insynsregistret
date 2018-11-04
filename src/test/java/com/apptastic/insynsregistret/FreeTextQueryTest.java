@@ -1,6 +1,7 @@
 package com.apptastic.insynsregistret;
 
 import static org.junit.Assert.*;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
@@ -90,7 +91,7 @@ public class FreeTextQueryTest {
 
     @Test
     public void getPDMR_Jo() throws IOException {
-        FreeTextQuery query = FreeTextQueryBuilder.personDischargingManagerialResponsibilities("Jo").build();
+        FreeTextQuery query = FreeTextQueryBuilder.pdmr("Jo").build();
 
         Insynsregistret ir = new Insynsregistret();
         long resultCount = ir.search(query).count();
@@ -100,7 +101,7 @@ public class FreeTextQueryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getPDMR_null() throws UnsupportedEncodingException {
-        FreeTextQueryBuilder.personDischargingManagerialResponsibilities(null).build();
+        FreeTextQueryBuilder.pdmr(null).build();
     }
 
 

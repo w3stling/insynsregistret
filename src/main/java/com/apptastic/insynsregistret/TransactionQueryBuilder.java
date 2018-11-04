@@ -146,18 +146,6 @@ public class TransactionQueryBuilder {
 
     /**
      * Limit the transaction to the this person discharging managerial responsibilities (PDMR).
-     * @deprecated As of Insynsregistret 1.0.2, use {@link #pdmr} instead.
-     * @param pdmr name of the PDMR
-     * @return builder object
-     */
-    @Deprecated
-    public TransactionQueryBuilder personDischargingManagerialResponsibilities(String pdmr) {
-        pdmr(pdmr);
-        return this;
-    }
-
-    /**
-     * Limit the transaction to the this person discharging managerial responsibilities (PDMR).
      * @param pdmr name of the PDMR
      * @return builder object
      */

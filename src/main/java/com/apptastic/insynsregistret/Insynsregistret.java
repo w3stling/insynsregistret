@@ -24,9 +24,12 @@
 package com.apptastic.insynsregistret;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.Charset;
+import java.time.Duration;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.logging.Level;
@@ -52,9 +55,15 @@ import java.util.zip.GZIPInputStream;
  */
 public class Insynsregistret {
     private boolean processTransactionInParallel;
+    private static final String HTTP_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
+    private final HttpClient httpClient;
 
     public Insynsregistret() {
-        String parallelProperty = System.getProperty("insynsregistret.parallel", "false");
+        httpClient = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(15))
+                .build();
+
+        var parallelProperty = System.getProperty("insynsregistret.parallel", "false");
         processTransactionInParallel = parallelProperty.equalsIgnoreCase("true");
     }
 
@@ -66,7 +75,7 @@ public class Insynsregistret {
      * @throws IOException exception
      */
     public Stream<String> search(FreeTextQuery query) throws IOException {
-        BufferedReader response = sendRequest(query.getUrl(), Charset.forName("UTF-8"));
+        var response = sendRequest(query.getUrl(), Charset.forName("UTF-8"));
 
         return parseFreeTextQueryResponse(response);
     }
@@ -80,7 +89,7 @@ public class Insynsregistret {
      * @throws IOException exception
      */
     public Stream<Transaction> search(TransactionQuery query) throws IOException {
-        BufferedReader response = sendRequest(query.getUrl(), Charset.forName("UTF-16LE"));
+        var response = sendRequest(query.getUrl(), Charset.forName("UTF-16LE"));
 
         return parseTransactionResponse(response);
     }
@@ -93,6 +102,29 @@ public class Insynsregistret {
      * @throws IOException exception
      */
     protected BufferedReader sendRequest(String url, Charset encoding) throws IOException {
+        var req = HttpRequest.newBuilder(URI.create(url))
+                .timeout(Duration.ofSeconds(15))
+                .header("Accept-Encoding", "gzip")
+                .header("User-Agent", HTTP_USER_AGENT)
+                .GET()
+                .build();
+
+        try {
+            var resp = httpClient.send(req, HttpResponse.BodyHandlers.ofInputStream());
+            var inputStream = resp.body();
+
+            if (Optional.of("gzip").equals(resp.headers().firstValue("Content-Encoding")))
+                inputStream = new GZIPInputStream(inputStream);
+
+            var reader = new InputStreamReader(inputStream, encoding);
+            return new BufferedReader(reader);
+        }
+        catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IOException(e);
+        }
+
+        /*
         URLConnection connection = new URL(url).openConnection();
 
         connection.setConnectTimeout(15 * 1000);
@@ -106,6 +138,7 @@ public class Insynsregistret {
         Reader reader = new InputStreamReader(inputStream, encoding);
 
         return new BufferedReader(reader);
+        */
     }
 
 
@@ -118,11 +151,10 @@ public class Insynsregistret {
         if (text.length() <= 2)
             return Stream.empty();
 
-        LinkedList<String> tokens = new LinkedList<>();
-
-        boolean found = true;
-        int start;
-        int end = 0;
+        var tokens = new LinkedList<String>();
+        var found = true;
+        var start = 0;
+        var end = 0;
 
         while (found) {
             start = text.indexOf('"', end + 1);
@@ -143,14 +175,14 @@ public class Insynsregistret {
 
     Stream<Transaction> parseTransactionResponse(BufferedReader reader) throws IOException {
         // Read header
-        String header = reader.readLine();
+        var header = reader.readLine();
 
         if (header == null)
             return Stream.empty();
 
         String[] headerColumns = splitLine(header, 32);
-        TransactionMapper mapper = new TransactionMapper();
-        int nofColumns = mapper.initialize(headerColumns);
+        var mapper = new TransactionMapper();
+        var nofColumns = mapper.initialize(headerColumns);
 
         // Read the rest of the lines after the header
         Stream<String> lineStream = reader.lines();
@@ -165,11 +197,11 @@ public class Insynsregistret {
 
 
     String[] splitLine(String text, int nofColumns) {
-        int index = 0;
-        boolean found = true;
-        int extraForQuotationMark = 0;
-        int start = 0;
-        int end;
+        var index = 0;
+        var found = true;
+        var extraForQuotationMark = 0;
+        var start = 0;
+        var end = 0;
         String[] tokens = new String[nofColumns];
 
         while (found && index < nofColumns) {
@@ -193,7 +225,7 @@ public class Insynsregistret {
             }
 
             if (found) {
-                String token = text.substring(start, end);
+                var token = text.substring(start, end);
                 token = token.replace("\\u0026", "&").trim();
 
                 tokens[index] = token;
@@ -252,7 +284,7 @@ public class Insynsregistret {
                 if (header[i] == null)
                     break;
 
-                String headerColumnText = header[i].trim();
+                var headerColumnText = header[i].trim();
                 columnIndexFieldMapping.add(i, COLUMN_NAME_FIELD_MAPPING.get(headerColumnText));
             }
 
@@ -261,11 +293,11 @@ public class Insynsregistret {
 
 
         Transaction createTransaction(String[] columns) {
-            Transaction transaction = new Transaction();
-            int length = Math.min(columns.length, columnIndexFieldMapping.size());
+            var transaction = new Transaction();
+            var length = Math.min(columns.length, columnIndexFieldMapping.size());
 
-            for (int i = 0; i < length; ++i) {
-                BiConsumer<Transaction, String> fieldMapping = columnIndexFieldMapping.get(i);
+            for (var i = 0; i < length; ++i) {
+                var fieldMapping = columnIndexFieldMapping.get(i);
 
                 if (fieldMapping != null)
                     fieldMapping.accept(transaction, columns[i]);
@@ -276,14 +308,14 @@ public class Insynsregistret {
 
 
         private static double parseDouble(String value) {
-            double floatNumber;
+            var floatNumber = 0.0;
 
             try {
                 value = value.replace(',', '.');
                 floatNumber = Double.valueOf(value);
             }
             catch (Exception e) {
-                Logger logger = Logger.getLogger("com.apptastic.insynsregistret");
+                var logger = Logger.getLogger("com.apptastic.insynsregistret");
 
                 if (logger.isLoggable(Level.WARNING))
                     logger.log(Level.WARNING, "Failed to parse double. ", e);

@@ -14,7 +14,6 @@ public class TransactionTest {
         transaction.setIssuer("Hennes & Mauritz AB, H & M");
         transaction.setLeiCode("529900O5RR7R39FRDM42");
         transaction.setNotifier("Ramsbury Invest AB");
-        transaction.setPersonDischargingManagerialResponsibilities("Stefan Persson");
         transaction.setPdmr("Stefan Persson");
         transaction.setPosition("Styrelseledamot/suppleant");
         transaction.setCloselyAssociated(true);
@@ -23,7 +22,7 @@ public class TransactionTest {
         transaction.setInitialNotification(false);
         transaction.setLinkedToShareOptionProgramme(false);
         transaction.setNatureOfTransaction("Förvärv");
-        transaction.setInstrument("Hennes & Mauritz AB, H & M ser. B");
+        transaction.setInstrumentName("Hennes & Mauritz AB, H & M ser. B");
         transaction.setIsin("SE0000106270");
         transaction.setTransactionDate("2018-05-03");
         transaction.setQuantity(4000000.0);
@@ -68,11 +67,6 @@ public class TransactionTest {
         }
         {
             Transaction transaction2 = getDefaultTransaction();
-            transaction2.setPersonDischargingManagerialResponsibilities("Stefan");
-            assertNotEquals(transaction1, transaction2);
-        }
-        {
-            Transaction transaction2 = getDefaultTransaction();
             transaction2.setPdmr("Stefan");
             assertNotEquals(transaction1, transaction2);
         }
@@ -113,7 +107,7 @@ public class TransactionTest {
         }
         {
             Transaction transaction2 = getDefaultTransaction();
-            transaction2.setInstrument("Hennes & Mauritz AB, H & M ser. A");
+            transaction2.setInstrumentName("Hennes & Mauritz AB, H & M ser. A");
             assertNotEquals(transaction1, transaction2);
         }
         {
