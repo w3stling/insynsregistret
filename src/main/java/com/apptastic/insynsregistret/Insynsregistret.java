@@ -29,6 +29,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -75,7 +76,7 @@ public class Insynsregistret {
      * @throws IOException exception
      */
     public Stream<String> search(FreeTextQuery query) throws IOException {
-        var response = sendRequest(query.getUrl(), Charset.forName("UTF-8"));
+        var response = sendRequest(query.getUrl(), StandardCharsets.UTF_8);
 
         return parseFreeTextQueryResponse(response);
     }
@@ -89,7 +90,7 @@ public class Insynsregistret {
      * @throws IOException exception
      */
     public Stream<Transaction> search(TransactionQuery query) throws IOException {
-        var response = sendRequest(query.getUrl(), Charset.forName("UTF-16LE"));
+        var response = sendRequest(query.getUrl(), StandardCharsets.UTF_8);
 
         return parseTransactionResponse(response);
     }
