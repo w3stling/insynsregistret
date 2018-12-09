@@ -90,7 +90,7 @@ public class Insynsregistret {
      * @throws IOException exception
      */
     public Stream<Transaction> search(TransactionQuery query) throws IOException {
-        var response = sendRequest(query.getUrl(), StandardCharsets.UTF_8);
+        var response = sendRequest(query.getUrl(), StandardCharsets.UTF_16LE);
 
         return parseTransactionResponse(response);
     }

@@ -8,9 +8,11 @@ import java.io.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -332,8 +334,18 @@ public class TransactionQueryTest {
         TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsLastDays(10)
                 .build();
 
-        long transactionCount = ir.search(transactionQuery).count();
-        assertTrue(transactionCount > 0);
+        List<Transaction> transactions = ir.search(transactionQuery)
+                .collect(Collectors.toList());
+
+        long count = transactions.stream()
+                .filter(t -> t.getPublicationDate() != null)
+                .count();
+
+        assertTrue(count > 0);
+
+        for (Transaction transaction : transactions) {
+            assertNotNull(transaction.getPublicationDate());
+        }
     }
 
 
@@ -344,10 +356,19 @@ public class TransactionQueryTest {
         TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(10)
                 .build();
 
-        long transactionCount = ir.search(transactionQuery).count();
-        assertTrue(transactionCount > 0);
-    }
+        List<Transaction> transactions = ir.search(transactionQuery)
+                .collect(Collectors.toList());
 
+        long count = transactions.stream()
+                .filter(t -> t.getPublicationDate() != null)
+                .count();
+
+        assertTrue(count > 0);
+
+        for (Transaction transaction : transactions) {
+            assertNotNull(transaction.getPublicationDate());
+        }
+    }
 
     @Test
     public void liveEnQueryByTransactionDate() throws IOException {
@@ -357,8 +378,18 @@ public class TransactionQueryTest {
                 .language(Language.ENGLISH)
                 .build();
 
-        long transactionCount = ir.search(transactionQuery).count();
-        assertTrue(transactionCount > 0);
+        List<Transaction> transactions = ir.search(transactionQuery)
+                .collect(Collectors.toList());
+
+        long count = transactions.stream()
+                .filter(t -> t.getPublicationDate() != null)
+                .count();
+
+        assertTrue(count > 0);
+
+        for (Transaction transaction : transactions) {
+            assertNotNull(transaction.getPublicationDate());
+        }
     }
 
 
@@ -370,8 +401,18 @@ public class TransactionQueryTest {
                 .language(Language.ENGLISH)
                 .build();
 
-        long transactionCount = ir.search(transactionQuery).count();
-        assertTrue(transactionCount > 0);
+        List<Transaction> transactions = ir.search(transactionQuery)
+                                           .collect(Collectors.toList());
+
+        long count = transactions.stream()
+                                 .filter(t -> t.getPublicationDate() != null)
+                                 .count();
+
+        assertTrue(count > 0);
+
+        for (Transaction transaction : transactions) {
+            assertNotNull(transaction.getPublicationDate());
+        }
     }
 
 
