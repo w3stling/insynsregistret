@@ -118,14 +118,14 @@ Download
 Download [the latest JAR][3] or grab via [Maven][4] or [Gradle][5].
 
 ### Maven setup
-Add repository for resolving artifact:
+Add JCenter repository for resolving artifact:
 ```xml
 <project>
     ...
     <repositories>
         <repository>
-            <id>apptastic-maven-repo</id>
-            <url>https://dl.bintray.com/apptastic/maven-repo</url>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com</url>
         </repository>
     </repositories>
     ...
@@ -148,12 +148,10 @@ Add dependency declaration:
 ```
 
 ### Gradle setup
-Add repository for resolving artifact:
+Add JCenter repository for resolving artifact:
 ```groovy
 repositories {
-    maven {
-        url  "https://dl.bintray.com/apptastic/maven-repo" 
-    }
+    jcenter()
 }
 ```
 
