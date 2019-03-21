@@ -363,6 +363,9 @@ public class TransactionQueryTest {
 
         for (Transaction transaction : transactions) {
             assertNotNull(transaction.getPublicationDate());
+            assertEquals(19, transaction.getPublicationDate().length());
+            assertNotNull(transaction.getTransactionDate());
+            assertEquals(19, transaction.getTransactionDate().length());
         }
     }
 
@@ -385,6 +388,9 @@ public class TransactionQueryTest {
 
         for (Transaction transaction : transactions) {
             assertNotNull(transaction.getPublicationDate());
+            assertEquals(19, transaction.getPublicationDate().length());
+            assertNotNull(transaction.getTransactionDate());
+            assertEquals(19, transaction.getTransactionDate().length());
         }
     }
 
