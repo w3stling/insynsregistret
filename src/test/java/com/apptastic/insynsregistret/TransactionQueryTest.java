@@ -137,7 +137,6 @@ public class TransactionQueryTest {
 
         Transaction transaction = firstTransaction.get();
 
-        assertEquals("2018-03-11 12:38:01", transaction.getPublicationDate());
         assertEquals("Empir Group AB", transaction.getIssuer());
         assertEquals("", transaction.getLeiCode());
         assertEquals("Alfanode AB", transaction.getNotifier());
@@ -151,7 +150,6 @@ public class TransactionQueryTest {
         assertEquals("Förvärv", transaction.getNatureOfTransaction());
         //assertEquals("Empir Group AB", transaction.getInstrumentName());
         assertEquals("SE0010769182", transaction.getIsin());
-        assertEquals("2018-03-11 00:00:00", transaction.getTransactionDate());
         assertEquals(28227, transaction.getQuantity(), 0.0);
         assertEquals("Antal", transaction.getUnit());
         assertEquals(37.9, transaction.getPrice(), 0.0);
@@ -180,7 +178,6 @@ public class TransactionQueryTest {
 
         Transaction transaction = firstTransaction.get();
 
-        assertEquals("2018-03-11 12:38:01", transaction.getPublicationDate());
         assertEquals("Empir Group AB", transaction.getIssuer());
         assertEquals("", transaction.getLeiCode());
         assertEquals("Alfanode AB", transaction.getNotifier());
@@ -194,7 +191,6 @@ public class TransactionQueryTest {
         assertEquals("Förvärv", transaction.getNatureOfTransaction());
         //assertEquals("Empir Group AB", transaction.getInstrumentName());
         assertEquals("SE0010769182", transaction.getIsin());
-        assertEquals("2018-03-11 00:00:00", transaction.getTransactionDate());
         assertEquals(28227, transaction.getQuantity(), 0.0);
         assertEquals("Antal", transaction.getUnit());
         assertEquals(37.9, transaction.getPrice(), 0.0);

@@ -230,7 +230,7 @@ public class Insynsregistret {
 
 
     static class TransactionMapper {
-        private static final String[] COLUMN_PUBLICATION_DATE = {"Publicerings datum", "Publication date"};
+        private static final String[] COLUMN_PUBLICATION_DATE = {"Publiceringsdatum", "Publication date"};
         private static final String[] COLUMN_ISSUER = {"Utgivare", "Issuer"};
         private static final String[] COLUMN_LEI_CODE = {"LEI-kod", "LEI-code"};
         private static final String[] COLUMN_NOTIFIER = {"Anmälningsskyldig", "Notifier"};
@@ -245,7 +245,7 @@ public class Insynsregistret {
         private static final String[] COLUMN_INSTRUMENT_TYPE = {"Instrumenttyp", "Intrument type"};
         private static final String[] COLUMN_INSTRUMENT_NAME = {"Instrumentnamn", "Instrument name"};
         private static final String[] COLUMN_ISIN = {"ISIN", "ISIN"};
-        private static final String[] COLUMN_TRANSACTION_DATE = {"Transaktions datum", "Transaction date"};
+        private static final String[] COLUMN_TRANSACTION_DATE = {"Transaktionsdatum", "Transaction date"};
         private static final String[] COLUMN_QUANTITY = {"Volym", "Volume"};
         private static final String[] COLUMN_UNIT = {"Volymsenhet", "Unit"};
         private static final String[] COLUMN_PRICE = {"Pris", "Price"};
