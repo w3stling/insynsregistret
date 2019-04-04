@@ -45,10 +45,10 @@ public class FreeTextQueryTest {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("ÅF").build();
 
         Insynsregistret ir = new Insynsregistret();
-        Optional<String> issuer = ir.search(query).findFirst();
+        Optional<String> issuer = ir.search(query).skip(1).findFirst();
 
         assertTrue(issuer.isPresent());
-        assertTrue(issuer.get().startsWith("ÅF AB"));
+        assertEquals("ÅF AB", issuer.get());
     }
 
 
