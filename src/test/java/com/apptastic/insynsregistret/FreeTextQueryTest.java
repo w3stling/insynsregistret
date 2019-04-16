@@ -48,7 +48,7 @@ public class FreeTextQueryTest {
         Optional<String> issuer = ir.search(query).skip(1).findFirst();
 
         assertTrue(issuer.isPresent());
-        assertEquals("ÅF-Pöyry", issuer.get());
+        assertEquals("ÅF PÖYRY AB", issuer.get());
     }
 
 
