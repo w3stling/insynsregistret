@@ -305,6 +305,14 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
+     * Get instrument type description
+     * @return instrument type description
+     */
+    public InstrumentType getInstrumentTypeDescription() {
+        return InstrumentType.parse(getInstrumentType());
+    }
+
+    /**
      * Get instrument long name.
      * Exmaple value: Kinnevik AB ser. A
      * @return instrument name
@@ -505,5 +513,100 @@ public class Transaction implements Comparable<Transaction> {
     @Override
     public int compareTo(Transaction o) {
         return transactionDate.compareTo(o.transactionDate);
+    }
+
+    /**
+     * Instrument Type
+     */
+    public enum InstrumentType {
+        SHARE("InstrumentTyp1", "Share", "Aktie"),
+        BTA("InstrumentTyp2", "BTA", "BTA (betald tecknad aktie)"),
+        BTU("InstrumentTyp3", "BTU","BTU (betald tecknad unit)"),
+        OPTION("InstrumentTyp8", "Option", "Option"),
+        SUBSCRIPTION_WARRANT("InstrumentTyp11", "Subscription warrant","Teckningsoption"),
+        SUBSCRIPTION_RIGHT("InstrumentTyp12", "Subscription right", "Teckningsrätt"),
+        OTHER_DERIVATIVE_CONTRACTS("InstrumentTyp15", "Other derivative contracts","Övriga derivatkontrakt"),
+        REDEMPTION_SHARE("InstrumentTyp17", "Redemption share", "Inlösenaktie"),
+        CALL_OPTION("InstrumentTyp18", "Call option", "Köpoption"),
+        COMMERCIAL_PAPER("InstrumentTyp21", "Commercial paper", "Företagscertifikat"),
+        UNKNOWN("", "Unknown", "Okänd");
+
+        private String instrumentType;
+        private String englishDescription;
+        private String swedishDescription;
+
+        InstrumentType(String instrumentType, String englishDescription, String swedishDescription) {
+            this.instrumentType = instrumentType;
+            this.englishDescription = englishDescription;
+            this.swedishDescription = swedishDescription;
+        }
+
+        public static InstrumentType parse(String instrumentType) {
+            InstrumentType type;
+
+            if (instrumentType == null) {
+                type = UNKNOWN;
+            }
+            else if (instrumentType.equals("InstrumentTyp1")) {
+                type = SHARE;
+            }
+            else if (instrumentType.equals("InstrumentTyp2")) {
+                type = BTA;
+            }
+            else if (instrumentType.equals("InstrumentTyp3")) {
+                type = BTU;
+            }
+            else if (instrumentType.equals("InstrumentTyp8")) {
+                type = OPTION;
+            }
+            else if (instrumentType.equals("InstrumentTyp11")) {
+                type = SUBSCRIPTION_WARRANT;
+            }
+            else if (instrumentType.equals("InstrumentTyp12")) {
+                type = SUBSCRIPTION_RIGHT;
+            }
+            else if (instrumentType.equals("InstrumentTyp15")) {
+                type = OTHER_DERIVATIVE_CONTRACTS;
+            }
+            else if (instrumentType.equals("InstrumentTyp17")) {
+                type = REDEMPTION_SHARE;
+            }
+            else if (instrumentType.equals("InstrumentTyp18")) {
+                type = CALL_OPTION;
+            }
+            else if (instrumentType.equals("InstrumentTyp21")) {
+                type = COMMERCIAL_PAPER;
+            }
+            else {
+                type = UNKNOWN;
+            }
+
+            type.instrumentType = instrumentType;
+            return type;
+        }
+
+        /**
+         * Get instrument type
+         * @return instrument type
+         */
+        public String getInstrumentType() {
+            return instrumentType;
+        }
+
+        /**
+         * Get instrument type description in english
+         * @return description
+         */
+        public String getEnglishDescription() {
+            return englishDescription;
+        }
+
+        /**
+         * Get instrument type description in swedish
+         * @return description
+         */
+        public String getSwedishDescription() {
+            return swedishDescription;
+        }
     }
 }

@@ -22,6 +22,7 @@ public class TransactionTest {
         transaction.setInitialNotification(false);
         transaction.setLinkedToShareOptionProgramme(false);
         transaction.setNatureOfTransaction("Förvärv");
+        transaction.setInstrumentType("InstrumentTyp1");
         transaction.setInstrumentName("Hennes & Mauritz AB, H & M ser. B");
         transaction.setIsin("SE0000106270");
         transaction.setTransactionDate("2018-05-03");
@@ -104,6 +105,12 @@ public class TransactionTest {
             Transaction transaction2 = getDefaultTransaction();
             transaction2.setNatureOfTransaction("Avyttring");
             assertNotEquals(transaction1, transaction2);
+        }
+        {
+            Transaction transaction2 = getDefaultTransaction();
+            transaction2.setInstrumentType("-");
+            assertNotEquals(transaction1, transaction2);
+            assertNotEquals(transaction1.getInstrumentTypeDescription(), transaction2.getInstrumentTypeDescription());
         }
         {
             Transaction transaction2 = getDefaultTransaction();
@@ -212,5 +219,50 @@ public class TransactionTest {
         assertEquals("Transaction1", transactions.get(transaction1));
         assertEquals("Transaction2", transactions.get(transaction2));
         assertEquals("Transaction3", transactions.get(transaction3));
+    }
+
+
+    @Test
+    public void testInstrumentType() {
+        Transaction.InstrumentType type;
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp1");
+        assertEquals(Transaction.InstrumentType.SHARE, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp2");
+        assertEquals(Transaction.InstrumentType.BTA, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp3");
+        assertEquals(Transaction.InstrumentType.BTU, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp8");
+        assertEquals(Transaction.InstrumentType.OPTION, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp11");
+        assertEquals(Transaction.InstrumentType.SUBSCRIPTION_WARRANT, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp12");
+        assertEquals(Transaction.InstrumentType.SUBSCRIPTION_RIGHT, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp15");
+        assertEquals(Transaction.InstrumentType.OTHER_DERIVATIVE_CONTRACTS, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp17");
+        assertEquals(Transaction.InstrumentType.REDEMPTION_SHARE, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp18");
+        assertEquals(Transaction.InstrumentType.CALL_OPTION, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp21");
+        assertEquals(Transaction.InstrumentType.COMMERCIAL_PAPER, type);
+
+        type = Transaction.InstrumentType.parse(null);
+        assertEquals(Transaction.InstrumentType.UNKNOWN, type);
+
+        type = Transaction.InstrumentType.parse("skdlf");
+        assertEquals(Transaction.InstrumentType.UNKNOWN, type);
+        assertEquals("skdlf", type.getInstrumentType());
+        assertEquals("Unknown", type.getEnglishDescription());
+        assertEquals("Okänd", type.getSwedishDescription());
     }
 }
