@@ -235,6 +235,15 @@ public class TransactionTest {
         type = Transaction.InstrumentType.parse("InstrumentTyp3");
         assertEquals(Transaction.InstrumentType.BTU, type);
 
+        type = Transaction.InstrumentType.parse("InstrumentTyp5");
+        assertEquals(Transaction.InstrumentType.CAPITAL_EQUITY, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp6");
+        assertEquals(Transaction.InstrumentType.CONVERTIBLE, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp7");
+        assertEquals(Transaction.InstrumentType.BOND, type);
+
         type = Transaction.InstrumentType.parse("InstrumentTyp8");
         assertEquals(Transaction.InstrumentType.OPTION, type);
 
@@ -255,6 +264,9 @@ public class TransactionTest {
 
         type = Transaction.InstrumentType.parse("InstrumentTyp21");
         assertEquals(Transaction.InstrumentType.COMMERCIAL_PAPER, type);
+
+        type = Transaction.InstrumentType.parse("InstrumentTyp22");
+        assertEquals(Transaction.InstrumentType.INTERIM_SHARE, type);
 
         type = Transaction.InstrumentType.parse(null);
         assertEquals(Transaction.InstrumentType.UNKNOWN, type);

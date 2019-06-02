@@ -522,13 +522,19 @@ public class Transaction implements Comparable<Transaction> {
         SHARE("InstrumentTyp1", "Share", "Aktie"),
         BTA("InstrumentTyp2", "BTA", "BTA (betald tecknad aktie)"),
         BTU("InstrumentTyp3", "BTU","BTU (betald tecknad unit)"),
+        CAPITAL_EQUITY("InstrumentTyp5","Capital equity","Kapitalandelsbevis"),
+        CONVERTIBLE("InstrumentTyp6","Convertible","Konvertibel"),
+        BOND("InstrumentTyp7","Bond","Obligation"),
         OPTION("InstrumentTyp8", "Option", "Option"),
         SUBSCRIPTION_WARRANT("InstrumentTyp11", "Subscription warrant","Teckningsoption"),
         SUBSCRIPTION_RIGHT("InstrumentTyp12", "Subscription right", "Teckningsrätt"),
+        FUTURE_FORWARD("InstrumentTyp13", "Future/Forward", "Terminer"),
+        WARRANT("InstrumentTyp14", "Warrant", "Warrant"),
         OTHER_DERIVATIVE_CONTRACTS("InstrumentTyp15", "Other derivative contracts","Övriga derivatkontrakt"),
         REDEMPTION_SHARE("InstrumentTyp17", "Redemption share", "Inlösenaktie"),
         CALL_OPTION("InstrumentTyp18", "Call option", "Köpoption"),
         COMMERCIAL_PAPER("InstrumentTyp21", "Commercial paper", "Företagscertifikat"),
+        INTERIM_SHARE("InstrumentTyp22", "Interim share", "Interimsaktie"),
         UNKNOWN("", "Unknown", "Okänd");
 
         private String value;
@@ -556,6 +562,15 @@ public class Transaction implements Comparable<Transaction> {
             else if (instrumentType.equals("InstrumentTyp3")) {
                 type = BTU;
             }
+            else if (instrumentType.equals("InstrumentTyp5")) {
+                type = CAPITAL_EQUITY;
+            }
+            else if (instrumentType.equals("InstrumentTyp6")) {
+                type = CONVERTIBLE;
+            }
+            else if (instrumentType.equals("InstrumentTyp7")) {
+                type = BOND;
+            }
             else if (instrumentType.equals("InstrumentTyp8")) {
                 type = OPTION;
             }
@@ -564,6 +579,12 @@ public class Transaction implements Comparable<Transaction> {
             }
             else if (instrumentType.equals("InstrumentTyp12")) {
                 type = SUBSCRIPTION_RIGHT;
+            }
+            else if (instrumentType.equals("InstrumentTyp13")) {
+                type = FUTURE_FORWARD;
+            }
+            else if (instrumentType.equals("InstrumentTyp14")) {
+                type = WARRANT;
             }
             else if (instrumentType.equals("InstrumentTyp15")) {
                 type = OTHER_DERIVATIVE_CONTRACTS;
@@ -576,6 +597,9 @@ public class Transaction implements Comparable<Transaction> {
             }
             else if (instrumentType.equals("InstrumentTyp21")) {
                 type = COMMERCIAL_PAPER;
+            }
+            else if (instrumentType.equals("InstrumentTyp22")) {
+                type = INTERIM_SHARE;
             }
             else {
                 type = UNKNOWN;

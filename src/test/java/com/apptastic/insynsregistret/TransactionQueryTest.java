@@ -349,7 +349,7 @@ public class TransactionQueryTest {
     public void liveSvQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(100)
                 .build();
 
         List<Transaction> transactions = ir.search(transactionQuery)
@@ -358,6 +358,11 @@ public class TransactionQueryTest {
         long count = transactions.stream()
                 .filter(t -> t.getPublicationDate() != null)
                 .count();
+
+        for (Transaction t : transactions) {
+            if (t.getInstrumentTypeDescription().equals(Transaction.InstrumentType.UNKNOWN))
+                System.out.println(t.getInstrumentType() + "  -  " + t.getIssuer() + ", " + t.getPdmr() + "," + t.getPublicationDate());
+        }
 
         assertTrue(count > 0);
 
