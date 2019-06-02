@@ -547,6 +547,7 @@ public class Transaction implements Comparable<Transaction> {
             this.swedishDescription = swedishDescription;
         }
 
+        @SuppressWarnings("squid:S3776")
         public static InstrumentType parse(String instrumentType) {
             InstrumentType type;
 
