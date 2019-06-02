@@ -289,24 +289,24 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Get instrument type.
-     * @return instrument type
+     * Get instrument value.
+     * @return instrument value
      */
     public String getInstrumentType() {
         return instrumentType;
     }
 
     /**
-     * Set instrument type.
-     * @param instrumentType instrument type
+     * Set instrument value.
+     * @param instrumentType instrument value
      */
     public void setInstrumentType(String instrumentType) {
         this.instrumentType = instrumentType;
     }
 
     /**
-     * Get instrument type description
-     * @return instrument type description
+     * Get instrument value description
+     * @return instrument value description
      */
     public InstrumentType getInstrumentTypeDescription() {
         return InstrumentType.parse(getInstrumentType());
@@ -531,12 +531,12 @@ public class Transaction implements Comparable<Transaction> {
         COMMERCIAL_PAPER("InstrumentTyp21", "Commercial paper", "Företagscertifikat"),
         UNKNOWN("", "Unknown", "Okänd");
 
-        private String instrumentType;
+        private String value;
         private String englishDescription;
         private String swedishDescription;
 
         InstrumentType(String instrumentType, String englishDescription, String swedishDescription) {
-            this.instrumentType = instrumentType;
+            this.value = instrumentType;
             this.englishDescription = englishDescription;
             this.swedishDescription = swedishDescription;
         }
@@ -581,20 +581,20 @@ public class Transaction implements Comparable<Transaction> {
                 type = UNKNOWN;
             }
 
-            type.instrumentType = instrumentType;
+            type.value = instrumentType;
             return type;
         }
 
         /**
-         * Get instrument type
-         * @return instrument type
+         * Get instrument type value
+         * @return value
          */
-        public String getInstrumentType() {
-            return instrumentType;
+        public String getValue() {
+            return value;
         }
 
         /**
-         * Get instrument type description in english
+         * Get instrument value description in english
          * @return description
          */
         public String getEnglishDescription() {
@@ -602,7 +602,7 @@ public class Transaction implements Comparable<Transaction> {
         }
 
         /**
-         * Get instrument type description in swedish
+         * Get instrument value description in swedish
          * @return description
          */
         public String getSwedishDescription() {

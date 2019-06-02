@@ -261,7 +261,7 @@ public class TransactionTest {
 
         type = Transaction.InstrumentType.parse("skdlf");
         assertEquals(Transaction.InstrumentType.UNKNOWN, type);
-        assertEquals("skdlf", type.getInstrumentType());
+        assertEquals("skdlf", type.getValue());
         assertEquals("Unknown", type.getEnglishDescription());
         assertEquals("Okänd", type.getSwedishDescription());
     }
