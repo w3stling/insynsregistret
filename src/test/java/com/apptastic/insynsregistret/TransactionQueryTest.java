@@ -373,14 +373,15 @@ public class TransactionQueryTest {
     public void noUnknownInstrumentType() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(15)
                 .build();
 
         List<Transaction> transactions = ir.search(transactionQuery)
+                .filter(t -> t.getInstrumentType() != null && !t.getInstrumentType().isBlank())
                 .filter(t -> t.getInstrumentTypeDescription() == Transaction.InstrumentType.UNKNOWN)
                 .collect(Collectors.toList());
 
-        assertEquals(transactions.size(), 0);
+        assertEquals(0, transactions.size());
     }
 
     @Test
