@@ -377,13 +377,10 @@ public class TransactionQueryTest {
                 .build();
 
         List<Transaction> transactions = ir.search(transactionQuery)
+                .filter(t -> t.getInstrumentTypeDescription() == Transaction.InstrumentType.UNKNOWN)
                 .collect(Collectors.toList());
 
-        long count = transactions.stream()
-                .filter(t -> t.getInstrumentTypeDescription() == Transaction.InstrumentType.UNKNOWN)
-                .count();
-
-        assertTrue(count == 0);
+        assertEquals(transactions.size(), 0);
     }
 
     @Test

@@ -533,6 +533,7 @@ public class Transaction implements Comparable<Transaction> {
         OTHER_DERIVATIVE_CONTRACTS("InstrumentTyp15", "Other derivative contracts","Övriga derivatkontrakt"),
         REDEMPTION_SHARE("InstrumentTyp17", "Redemption share", "Inlösenaktie"),
         CALL_OPTION("InstrumentTyp18", "Call option", "Köpoption"),
+        PUT_OPTION("InstrumentTyp19", "Put option", "Säljoption"),
         COMMERCIAL_PAPER("InstrumentTyp21", "Commercial paper", "Företagscertifikat"),
         INTERIM_SHARE("InstrumentTyp22", "Interim share", "Interimsaktie"),
         UNKNOWN("", "Unknown", "Okänd");
@@ -595,6 +596,9 @@ public class Transaction implements Comparable<Transaction> {
             }
             else if (instrumentType.equals("InstrumentTyp18")) {
                 type = CALL_OPTION;
+            }
+            else if (instrumentType.equals("InstrumentTyp19")) {
+                type = PUT_OPTION;
             }
             else if (instrumentType.equals("InstrumentTyp21")) {
                 type = COMMERCIAL_PAPER;
