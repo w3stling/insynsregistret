@@ -468,7 +468,7 @@ public class TransactionQueryTest {
         Insynsregistret ir = new Insynsregistret();
 
         TransactionQuery query = TransactionQueryBuilder.publicationsLastDays(365 * 2)
-                .issuer("H&M Hennes & Mauritz AB")
+                .issuer("Hennes & Mauritz AB, H & M")
                 .build();
 
         long count = ir.search(query)
