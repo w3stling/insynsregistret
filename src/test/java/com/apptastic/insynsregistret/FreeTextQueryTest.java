@@ -48,7 +48,7 @@ public class FreeTextQueryTest {
         Optional<String> issuer = ir.search(query).skip(1).findFirst();
 
         assertTrue(issuer.isPresent());
-        assertEquals("åf pöyry ab", issuer.get().toLowerCase());
+        assertTrue(issuer.get().toLowerCase().contains("åf pöyry ab"));
     }
 
 
