@@ -33,7 +33,9 @@ public class FreeTextQueryTest {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("Öre").build();
 
         Insynsregistret ir = new Insynsregistret();
-        Optional<String> issuer = ir.search(query).findFirst();
+        Optional<String> issuer = ir.search(query)
+                                    .filter(n -> n.startsWith("Öresund"))
+                                    .findFirst();
 
         assertTrue(issuer.isPresent());
         assertEquals("Öresund, Investment AB", issuer.get());
