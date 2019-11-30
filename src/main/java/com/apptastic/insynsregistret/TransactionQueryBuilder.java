@@ -55,7 +55,7 @@ public class TransactionQueryBuilder {
      *
      * @deprecated Use LocalDate class instead of Date class
      */
-    @Deprecated
+    @Deprecated(since="2.2.0")
     public static TransactionQueryBuilder transactions(Date from, Date to) {
         if (from == null)
             throw new IllegalArgumentException("From transaction date is null");
@@ -121,7 +121,7 @@ public class TransactionQueryBuilder {
      *
      * @deprecated Use LocalDate class instead of Date class
      */
-    @Deprecated
+    @Deprecated(since="2.2.0")
     public static TransactionQueryBuilder publications(Date from, Date to) {
         if (from == null)
             throw new IllegalArgumentException("From publication date is null");
