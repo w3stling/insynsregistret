@@ -57,6 +57,7 @@ public class TransactionQuery {
      *
      * @deprecated Use LocalDate class instead of Date class
      */
+    @SuppressWarnings("squid:S1133")
     @Deprecated(since="2.2.0")
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
                      String issuer, String pdmr, Language language) throws UnsupportedEncodingException {

@@ -55,6 +55,7 @@ public class TransactionQueryBuilder {
      *
      * @deprecated Use LocalDate class instead of Date class
      */
+    @SuppressWarnings("squid:S1133")
     @Deprecated(since="2.2.0")
     public static TransactionQueryBuilder transactions(Date from, Date to) {
         if (from == null)
@@ -121,6 +122,7 @@ public class TransactionQueryBuilder {
      *
      * @deprecated Use LocalDate class instead of Date class
      */
+    @SuppressWarnings("squid:S1133")
     @Deprecated(since="2.2.0")
     public static TransactionQueryBuilder publications(Date from, Date to) {
         if (from == null)
