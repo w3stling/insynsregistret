@@ -52,6 +52,8 @@ public class TransactionQueryBuilder {
      * @param from from date (Year, month and day resolution)
      * @param to to date (Year, month and day resolution)
      * @return builder object
+     *
+     * @deprecated Use LocalDate class instead of Date class
      */
     @Deprecated
     public static TransactionQueryBuilder transactions(Date from, Date to) {
@@ -116,6 +118,8 @@ public class TransactionQueryBuilder {
      * @param from from date  (Year, month and day resolution)
      * @param to to date (Year, month and day resolution)
      * @return builder object
+     *
+     * @deprecated Use LocalDate class instead of Date class
      */
     @Deprecated
     public static TransactionQueryBuilder publications(Date from, Date to) {

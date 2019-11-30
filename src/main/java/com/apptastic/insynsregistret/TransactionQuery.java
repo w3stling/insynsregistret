@@ -54,6 +54,8 @@ public class TransactionQuery {
      * @param pdmr person discharging managerial responsibilities (PDMR) name
      * @param language - language
      * @throws UnsupportedEncodingException exception
+     *
+     * @deprecated Use LocalDate class instead of Date class
      */
     @Deprecated
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
