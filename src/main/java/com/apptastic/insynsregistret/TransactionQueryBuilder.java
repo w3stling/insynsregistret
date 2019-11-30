@@ -24,7 +24,8 @@
 package com.apptastic.insynsregistret;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -33,10 +34,10 @@ import java.util.concurrent.TimeUnit;
  * Builder class for creating a query for searching inside trade transactions via the {@link Insynsregistret} class.
  */
 public class TransactionQueryBuilder {
-    private Date fromTransactionDate;
-    private Date toTransactionDate;
-    private Date fromPublicationDate;
-    private Date toPublicationDate;
+    private LocalDate fromTransactionDate;
+    private LocalDate toTransactionDate;
+    private LocalDate fromPublicationDate;
+    private LocalDate toPublicationDate;
     private String issuer;
     private String pdmr;
     private Language language;
@@ -52,12 +53,34 @@ public class TransactionQueryBuilder {
      * @param to to date (Year, month and day resolution)
      * @return builder object
      */
+    @Deprecated
     public static TransactionQueryBuilder transactions(Date from, Date to) {
         if (from == null)
             throw new IllegalArgumentException("From transaction date is null");
         else if (to == null)
             throw new IllegalArgumentException("To transaction date is null");
         else if (TimeUnit.MILLISECONDS.toDays(from.getTime()) > TimeUnit.MILLISECONDS.toDays(to.getTime()))
+            throw new IllegalArgumentException("From date after to date is not allowed");
+
+        TransactionQueryBuilder builder = new TransactionQueryBuilder();
+        builder.fromTransactionDate = toLocalDate(from);
+        builder.toTransactionDate = toLocalDate(to);
+
+        return builder;
+    }
+
+    /**
+     * Query inside trade transactions between the given dates.
+     * @param from from date (Year, month and day resolution)
+     * @param to to date (Year, month and day resolution)
+     * @return builder object
+     */
+    public static TransactionQueryBuilder transactions(LocalDate from, LocalDate to) {
+        if (from == null)
+            throw new IllegalArgumentException("From transaction date is null");
+        else if (to == null)
+            throw new IllegalArgumentException("To transaction date is null");
+        else if (from.toEpochDay() > to.toEpochDay())
             throw new IllegalArgumentException("From date after to date is not allowed");
 
         TransactionQueryBuilder builder = new TransactionQueryBuilder();
@@ -76,10 +99,8 @@ public class TransactionQueryBuilder {
         if (days < 0)
             throw new IllegalArgumentException("Past transaction days is a negative number");
 
-        Calendar cal = Calendar.getInstance();
-        Date to = cal.getTime();
-        cal.add(Calendar.DAY_OF_YEAR, -days);
-        Date from = cal.getTime();
+        LocalDate to = LocalDate.now();
+        LocalDate from = to.minusDays(days);
 
         TransactionQueryBuilder builder = new TransactionQueryBuilder();
 
@@ -96,12 +117,35 @@ public class TransactionQueryBuilder {
      * @param to to date (Year, month and day resolution)
      * @return builder object
      */
+    @Deprecated
     public static TransactionQueryBuilder publications(Date from, Date to) {
         if (from == null)
             throw new IllegalArgumentException("From publication date is null");
         else if (to == null)
             throw new IllegalArgumentException("To publication date is null");
         else if (TimeUnit.MILLISECONDS.toDays(from.getTime()) > TimeUnit.MILLISECONDS.toDays(to.getTime()))
+            throw new IllegalArgumentException("From date after to date is not allowed");
+
+        TransactionQueryBuilder builder = new TransactionQueryBuilder();
+        builder.fromPublicationDate = toLocalDate(from);
+        builder.toPublicationDate = toLocalDate(to);
+
+        return builder;
+    }
+
+    /**
+     * Query inside trade transactions was published between the given dates.
+     * Usually transactions are published with 3 days from then the transaction occurred.
+     * @param from from date  (Year, month and day resolution)
+     * @param to to date (Year, month and day resolution)
+     * @return builder object
+     */
+    public static TransactionQueryBuilder publications(LocalDate from, LocalDate to) {
+        if (from == null)
+            throw new IllegalArgumentException("From publication date is null");
+        else if (to == null)
+            throw new IllegalArgumentException("To publication date is null");
+        else if (from.toEpochDay() > to.toEpochDay())
             throw new IllegalArgumentException("From date after to date is not allowed");
 
         TransactionQueryBuilder builder = new TransactionQueryBuilder();
@@ -121,10 +165,8 @@ public class TransactionQueryBuilder {
         if (days < 0)
             throw new IllegalArgumentException("Past publication days is a negative number");
 
-        Calendar cal = Calendar.getInstance();
-        Date to = cal.getTime();
-        cal.add(Calendar.DAY_OF_YEAR, -days);
-        Date from = cal.getTime();
+        LocalDate to = LocalDate.now();
+        LocalDate from = to.minusDays(days);
 
         TransactionQueryBuilder builder = new TransactionQueryBuilder();
 
@@ -174,5 +216,12 @@ public class TransactionQueryBuilder {
                          fromPublicationDate, toPublicationDate,
                          issuer, pdmr,
                          language);
+    }
+
+    private static LocalDate toLocalDate(Date date) {
+        if (date == null)
+            return null;
+
+        return LocalDate.ofInstant(date.toInstant(), ZoneId.of("Europe/Stockholm"));
     }
 }

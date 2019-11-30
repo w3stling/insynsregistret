@@ -25,7 +25,9 @@ package com.apptastic.insynsregistret;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 
@@ -36,7 +38,7 @@ import java.util.Date;
 public class TransactionQuery {
     private static final String INSYNSREGISTERET_URL = "https://marknadssok.fi.se/publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
     private static final String URL_ENCODING = "UTF-8";
-    private final SimpleDateFormat dateFormatter;
+    private final DateTimeFormatter dateFormatter;
     private final String url;
     private final Language language;
 
@@ -53,12 +55,28 @@ public class TransactionQuery {
      * @param language - language
      * @throws UnsupportedEncodingException exception
      */
+    @Deprecated
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
                      String issuer, String pdmr, Language language) throws UnsupportedEncodingException {
         
         String issuerName = URLEncoder.encode(orDefault(issuer, ""), URL_ENCODING);
         String pdmrName = URLEncoder.encode(orDefault(pdmr, ""), URL_ENCODING);
-        dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.language = orDefault(language, Language.SWEDISH);
+        String languageName = this.language.getName();
+
+        url = String.format(INSYNSREGISTERET_URL, languageName, issuerName, pdmrName,
+                toDateString(toLocalDate(fromTransactionDate)), toDateString(toLocalDate(toTransactionDate)),
+                toDateString(toLocalDate(fromPublicationDate)), toDateString(toLocalDate(toPublicationDate)));
+    }
+
+    TransactionQuery(LocalDate fromTransactionDate, LocalDate toTransactionDate,
+                     LocalDate fromPublicationDate, LocalDate toPublicationDate,
+                     String issuer, String pdmr, Language language) throws UnsupportedEncodingException {
+
+        String issuerName = URLEncoder.encode(orDefault(issuer, ""), URL_ENCODING);
+        String pdmrName = URLEncoder.encode(orDefault(pdmr, ""), URL_ENCODING);
+        dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.language = orDefault(language, Language.SWEDISH);
         String languageName = this.language.getName();
 
@@ -67,11 +85,18 @@ public class TransactionQuery {
                 toDateString(fromPublicationDate), toDateString(toPublicationDate));
     }
 
-    private String toDateString(Date date) {
+    private static LocalDate toLocalDate(Date date) {
+        if (date == null)
+            return null;
+
+        return LocalDate.ofInstant(date.toInstant(), ZoneId.of("Europe/Stockholm"));
+    }
+
+    private String toDateString(LocalDate date) {
         if (date == null)
             return "";
 
-        return dateFormatter.format(date);
+        return date.format(dateFormatter);
     }
 
     private static <T> T orDefault(T value, T defaultValue) {
