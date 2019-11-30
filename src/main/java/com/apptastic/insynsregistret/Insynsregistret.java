@@ -23,6 +23,7 @@
  */
 package com.apptastic.insynsregistret;
 
+import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -30,6 +31,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -57,12 +60,25 @@ import java.util.zip.GZIPInputStream;
 public class Insynsregistret {
     private boolean processTransactionInParallel;
     private static final String HTTP_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
-    private final HttpClient httpClient;
+    private HttpClient httpClient;
 
     public Insynsregistret() {
-        httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(15))
-                .build();
+        try {
+            SSLContext context = SSLContext.getInstance("TLSv1.3");
+            context.init(null, null, null);
+
+            httpClient = HttpClient.newBuilder()
+                    .sslContext(context)
+                    .followRedirects(HttpClient.Redirect.ALWAYS)
+                    .connectTimeout(Duration.ofSeconds(15))
+                    .build();
+        }
+        catch(NoSuchAlgorithmException | KeyManagementException e) {
+            httpClient = HttpClient.newBuilder()
+                    .followRedirects(HttpClient.Redirect.ALWAYS)
+                    .connectTimeout(Duration.ofSeconds(15))
+                    .build();
+        }
 
         var parallelProperty = System.getProperty("insynsregistret.parallel", "false");
         processTransactionInParallel = parallelProperty.equalsIgnoreCase("true");
