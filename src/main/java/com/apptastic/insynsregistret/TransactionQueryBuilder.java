@@ -27,7 +27,6 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -58,18 +57,9 @@ public class TransactionQueryBuilder {
     @SuppressWarnings("squid:S1133")
     @Deprecated(since="2.2.0")
     public static TransactionQueryBuilder transactions(Date from, Date to) {
-        if (from == null)
-            throw new IllegalArgumentException("From transaction date is null");
-        else if (to == null)
-            throw new IllegalArgumentException("To transaction date is null");
-        else if (TimeUnit.MILLISECONDS.toDays(from.getTime()) > TimeUnit.MILLISECONDS.toDays(to.getTime()))
-            throw new IllegalArgumentException("From date after to date is not allowed");
-
-        TransactionQueryBuilder builder = new TransactionQueryBuilder();
-        builder.fromTransactionDate = toLocalDate(from);
-        builder.toTransactionDate = toLocalDate(to);
-
-        return builder;
+        LocalDate fromDate = toLocalDate(from);
+        LocalDate toDate = toLocalDate(to);
+        return transactions(fromDate, toDate);
     }
 
     /**
@@ -125,18 +115,9 @@ public class TransactionQueryBuilder {
     @SuppressWarnings("squid:S1133")
     @Deprecated(since="2.2.0")
     public static TransactionQueryBuilder publications(Date from, Date to) {
-        if (from == null)
-            throw new IllegalArgumentException("From publication date is null");
-        else if (to == null)
-            throw new IllegalArgumentException("To publication date is null");
-        else if (TimeUnit.MILLISECONDS.toDays(from.getTime()) > TimeUnit.MILLISECONDS.toDays(to.getTime()))
-            throw new IllegalArgumentException("From date after to date is not allowed");
-
-        TransactionQueryBuilder builder = new TransactionQueryBuilder();
-        builder.fromPublicationDate = toLocalDate(from);
-        builder.toPublicationDate = toLocalDate(to);
-
-        return builder;
+        LocalDate fromDate = toLocalDate(from);
+        LocalDate toDate = toLocalDate(to);
+        return publications(fromDate, toDate);
     }
 
     /**
@@ -230,4 +211,5 @@ public class TransactionQueryBuilder {
 
         return LocalDate.ofInstant(date.toInstant(), ZoneId.of("Europe/Stockholm"));
     }
+
 }

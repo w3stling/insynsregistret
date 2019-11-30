@@ -61,16 +61,10 @@ public class TransactionQuery {
     @Deprecated(since="2.2.0")
     TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
                      String issuer, String pdmr, Language language) throws UnsupportedEncodingException {
-        
-        String issuerName = URLEncoder.encode(orDefault(issuer, ""), URL_ENCODING);
-        String pdmrName = URLEncoder.encode(orDefault(pdmr, ""), URL_ENCODING);
-        dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        this.language = orDefault(language, Language.SWEDISH);
-        String languageName = this.language.getName();
 
-        url = String.format(INSYNSREGISTERET_URL, languageName, issuerName, pdmrName,
-                toDateString(toLocalDate(fromTransactionDate)), toDateString(toLocalDate(toTransactionDate)),
-                toDateString(toLocalDate(fromPublicationDate)), toDateString(toLocalDate(toPublicationDate)));
+        this(toLocalDate(fromTransactionDate), toLocalDate(toTransactionDate),
+             toLocalDate(fromPublicationDate), toLocalDate(toPublicationDate),
+             issuer, pdmr, language);
     }
 
     TransactionQuery(LocalDate fromTransactionDate, LocalDate toTransactionDate,
