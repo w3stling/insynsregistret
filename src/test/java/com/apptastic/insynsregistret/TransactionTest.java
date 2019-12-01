@@ -2,6 +2,7 @@ package com.apptastic.insynsregistret;
 
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -166,7 +167,8 @@ public class TransactionTest {
         transaction1.setTransactionDate("2018-05-02 01:02:03");
 
         Transaction transaction2 = getDefaultTransaction();
-        transaction2.setTransactionDate("2018-05-04 01:02:03");
+        transaction2.setPublicationDate(LocalDateTime.of(2018,5, 4,1, 2, 3));
+        transaction2.setTransactionDate(LocalDateTime.of(2018,5, 4,1, 2, 3));
 
         Transaction transaction3 = getDefaultTransaction();
         transaction3.setTransactionDate("2018-05-03 01:02:03");
