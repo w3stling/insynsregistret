@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -316,7 +316,7 @@ implements java.lang.Comparable&lt;<a href="Transaction.html" title="class in co
 </td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code>java.time.LocalDateTime</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPublicationDate()">getPublicationDate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Get the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).</div>
@@ -344,7 +344,7 @@ implements java.lang.Comparable&lt;<a href="Transaction.html" title="class in co
 </td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code>java.time.LocalDateTime</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTransactionDate()">getTransactionDate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Get the date when the transaction was made.</div>
@@ -512,33 +512,47 @@ implements java.lang.Comparable&lt;<a href="Transaction.html" title="class in co
 </tr>
 <tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPublicationDate(java.time.LocalDateTime)">setPublicationDate</a></span>&#8203;(java.time.LocalDateTime&nbsp;publicationDate)</code></th>
+<td class="colLast">
+<div class="block">Set the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).</div>
+</td>
+</tr>
+<tr id="i44" class="altColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQuantity(double)">setQuantity</a></span>&#8203;(double&nbsp;quantity)</code></th>
 <td class="colLast">
 <div class="block">Set the quantity.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStatus(java.lang.String)">setStatus</a></span>&#8203;(java.lang.String&nbsp;status)</code></th>
 <td class="colLast">
 <div class="block">Set status for the transaction.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTradingVenue(java.lang.String)">setTradingVenue</a></span>&#8203;(java.lang.String&nbsp;tradingVenue)</code></th>
 <td class="colLast">
 <div class="block">Get the trading venue, (e.g., Nordic Growth Market (NGM) or Nasdaq Stockholm) from where the transaction was made.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTransactionDate(java.lang.String)">setTransactionDate</a></span>&#8203;(java.lang.String&nbsp;transactionDate)</code></th>
 <td class="colLast">
 <div class="block">Set the date when the transaction was made.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i48" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTransactionDate(java.time.LocalDateTime)">setTransactionDate</a></span>&#8203;(java.time.LocalDateTime&nbsp;transactionDate)</code></th>
+<td class="colLast">
+<div class="block">Set the date when the transaction was made.</div>
+</td>
+</tr>
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUnit(java.lang.String)">setUnit</a></span>&#8203;(java.lang.String&nbsp;unit)</code></th>
 <td class="colLast">
@@ -609,9 +623,8 @@ implements java.lang.Comparable&lt;<a href="Transaction.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>getPublicationDate</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPublicationDate()</pre>
-<div class="block">Get the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).
- Date string format: yyyy-MM-dd HH:mm:ss</div>
+<pre class="methodSignature">public&nbsp;java.time.LocalDateTime&nbsp;getPublicationDate()</pre>
+<div class="block">Get the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>publication date</dd>
@@ -627,6 +640,20 @@ implements java.lang.Comparable&lt;<a href="Transaction.html" title="class in co
 <pre class="methodSignature">public&nbsp;void&nbsp;setPublicationDate&#8203;(java.lang.String&nbsp;publicationDate)</pre>
 <div class="block">Set the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).
  Date string format: yyyy-MM-dd HH:mm:ss</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>publicationDate</code> - publication</dd>
+</dl>
+</li>
+</ul>
+<a id="setPublicationDate(java.time.LocalDateTime)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPublicationDate</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPublicationDate&#8203;(java.time.LocalDateTime&nbsp;publicationDate)</pre>
+<div class="block">Set the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>publicationDate</code> - publication</dd>
@@ -1053,9 +1080,8 @@ implements java.lang.Comparable&lt;<a href="Transaction.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>getTransactionDate</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTransactionDate()</pre>
-<div class="block">Get the date when the transaction was made.
- Date string format: yyyy-MM-dd HH:mm:ss</div>
+<pre class="methodSignature">public&nbsp;java.time.LocalDateTime&nbsp;getTransactionDate()</pre>
+<div class="block">Get the date when the transaction was made.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>transaction date</dd>
@@ -1071,6 +1097,20 @@ implements java.lang.Comparable&lt;<a href="Transaction.html" title="class in co
 <pre class="methodSignature">public&nbsp;void&nbsp;setTransactionDate&#8203;(java.lang.String&nbsp;transactionDate)</pre>
 <div class="block">Set the date when the transaction was made.
  Date string format: yyyy-MM-dd HH:mm:ss</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>transactionDate</code> - transaction date</dd>
+</dl>
+</li>
+</ul>
+<a id="setTransactionDate(java.time.LocalDateTime)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTransactionDate</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTransactionDate&#8203;(java.time.LocalDateTime&nbsp;transactionDate)</pre>
+<div class="block">Set the date when the transaction was made.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>transactionDate</code> - transaction date</dd>
