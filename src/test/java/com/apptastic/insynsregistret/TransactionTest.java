@@ -10,7 +10,7 @@ public class TransactionTest {
     private Transaction getDefaultTransaction() {
         Transaction transaction = new Transaction();
 
-        transaction.setPublicationDate("2018-05-08");
+        transaction.setPublicationDate("2018-05-08 01:02:03");
         transaction.setIssuer("Hennes & Mauritz AB, H & M");
         transaction.setLeiCode("529900O5RR7R39FRDM42");
         transaction.setNotifier("Ramsbury Invest AB");
@@ -25,7 +25,7 @@ public class TransactionTest {
         transaction.setInstrumentType("InstrumentTyp1");
         transaction.setInstrumentName("Hennes & Mauritz AB, H & M ser. B");
         transaction.setIsin("SE0000106270");
-        transaction.setTransactionDate("2018-05-03");
+        transaction.setTransactionDate("2018-05-03 01:02:03");
         transaction.setQuantity(4000000.0);
         transaction.setUnit("Antal");
         transaction.setPrice(149.6959);
@@ -48,7 +48,7 @@ public class TransactionTest {
 
         {
             Transaction transaction2 = getDefaultTransaction();
-            transaction2.setPublicationDate("2018-05-09");
+            transaction2.setPublicationDate("2018-05-09 01:02:03");
             assertNotEquals(transaction1, transaction2);
         }
         {
@@ -124,7 +124,7 @@ public class TransactionTest {
         }
         {
             Transaction transaction2 = getDefaultTransaction();
-            transaction2.setTransactionDate("2018-05-04");
+            transaction2.setTransactionDate("2018-05-04 01:02:03");
             assertNotEquals(transaction1, transaction2);
         }
         {
@@ -163,20 +163,20 @@ public class TransactionTest {
     @Test
     public void testSort() {
         Transaction transaction1 = getDefaultTransaction();
-        transaction1.setTransactionDate("2018-05-02");
+        transaction1.setTransactionDate("2018-05-02 01:02:03");
 
         Transaction transaction2 = getDefaultTransaction();
-        transaction2.setTransactionDate("2018-05-04");
+        transaction2.setTransactionDate("2018-05-04 01:02:03");
 
         Transaction transaction3 = getDefaultTransaction();
-        transaction3.setTransactionDate("2018-05-03");
+        transaction3.setTransactionDate("2018-05-03 01:02:03");
 
         List<Transaction> transactions = Arrays.asList(transaction1, transaction2, transaction3);
         Collections.sort(transactions);
 
-        assertEquals("2018-05-02", transactions.get(0).getTransactionDate());
-        assertEquals("2018-05-03", transactions.get(1).getTransactionDate());
-        assertEquals("2018-05-04", transactions.get(2).getTransactionDate());
+        assertEquals("2018-05-02T01:02:03", transactions.get(0).getTransactionDate().toString());
+        assertEquals("2018-05-03T01:02:03", transactions.get(1).getTransactionDate().toString());
+        assertEquals("2018-05-04T01:02:03", transactions.get(2).getTransactionDate().toString());
     }
 
     @Test
@@ -184,15 +184,15 @@ public class TransactionTest {
         Map<Transaction, String> transactions = new HashMap<>();
 
         Transaction transaction1 = getDefaultTransaction();
-        transaction1.setTransactionDate("2018-05-02");
+        transaction1.setTransactionDate("2018-05-02 01:02:03");
         transactions.put(transaction1, "Transaction1");
 
         Transaction transaction2 = getDefaultTransaction();
-        transaction2.setTransactionDate("2018-05-04");
+        transaction2.setTransactionDate("2018-05-04 01:02:03");
         transactions.put(transaction2, "Transaction2");
 
         Transaction transaction3 = getDefaultTransaction();
-        transaction3.setTransactionDate("2018-05-03");
+        transaction3.setTransactionDate("2018-05-03 01:02:03");
         transactions.put(transaction3, "Transaction3");
 
         assertEquals("Transaction1", transactions.get(transaction1));
@@ -205,15 +205,15 @@ public class TransactionTest {
         Map<Transaction, String> transactions = new TreeMap<>();
 
         Transaction transaction1 = getDefaultTransaction();
-        transaction1.setTransactionDate("2018-05-02");
+        transaction1.setTransactionDate("2018-05-02 01:02:03");
         transactions.put(transaction1, "Transaction1");
 
         Transaction transaction2 = getDefaultTransaction();
-        transaction2.setTransactionDate("2018-05-04");
+        transaction2.setTransactionDate("2018-05-04 01:02:03");
         transactions.put(transaction2, "Transaction2");
 
         Transaction transaction3 = getDefaultTransaction();
-        transaction3.setTransactionDate("2018-05-03");
+        transaction3.setTransactionDate("2018-05-03 01:02:03");
         transactions.put(transaction3, "Transaction3");
 
         assertEquals("Transaction1", transactions.get(transaction1));

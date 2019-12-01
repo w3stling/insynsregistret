@@ -23,13 +23,17 @@
  */
 package com.apptastic.insynsregistret;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
  * Represents a inside trade transaction.
  */
 public class Transaction implements Comparable<Transaction> {
-    private String publicationDate;
+    private static final DateTimeFormatter DATE_TIME_FORMATTER1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER2 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private LocalDateTime publicationDate;
     private String issuer;
     private String leiCode;
     private String notifier;
@@ -44,7 +48,7 @@ public class Transaction implements Comparable<Transaction> {
     private String instrumentType;
     private String instrumentName;
     private String isin;
-    private String transactionDate;
+    private LocalDateTime transactionDate;
     private double quantity;
     private String unit;
     private double price;
@@ -92,10 +96,9 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).
-     * Date string format: yyyy-MM-dd HH:mm:ss
      * @return publication date
      */
-    public String getPublicationDate() {
+    public LocalDateTime getPublicationDate() {
         return publicationDate;
     }
 
@@ -105,6 +108,15 @@ public class Transaction implements Comparable<Transaction> {
      * @param publicationDate publication
      */
     public void setPublicationDate(String publicationDate) {
+        DateTimeFormatter formatter = getDateTimeFormatter(publicationDate);
+        this.publicationDate = LocalDateTime.parse(publicationDate, formatter);
+    }
+
+    /**
+     * Set the date when the transaction was published by @see <a href="http://google.com">Finansinspektionen</a> (FI).
+     * @param publicationDate publication
+     */
+    public void setPublicationDate(LocalDateTime publicationDate) {
         this.publicationDate = publicationDate;
     }
 
@@ -350,10 +362,9 @@ public class Transaction implements Comparable<Transaction> {
 
     /**
      * Get the date when the transaction was made.
-     * Date string format: yyyy-MM-dd HH:mm:ss
      * @return transaction date
      */
-    public String getTransactionDate() {
+    public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
@@ -363,6 +374,16 @@ public class Transaction implements Comparable<Transaction> {
      * @param transactionDate transaction date
      */
     public void setTransactionDate(String transactionDate) {
+        DateTimeFormatter formatter = getDateTimeFormatter(transactionDate);
+        this.transactionDate = LocalDateTime.parse(transactionDate, formatter);
+    }
+
+
+    /**
+     * Set the date when the transaction was made.
+     * @param transactionDate transaction date
+     */
+    public void setTransactionDate(LocalDateTime transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -513,6 +534,20 @@ public class Transaction implements Comparable<Transaction> {
     @Override
     public int compareTo(Transaction o) {
         return transactionDate.compareTo(o.transactionDate);
+    }
+
+    private DateTimeFormatter getDateTimeFormatter(String dateTime) {
+        Objects.requireNonNull(dateTime, "Timestamp must not be null");
+
+        if (dateTime.length() == 19 && dateTime.codePointAt(2) == '/') {
+            return DATE_TIME_FORMATTER2;
+        } else if (dateTime.length() == 19 && dateTime.codePointAt(10) == ' ') {
+            return DATE_TIME_FORMATTER1;
+        } else if (dateTime.length() == 19 && dateTime.codePointAt(10) == 'T') {
+            return DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        }
+
+        return null;
     }
 
     /**

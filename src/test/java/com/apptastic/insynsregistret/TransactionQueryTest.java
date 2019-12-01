@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -461,9 +462,9 @@ public class TransactionQueryTest {
 
         for (Transaction transaction : transactions) {
             assertNotNull(transaction.getPublicationDate());
-            assertEquals(19, transaction.getPublicationDate().length());
+            assertEquals(19, transaction.getPublicationDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).length());
             assertNotNull(transaction.getTransactionDate());
-            assertEquals(19, transaction.getTransactionDate().length());
+            assertEquals(19, transaction.getTransactionDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).length());
         }
     }
 
@@ -501,9 +502,9 @@ public class TransactionQueryTest {
 
         for (Transaction transaction : transactions) {
             assertNotNull(transaction.getPublicationDate());
-            assertEquals(19, transaction.getPublicationDate().length());
+            assertEquals(19, transaction.getPublicationDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).length());
             assertNotNull(transaction.getTransactionDate());
-            assertEquals(19, transaction.getTransactionDate().length());
+            assertEquals(19, transaction.getTransactionDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).length());
         }
     }
 
