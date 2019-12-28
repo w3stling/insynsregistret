@@ -267,6 +267,9 @@ public class TransactionTest {
         type = Transaction.InstrumentType.parse("InstrumentTyp19");
         assertEquals(Transaction.InstrumentType.PUT_OPTION, type);
 
+        type = Transaction.InstrumentType.parse("InstrumentTyp20");
+        assertEquals(Transaction.InstrumentType.PUT_OPTION, type);
+
         type = Transaction.InstrumentType.parse("InstrumentTyp21");
         assertEquals(Transaction.InstrumentType.COMMERCIAL_PAPER, type);
 
