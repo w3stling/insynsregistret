@@ -3,7 +3,7 @@ Insynsregistret
 
 [![Build Status](https://travis-ci.org/w3stling/insynsregistret.svg?branch=master)](https://travis-ci.org/w3stling/insynsregistret)
 [![Download](https://api.bintray.com/packages/apptastic/maven-repo/insynsregistret/images/download.svg)](https://bintray.com/apptastic/maven-repo/insynsregistret/_latestVersion)
-[![Javadoc](https://img.shields.io/badge/javadoc-3.0.1-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/3.0.1)
+[![Javadoc](https://img.shields.io/badge/javadoc-3.0.2-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/3.0.2)
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)   
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.apptastic%3Ainsynsregistret)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=coverage)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=Coverage)
@@ -140,7 +140,7 @@ Add dependency declaration:
         <dependency>
             <groupId>com.apptastic</groupId>
             <artifactId>insynsregistret</artifactId>
-            <version>3.0.1</version>
+            <version>3.0.2</version>
         </dependency>
     </dependencies>
     ...
@@ -158,7 +158,7 @@ repositories {
 Add dependency declaration:
 ```groovy
 dependencies {
-    implementation 'com.apptastic:insynsregistret:3.0.1'
+    implementation 'com.apptastic:insynsregistret:3.0.2'
 }
 ```
 
