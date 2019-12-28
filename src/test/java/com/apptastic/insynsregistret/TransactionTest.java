@@ -268,7 +268,7 @@ public class TransactionTest {
         assertEquals(Transaction.InstrumentType.PUT_OPTION, type);
 
         type = Transaction.InstrumentType.parse("InstrumentTyp20");
-        assertEquals(Transaction.InstrumentType.PUT_OPTION, type);
+        assertEquals(Transaction.InstrumentType.SYNTHETIC_OPTION, type);
 
         type = Transaction.InstrumentType.parse("InstrumentTyp21");
         assertEquals(Transaction.InstrumentType.COMMERCIAL_PAPER, type);
