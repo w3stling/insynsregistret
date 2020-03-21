@@ -60,26 +60,8 @@ import java.util.zip.GZIPInputStream;
 public class Insynsregistret {
     private boolean processTransactionInParallel;
     private static final String HTTP_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
-    private HttpClient httpClient;
 
     public Insynsregistret() {
-        try {
-            SSLContext context = SSLContext.getInstance("TLSv1.3");
-            context.init(null, null, null);
-
-            httpClient = HttpClient.newBuilder()
-                    .sslContext(context)
-                    .followRedirects(HttpClient.Redirect.ALWAYS)
-                    .connectTimeout(Duration.ofSeconds(15))
-                    .build();
-        }
-        catch(NoSuchAlgorithmException | KeyManagementException e) {
-            httpClient = HttpClient.newBuilder()
-                    .followRedirects(HttpClient.Redirect.ALWAYS)
-                    .connectTimeout(Duration.ofSeconds(15))
-                    .build();
-        }
-
         var parallelProperty = System.getProperty("insynsregistret.parallel", "false");
         processTransactionInParallel = parallelProperty.equalsIgnoreCase("true");
     }
@@ -127,6 +109,7 @@ public class Insynsregistret {
                 .build();
 
         try {
+            var httpClient = createHttpClient();
             var resp = httpClient.send(req, HttpResponse.BodyHandlers.ofInputStream());
             var inputStream = resp.body();
 
@@ -427,6 +410,30 @@ public class Insynsregistret {
             COLUMN_NAME_FIELD_MAPPING.put(COLUMN_STATUS[Language.SWEDISH.getIndex()], Transaction::setStatus);
             COLUMN_NAME_FIELD_MAPPING.put(COLUMN_STATUS[Language.ENGLISH.getIndex()], Transaction::setStatus);
         }
+    }
+
+
+    private HttpClient createHttpClient() {
+        HttpClient httpClient;
+
+        try {
+            SSLContext context = SSLContext.getInstance("TLSv1.3");
+            context.init(null, null, null);
+
+            httpClient = HttpClient.newBuilder()
+                    .sslContext(context)
+                    .followRedirects(HttpClient.Redirect.ALWAYS)
+                    .connectTimeout(Duration.ofSeconds(15))
+                    .build();
+        }
+        catch(NoSuchAlgorithmException | KeyManagementException e) {
+            httpClient = HttpClient.newBuilder()
+                    .followRedirects(HttpClient.Redirect.ALWAYS)
+                    .connectTimeout(Duration.ofSeconds(15))
+                    .build();
+        }
+
+        return httpClient;
     }
 
 }
