@@ -448,7 +448,7 @@ public class TransactionQueryTest {
     public void liveSvQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(5)
                 .build();
 
         List<Transaction> transactions = ir.search(transactionQuery)
@@ -513,7 +513,7 @@ public class TransactionQueryTest {
     public void liveEnQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
-        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(10)
+        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(5)
                 .language(Language.ENGLISH)
                 .build();
 
