@@ -42,8 +42,8 @@ public class TransactionTest {
     public void equalsTest() {
         Transaction transaction1 = getDefaultTransaction();
 
-        assertTrue(transaction1.equals(transaction1));
-        assertFalse(transaction1.equals("Transaction"));
+        assertEquals(transaction1, transaction1);
+        assertNotEquals("Transaction", transaction1);
         assertEquals(transaction1, getDefaultTransaction());
         assertEquals(transaction1, new Transaction(transaction1));
 
