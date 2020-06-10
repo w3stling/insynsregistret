@@ -572,6 +572,7 @@ public class Transaction implements Comparable<Transaction> {
         SYNTHETIC_OPTION("InstrumentTyp20", "Synthetic option", "Syntetisk option"),
         COMMERCIAL_PAPER("InstrumentTyp21", "Commercial paper", "Företagscertifikat"),
         INTERIM_SHARE("InstrumentTyp22", "Interim share", "Interimsaktie"),
+        EMISSION_ALLOWANCE("InstrumentTyp23", "Emission allowance", "Utsläppsrätt"),
         UNKNOWN("", "Unknown", "Okänd");
 
         private String value;
@@ -644,6 +645,9 @@ public class Transaction implements Comparable<Transaction> {
             }
             else if (instrumentType.equals("InstrumentTyp22")) {
                 type = INTERIM_SHARE;
+            }
+            else if (instrumentType.equals("InstrumentTyp23")) {
+                type = EMISSION_ALLOWANCE;
             }
             else {
                 type = UNKNOWN;
