@@ -47,7 +47,7 @@ public class FreeTextQueryTest {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("ÅF").build();
 
         Insynsregistret ir = new Insynsregistret();
-        Optional<String> issuer = ir.search(query).skip(1).findFirst();
+        Optional<String> issuer = ir.search(query).findFirst();
 
         assertTrue(issuer.isPresent());
         assertTrue(issuer.get().toLowerCase().contains("åf pöyry ab"));
