@@ -62,7 +62,7 @@ public class FreeTextQueryTest {
         Optional<String> issuer = ir.search(query).findFirst();
 
         assertTrue(issuer.isPresent());
-        assertEquals("Hennes & Mauritz AB, H & M", issuer.get());
+        assertEquals("H & M Hennes & Mauritz AB", issuer.get());
     }
 
 
