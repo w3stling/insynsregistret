@@ -1,7 +1,7 @@
 Insynsregistret
 ===============
 
-[![Build Status](https://travis-ci.org/w3stling/insynsregistret.svg?branch=master)](https://travis-ci.org/w3stling/insynsregistret)
+[![Build Status](https://travis-ci.com/w3stling/insynsregistret.svg?branch=master)](https://travis-ci.com/w3stling/insynsregistret)
 [![Download](https://api.bintray.com/packages/apptastic/maven-repo/insynsregistret/images/download.svg)](https://bintray.com/apptastic/maven-repo/insynsregistret/_latestVersion)
 [![Javadoc](https://img.shields.io/badge/javadoc-3.0.4-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/3.0.4)
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)   
