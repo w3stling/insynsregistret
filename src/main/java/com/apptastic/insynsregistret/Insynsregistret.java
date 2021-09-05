@@ -230,7 +230,7 @@ public class Insynsregistret {
 
     static class TransactionMapper {
         private static final String[] COLUMN_PUBLICATION_DATE = {"Publiceringsdatum", "Publication date"};
-        private static final String[] COLUMN_ISSUER = {"Utgivare", "Issuer"};
+        private static final String[] COLUMN_ISSUER = {"Emittent", "Issuer"};
         private static final String[] COLUMN_LEI_CODE = {"LEI-kod", "LEI-code"};
         private static final String[] COLUMN_NOTIFIER = {"Anmälningsskyldig", "Notifier"};
         private static final String[] COLUMN_PERSON_DISCHARGING_MANAGERIAL_RESPONSIBILITIES = {"Person i ledande ställning", "Person discharging managerial responsibilities"};

@@ -589,64 +589,61 @@ public class Transaction implements Comparable<Transaction> {
         public static InstrumentType parse(String instrumentType) {
             InstrumentType type;
 
-            if (instrumentType == null) {
-                type = UNKNOWN;
-            }
-            else if (instrumentType.equals("InstrumentTyp1")) {
+            if ("Aktie".equals(instrumentType) || "Share".equals(instrumentType) || "InstrumentTyp1".equals(instrumentType)) {
                 type = SHARE;
             }
-            else if (instrumentType.equals("InstrumentTyp2")) {
+            else if ("BTA (betald tecknad aktie)".equals(instrumentType) || "BTA".equals(instrumentType) || "InstrumentTyp2".equals(instrumentType)) {
                 type = BTA;
             }
-            else if (instrumentType.equals("InstrumentTyp3")) {
+            else if ("BTU (betald tecknad unit)".equals(instrumentType) || "BTU".equals(instrumentType) || "InstrumentTyp3".equals(instrumentType)) {
                 type = BTU;
             }
-            else if (instrumentType.equals("InstrumentTyp5")) {
+            else if ("Kapitalandelsbevis".equals(instrumentType) || "Capital equity".equals(instrumentType) || "InstrumentTyp5".equals(instrumentType)) {
                 type = CAPITAL_EQUITY;
             }
-            else if (instrumentType.equals("InstrumentTyp6")) {
+            else if ("Konvertibel".equals(instrumentType) || "Convertible".equals(instrumentType) || "InstrumentTyp6".equals(instrumentType)) {
                 type = CONVERTIBLE;
             }
-            else if (instrumentType.equals("InstrumentTyp7")) {
+            else if ("Obligation".equals(instrumentType) || "Bond".equals(instrumentType) || "InstrumentTyp7".equals(instrumentType)) {
                 type = BOND;
             }
-            else if (instrumentType.equals("InstrumentTyp8")) {
+            else if ("Option".equals(instrumentType) || "Option".equals(instrumentType) || "InstrumentTyp8".equals(instrumentType)) {
                 type = OPTION;
             }
-            else if (instrumentType.equals("InstrumentTyp11")) {
+            else if ("Teckningsoption".equals(instrumentType) || "Subscription warrant".equals(instrumentType) || "InstrumentTyp11".equals(instrumentType)) {
                 type = SUBSCRIPTION_WARRANT;
             }
-            else if (instrumentType.equals("InstrumentTyp12")) {
+            else if ("Teckningsrätt/Uniträtt".equals(instrumentType) || "Subscription right".equals(instrumentType) || "InstrumentTyp12".equals(instrumentType)) {
                 type = SUBSCRIPTION_RIGHT;
             }
-            else if (instrumentType.equals("InstrumentTyp13")) {
+            else if ("Terminer".equals(instrumentType) || "Future/Forward".equals(instrumentType) || "InstrumentTyp13".equals(instrumentType)) {
                 type = FUTURE_FORWARD;
             }
-            else if (instrumentType.equals("InstrumentTyp14")) {
+            else if ("Warrant".equals(instrumentType) || "Warrant".equals(instrumentType) || "InstrumentTyp14".equals(instrumentType)) {
                 type = WARRANT;
             }
-            else if (instrumentType.equals("InstrumentTyp15")) {
+            else if ("Övriga derivatkontrakt".equals(instrumentType) || "Other derivative contracts".equals(instrumentType) || "InstrumentTyp15".equals(instrumentType)) {
                 type = OTHER_DERIVATIVE_CONTRACTS;
             }
-            else if (instrumentType.equals("InstrumentTyp17")) {
+            else if ("Inlösenaktie".equals(instrumentType) || "Redemption share".equals(instrumentType) || "InstrumentTyp17".equals(instrumentType)) {
                 type = REDEMPTION_SHARE;
             }
-            else if (instrumentType.equals("InstrumentTyp18")) {
+            else if ("Köpoption".equals(instrumentType) || "Call option".equals(instrumentType) || "InstrumentTyp18".equals(instrumentType)) {
                 type = CALL_OPTION;
             }
-            else if (instrumentType.equals("InstrumentTyp19")) {
+            else if ("Säljoption".equals(instrumentType) || "Put option".equals(instrumentType) || "InstrumentTyp19".equals(instrumentType)) {
                 type = PUT_OPTION;
             }
-            else if (instrumentType.equals("InstrumentTyp20")) {
+            else if ("Syntetisk option".equals(instrumentType) || "Synthetic option".equals(instrumentType) || "InstrumentTyp20".equals(instrumentType)) {
                 type = SYNTHETIC_OPTION;
             }
-            else if (instrumentType.equals("InstrumentTyp21")) {
+            else if ("Företagscertifikat".equals(instrumentType) || "Commercial paper".equals(instrumentType) || "InstrumentTyp21".equals(instrumentType)) {
                 type = COMMERCIAL_PAPER;
             }
-            else if (instrumentType.equals("InstrumentTyp22")) {
+            else if ("Interimsaktie".equals(instrumentType) || "Interim share".equals(instrumentType) || "InstrumentTyp22".equals(instrumentType)) {
                 type = INTERIM_SHARE;
             }
-            else if (instrumentType.equals("InstrumentTyp23")) {
+            else if ("Utsläppsrätt".equals(instrumentType)  || "Emission allowance".equals(instrumentType) || "InstrumentTyp23".equals(instrumentType)) {
                 type = EMISSION_ALLOWANCE;
             }
             else {

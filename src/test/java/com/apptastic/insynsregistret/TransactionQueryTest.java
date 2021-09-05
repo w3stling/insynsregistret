@@ -2,6 +2,7 @@ package com.apptastic.insynsregistret;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -191,6 +192,7 @@ public class TransactionQueryTest {
     }
 
 
+    @Ignore
     @Test
     public void validateTransactionOld() throws IOException {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
@@ -224,6 +226,7 @@ public class TransactionQueryTest {
         assertEquals("Aktuell", transaction.getStatus());
     }
 
+    @Ignore
     @Test
     public void validateTransaction() throws IOException {
         LocalDate from = LocalDate.of(2018, 3,1);
@@ -258,6 +261,7 @@ public class TransactionQueryTest {
     }
 
 
+    @Ignore
     @Test
     public void badPricePointInsteadOfComma() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
@@ -611,7 +615,7 @@ public class TransactionQueryTest {
 
     @Test
     public void transactionAssignerTest() {
-        String[] headerColumns = new String[] {"Hepp1", "Utgivare", "ISIN"};
+        String[] headerColumns = new String[] {"Hepp1", "Emittent", "ISIN"};
         String[] dataColumns = new String[] {"Test1", "Swedish Match", "SE0000310336"};
 
         Insynsregistret.TransactionMapper assigner = new Insynsregistret.TransactionMapper();
