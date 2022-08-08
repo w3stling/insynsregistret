@@ -12,6 +12,10 @@ Insynsregistret
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
 
+> **Note** - from version 4.0.0:
+> * New Java package name
+> * New group ID in Maven / Gradle dependency declaration
+> * Moved repository from `JCenter` to `Maven Central Repository`
 
 [Insynsregistret][1] is a Swedish financial registry maintained by
 the [Finansinspektionen][2] (FI). It contains information regarding insider trading on

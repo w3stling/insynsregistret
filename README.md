@@ -2,7 +2,7 @@ Insynsregistret
 ===============
 
 [![Build](https://github.com/w3stling/insynsregistret/actions/workflows/build.yml/badge.svg)](https://github.com/w3stling/insynsregistret/actions/workflows/build.yml)
-[![Download](https://img.shields.io/badge/download-2.0.0-brightgreen.svg)](https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/2.0.0/jar)
+[![Download](https://img.shields.io/badge/download-4.0.0-brightgreen.svg)](https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/4.0.0/jar)
 [![Javadoc](https://img.shields.io/badge/javadoc-4.0.0-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/4.0.0)
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)   
 [![CodeQL](https://github.com/w3stling/insynsregistret/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/w3stling/insynsregistret/actions/workflows/codeql-analysis.yml)
@@ -12,6 +12,10 @@ Insynsregistret
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
 
+> **Note** - from version 4.0.0:
+> * New Java package name
+> * New group ID in Maven / Gradle dependency declaration
+> * Moved repository from `JCenter` to `Maven Central Repository`
 
 [Insynsregistret][1] is a Swedish financial registry maintained by
 the [Finansinspektionen][2] (FI). It contains information regarding insider trading on
