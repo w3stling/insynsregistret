@@ -26,8 +26,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":41,"i6":9,"i7":9,"i8":41,"i9":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":9,"i7":9};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -148,7 +148,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -192,22 +192,12 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="TransactionQueryBuilder.html" title="class in com.apptasticsoftware.insynsregistret">TransactionQueryBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#publications(java.util.Date,java.util.Date)">publications</a></span>&#8203;(java.util.Date&nbsp;from,
-            java.util.Date&nbsp;to)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Use LocalDate class instead of Date class</div>
-</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>static <a href="TransactionQueryBuilder.html" title="class in com.apptasticsoftware.insynsregistret">TransactionQueryBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#publicationsLastDays(int)">publicationsLastDays</a></span>&#8203;(int&nbsp;days)</code></th>
 <td class="colLast">
 <div class="block">Query inside trade transactions that as publications from a given number of days back in time from today's date.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="TransactionQueryBuilder.html" title="class in com.apptasticsoftware.insynsregistret">TransactionQueryBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#transactions(java.time.LocalDate,java.time.LocalDate)">transactions</a></span>&#8203;(java.time.LocalDate&nbsp;from,
             java.time.LocalDate&nbsp;to)</code></th>
@@ -215,17 +205,7 @@ extends java.lang.Object</pre>
 <div class="block">Query inside trade transactions between the given dates.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>static <a href="TransactionQueryBuilder.html" title="class in com.apptasticsoftware.insynsregistret">TransactionQueryBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#transactions(java.util.Date,java.util.Date)">transactions</a></span>&#8203;(java.util.Date&nbsp;from,
-            java.util.Date&nbsp;to)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Use LocalDate class instead of Date class</div>
-</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="TransactionQueryBuilder.html" title="class in com.apptasticsoftware.insynsregistret">TransactionQueryBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#transactionsLastDays(int)">transactionsLastDays</a></span>&#8203;(int&nbsp;days)</code></th>
 <td class="colLast">
@@ -256,28 +236,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="transactions(java.util.Date,java.util.Date)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>transactions</h4>
-<pre class="methodSignature">@Deprecated(since="2.2.0")
-public static&nbsp;<a href="TransactionQueryBuilder.html" title="class in com.apptasticsoftware.insynsregistret">TransactionQueryBuilder</a>&nbsp;transactions&#8203;(java.util.Date&nbsp;from,
-                                                   java.util.Date&nbsp;to)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Use LocalDate class instead of Date class</div>
-</div>
-<div class="block">Query inside trade transactions between the given dates.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>from</code> - from date (Year, month and day resolution)</dd>
-<dd><code>to</code> - to date (Year, month and day resolution)</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>builder object</dd>
-</dl>
-</li>
-</ul>
 <a id="transactions(java.time.LocalDate,java.time.LocalDate)">
 <!--   -->
 </a>
@@ -307,29 +265,6 @@ public static&nbsp;<a href="TransactionQueryBuilder.html" title="class in com.ap
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>days</code> - number of days back in time</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>builder object</dd>
-</dl>
-</li>
-</ul>
-<a id="publications(java.util.Date,java.util.Date)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>publications</h4>
-<pre class="methodSignature">@Deprecated(since="2.2.0")
-public static&nbsp;<a href="TransactionQueryBuilder.html" title="class in com.apptasticsoftware.insynsregistret">TransactionQueryBuilder</a>&nbsp;publications&#8203;(java.util.Date&nbsp;from,
-                                                   java.util.Date&nbsp;to)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Use LocalDate class instead of Date class</div>
-</div>
-<div class="block">Query inside trade transactions was published between the given dates.
- Usually transactions are published with 3 days from then the transaction occurred.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>from</code> - from date  (Year, month and day resolution)</dd>
-<dd><code>to</code> - to date (Year, month and day resolution)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>builder object</dd>
 </dl>
