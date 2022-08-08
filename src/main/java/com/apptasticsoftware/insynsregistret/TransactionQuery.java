@@ -26,9 +26,7 @@ package com.apptasticsoftware.insynsregistret;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 
 /**
@@ -40,32 +38,7 @@ public class TransactionQuery {
     private static final String URL_ENCODING = "UTF-8";
     private final DateTimeFormatter dateFormatter;
     private final String url;
-    private final Language language;
 
-
-    /**
-     * Constructor for inside trade transaction query.
-     * Query either transactions or publication between dates. Optional parameters issue, PDMR and language parameters.
-     * @param fromTransactionDate from transaction date
-     * @param toTransactionDate to transaction date
-     * @param fromPublicationDate from publication date
-     * @param toPublicationDate to publication date
-     * @param issuer - issuer name
-     * @param pdmr person discharging managerial responsibilities (PDMR) name
-     * @param language - language
-     * @throws UnsupportedEncodingException exception
-     *
-     * @deprecated Use LocalDate class instead of Date class
-     */
-    @SuppressWarnings("squid:S1133")
-    @Deprecated(since="2.2.0")
-    TransactionQuery(Date fromTransactionDate, Date toTransactionDate, Date fromPublicationDate, Date toPublicationDate,
-                     String issuer, String pdmr, Language language) throws UnsupportedEncodingException {
-
-        this(toLocalDate(fromTransactionDate), toLocalDate(toTransactionDate),
-             toLocalDate(fromPublicationDate), toLocalDate(toPublicationDate),
-             issuer, pdmr, language);
-    }
 
     TransactionQuery(LocalDate fromTransactionDate, LocalDate toTransactionDate,
                      LocalDate fromPublicationDate, LocalDate toPublicationDate,
@@ -74,19 +47,12 @@ public class TransactionQuery {
         String issuerName = URLEncoder.encode(orDefault(issuer, ""), URL_ENCODING);
         String pdmrName = URLEncoder.encode(orDefault(pdmr, ""), URL_ENCODING);
         dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        this.language = orDefault(language, Language.SWEDISH);
-        String languageName = this.language.getName();
+        Language lang = orDefault(language, Language.SWEDISH);
+        String languageName = lang.getName();
 
         url = String.format(INSYNSREGISTERET_URL, languageName, issuerName, pdmrName,
                 toDateString(fromTransactionDate), toDateString(toTransactionDate),
                 toDateString(fromPublicationDate), toDateString(toPublicationDate));
-    }
-
-    private static LocalDate toLocalDate(Date date) {
-        if (date == null)
-            return null;
-
-        return LocalDate.ofInstant(date.toInstant(), ZoneId.of("Europe/Stockholm"));
     }
 
     private String toDateString(LocalDate date) {
