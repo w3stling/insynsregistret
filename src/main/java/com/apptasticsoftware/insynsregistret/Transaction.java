@@ -550,6 +550,7 @@ public class Transaction implements Comparable<Transaction> {
         return null;
     }
 
+    @SuppressWarnings("java:S1192")
     /**
      * Instrument Type
      */
