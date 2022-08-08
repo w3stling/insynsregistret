@@ -23,10 +23,10 @@
  */
 
 /**
- * This modules defines the base APIs for insynsregistret.
+ * These modules define the base APIs for insynsregistret.
  */
-module com.apptastic.insynsregistret {
-    exports com.apptastic.insynsregistret;
+module com.apptasticsoftware.insynsregistret {
+    exports com.apptasticsoftware.insynsregistret;
     
     requires java.logging;
     requires java.net.http;

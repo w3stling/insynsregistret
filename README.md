@@ -138,7 +138,7 @@ Add dependency declaration:
     ...
     <dependencies>
         <dependency>
-            <groupId>com.apptastic</groupId>
+            <groupId>com.apptasticsoftware</groupId>
             <artifactId>insynsregistret</artifactId>
             <version>3.0.4</version>
         </dependency>
@@ -158,7 +158,7 @@ repositories {
 Add dependency declaration:
 ```groovy
 dependencies {
-    implementation 'com.apptastic:insynsregistret:3.0.4'
+    implementation 'com.apptasticsoftware:insynsregistret:3.0.4'
 }
 ```
 

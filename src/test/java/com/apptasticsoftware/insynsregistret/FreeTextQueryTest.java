@@ -1,4 +1,4 @@
-package com.apptastic.insynsregistret;
+package com.apptasticsoftware.insynsregistret;
 
 import static org.junit.Assert.*;
 
