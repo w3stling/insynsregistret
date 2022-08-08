@@ -69,7 +69,7 @@ class TransactionQueryTest {
         LocalDate to = null;
 
         assertThrows(IllegalArgumentException.class, () ->
-                TransactionQueryBuilder.transactions(from, to).build());
+                TransactionQueryBuilder.transactions(from, to));
     }
 
     @Test
@@ -97,7 +97,7 @@ class TransactionQueryTest {
         LocalDate to = LocalDate.of(2018, 3,1);
 
         assertThrows(IllegalArgumentException.class, () ->
-                TransactionQueryBuilder.publications(from, to).build());
+                TransactionQueryBuilder.publications(from, to));
     }
 
 
@@ -107,14 +107,14 @@ class TransactionQueryTest {
         LocalDate to = null;
 
         assertThrows(IllegalArgumentException.class, () ->
-                TransactionQueryBuilder.publications(from, to).build());
+                TransactionQueryBuilder.publications(from, to));
     }
 
 
     @Test
     void badPublicationsPastDays() {
         assertThrows(IllegalArgumentException.class, () ->
-                TransactionQueryBuilder.publicationsLastDays(-1).build());
+                TransactionQueryBuilder.publicationsLastDays(-1));
     }
 
 

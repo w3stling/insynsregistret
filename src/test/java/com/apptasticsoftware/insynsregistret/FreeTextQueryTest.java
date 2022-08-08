@@ -86,7 +86,7 @@ class FreeTextQueryTest {
     @Test
     void getIssuer_null() {
         assertThrows(IllegalArgumentException.class, () ->
-                FreeTextQueryBuilder.issuer(null).build());
+                FreeTextQueryBuilder.issuer(null));
     }
 
 
@@ -103,7 +103,7 @@ class FreeTextQueryTest {
     @Test
     void getPDMR_null() {
         assertThrows(IllegalArgumentException.class, () ->
-            FreeTextQueryBuilder.pdmr(null).build());
+            FreeTextQueryBuilder.pdmr(null));
     }
 
 

@@ -39,7 +39,9 @@ class TransactionTest {
     }
 
 
+
     @Test
+    @SuppressWarnings("java:S5961")
     void equalsTest() {
         Transaction transaction1 = getDefaultTransaction();
 
