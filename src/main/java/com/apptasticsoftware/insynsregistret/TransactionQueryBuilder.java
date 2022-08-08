@@ -25,8 +25,6 @@ package com.apptasticsoftware.insynsregistret;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 
 /**
@@ -44,22 +42,6 @@ public class TransactionQueryBuilder {
 
     private TransactionQueryBuilder() {
 
-    }
-
-    /**
-     * Query inside trade transactions between the given dates.
-     * @param from from date (Year, month and day resolution)
-     * @param to to date (Year, month and day resolution)
-     * @return builder object
-     *
-     * @deprecated Use LocalDate class instead of Date class
-     */
-    @SuppressWarnings("squid:S1133")
-    @Deprecated(since="2.2.0")
-    public static TransactionQueryBuilder transactions(Date from, Date to) {
-        LocalDate fromDate = toLocalDate(from);
-        LocalDate toDate = toLocalDate(to);
-        return transactions(fromDate, toDate);
     }
 
     /**
@@ -101,23 +83,6 @@ public class TransactionQueryBuilder {
         builder.toTransactionDate = to;
 
         return builder;
-    }
-
-    /**
-     * Query inside trade transactions was published between the given dates.
-     * Usually transactions are published with 3 days from then the transaction occurred.
-     * @param from from date  (Year, month and day resolution)
-     * @param to to date (Year, month and day resolution)
-     * @return builder object
-     *
-     * @deprecated Use LocalDate class instead of Date class
-     */
-    @SuppressWarnings("squid:S1133")
-    @Deprecated(since="2.2.0")
-    public static TransactionQueryBuilder publications(Date from, Date to) {
-        LocalDate fromDate = toLocalDate(from);
-        LocalDate toDate = toLocalDate(to);
-        return publications(fromDate, toDate);
     }
 
     /**
@@ -203,13 +168,6 @@ public class TransactionQueryBuilder {
                          fromPublicationDate, toPublicationDate,
                          issuer, pdmr,
                          language);
-    }
-
-    private static LocalDate toLocalDate(Date date) {
-        if (date == null)
-            return null;
-
-        return LocalDate.ofInstant(date.toInstant(), ZoneId.of("Europe/Stockholm"));
     }
 
 }
