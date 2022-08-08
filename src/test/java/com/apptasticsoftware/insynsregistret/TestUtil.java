@@ -1,4 +1,4 @@
-package com.apptastic.insynsregistret;
+package com.apptasticsoftware.insynsregistret;
 
 import java.io.*;
 import java.nio.charset.Charset;

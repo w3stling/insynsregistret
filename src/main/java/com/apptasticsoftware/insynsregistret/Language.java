@@ -21,8 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.apptasticsoftware.insynsregistret;
+
 
 /**
- * This package is intended for extracting data from the Financial Supervisory Authority (Finansinspektionen) insider registry.
+ * Represents a language.
  */
-package com.apptastic.insynsregistret;
+public enum Language {
+    SWEDISH(0, "sv-SE"),
+    ENGLISH(1, "en-GB");
+
+    private int index;
+    private String name;
+
+    /**
+     * Language
+     * @param index index
+     * @param name name
+     */
+    Language(int index, String name) {
+        this.index = index;
+        this.name = name;
+    }
+
+    /**
+     * Returns an index representation of the language.
+     * @return index
+     */
+    int getIndex() {
+        return index;
+    }
+
+    /**
+     * Returns the name representation of the language.
+     * @return name
+     */
+    String getName() {
+        return name;
+    }
+}

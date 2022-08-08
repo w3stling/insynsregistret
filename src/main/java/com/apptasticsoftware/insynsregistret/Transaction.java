@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.apptastic.insynsregistret;
+package com.apptasticsoftware.insynsregistret;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

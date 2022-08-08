@@ -1,4 +1,4 @@
-package com.apptastic.insynsregistret;
+package com.apptasticsoftware.insynsregistret;
 
 import org.junit.Test;
 
