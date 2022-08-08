@@ -1,9 +1,9 @@
 package com.apptasticsoftware.insynsregistret;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -17,18 +17,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 
-public class TransactionQueryTest {
+class TransactionQueryTest {
     private BufferedReader reader;
     private Insynsregistret irMock;
 
 
-    @Before
-    public void setupTest() throws IOException {
+    @BeforeEach
+    void setupTest() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
         reader = TestUtil.getExportedTransactionFile(classLoader, "insynSample1.csv");
 
@@ -37,15 +37,15 @@ public class TransactionQueryTest {
     }
 
 
-    @After
-    public void teardownTest() throws IOException {
+    @AfterEach
+    void teardownTest() throws IOException {
         if (reader != null)
             reader.close();
     }
 
 
     @Test
-    public void queryByTransactionDateOld() throws IOException {
+    void queryByTransactionDateOld() throws IOException {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
@@ -56,7 +56,7 @@ public class TransactionQueryTest {
     }
 
     @Test
-    public void queryByTransactionDate() throws IOException {
+    void queryByTransactionDate() throws IOException {
         LocalDate from = LocalDate.of(2018, 3,1);
         LocalDate to = LocalDate.of(2018, 3,1);
 
@@ -66,59 +66,33 @@ public class TransactionQueryTest {
         assertEquals(375, transactionCount);
     }
 
-
-    @Test(expected = IllegalArgumentException.class)
-    public void badTransactionFromDateOld() throws IOException {
-        Date from = null;
-        Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-
-        TransactionQuery query = TransactionQueryBuilder.transactions(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void badTransactionFromDate() throws IOException {
+    @Test
+    void badTransactionFromDate() {
         LocalDate from = null;
         LocalDate to = LocalDate.of(2018, 3,1);
 
-        TransactionQuery query = TransactionQueryBuilder.transactions(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
+        assertThrows(IllegalArgumentException.class, () ->
+                TransactionQueryBuilder.transactions(from, to).build());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void badTransactionToDateOld() throws IOException {
-        Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-        Date to = null;
-
-        TransactionQuery query = TransactionQueryBuilder.transactions(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void badTransactionToDate() throws IOException {
+    @Test
+    void badTransactionToDate() {
         LocalDate from = LocalDate.of(2018, 3,1);
         LocalDate to = null;
 
-        TransactionQuery query = TransactionQueryBuilder.transactions(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
+        assertThrows(IllegalArgumentException.class, () ->
+                TransactionQueryBuilder.transactions(from, to).build());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void badTransactionPastDays() throws UnsupportedEncodingException {
-        TransactionQueryBuilder.transactionsLastDays(-1).build();
+    @Test
+    void badTransactionPastDays() {
+        assertThrows(IllegalArgumentException.class, () ->
+                TransactionQueryBuilder.transactionsLastDays(-1).build());
     }
 
 
     @Test
-    public void queryByPublicationDateOld() throws IOException {
+    void queryByPublicationDateOld() throws IOException {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
@@ -130,7 +104,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void queryByPublicationDate() throws IOException {
+    void queryByPublicationDate() throws IOException {
         LocalDate from = LocalDate.of(2018, 3,1);
         LocalDate to = LocalDate.of(2018, 3,1);
 
@@ -140,61 +114,35 @@ public class TransactionQueryTest {
         assertEquals(375, transactionCount);
     }
 
-
-    @Test(expected = IllegalArgumentException.class)
-    public void badPublicationFromDateOld() throws IOException {
-        Date from = null;
-        Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-
-        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void badPublicationFromDate() throws IOException {
+    @Test
+    void badPublicationFromDate() {
         LocalDate from = null;
         LocalDate to = LocalDate.of(2018, 3,1);
 
-        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
+        assertThrows(IllegalArgumentException.class, () ->
+                TransactionQueryBuilder.publications(from, to).build());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void badPublicationToDateOld() throws IOException {
-        Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-        Date to = null;
-
-        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void badPublicationToDate() throws IOException {
+    @Test
+    void badPublicationToDate() {
         LocalDate from = LocalDate.of(2018,3,1);
         LocalDate to = null;
 
-        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
+        assertThrows(IllegalArgumentException.class, () ->
+                TransactionQueryBuilder.publications(from, to).build());
     }
 
 
-    @Test(expected = IllegalArgumentException.class)
-    public void badPublicationsPastDays() throws UnsupportedEncodingException {
-        TransactionQueryBuilder.publicationsLastDays(-1).build();
-    }
-
-
-    @Ignore
     @Test
-    public void validateTransactionOld() throws IOException {
+    void badPublicationsPastDays() {
+        assertThrows(IllegalArgumentException.class, () ->
+                TransactionQueryBuilder.publicationsLastDays(-1).build());
+    }
+
+
+    @Disabled("Investigating")
+    @Test
+    void validateTransactionOld() throws IOException {
         Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
         Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
 
@@ -226,9 +174,9 @@ public class TransactionQueryTest {
         assertEquals("Aktuell", transaction.getStatus());
     }
 
-    @Ignore
+    @Disabled("Investigating")
     @Test
-    public void validateTransaction() throws IOException {
+    void validateTransaction() throws IOException {
         LocalDate from = LocalDate.of(2018, 3,1);
         LocalDate to = LocalDate.of(2018, 3,1);
 
@@ -261,9 +209,9 @@ public class TransactionQueryTest {
     }
 
 
-    @Ignore
+    @Disabled("Investigating")
     @Test
-    public void badPricePointInsteadOfComma() throws IOException {
+    void badPricePointInsteadOfComma() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
         reader = TestUtil.getExportedTransactionFile(classLoader, "pricePointInsteadOfComma.csv");
 
@@ -304,7 +252,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void badPrice() throws IOException {
+    void badPrice() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
         reader = TestUtil.getExportedTransactionFile(classLoader, "badPrice.csv");
 
@@ -323,7 +271,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void badPriceNoLogging() throws IOException {
+    void badPriceNoLogging() throws IOException {
         Level defaultLevel = Logger.getLogger("com.apptastic.insynsregistret").getLevel();
 
         try {
@@ -351,7 +299,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void badQuantity() throws IOException {
+    void badQuantity() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
         reader = TestUtil.getExportedTransactionFile(classLoader, "badQuantity.csv");
 
@@ -370,7 +318,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void emptyDownload() throws IOException {
+    void emptyDownload() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
         reader = TestUtil.getExportedTransactionFile(classLoader, "empty.csv");
 
@@ -391,7 +339,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void noTransactions() throws IOException {
+    void noTransactions() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
         reader = TestUtil.getExportedTransactionFile(classLoader, "noTransactions.csv");
 
@@ -411,7 +359,7 @@ public class TransactionQueryTest {
     }
 
     @Test
-    public void transactionQueryBuilder() throws IOException {
+    void transactionQueryBuilder() throws IOException {
         TransactionQuery query1 = TransactionQueryBuilder.publicationsLastDays(30)
                 .pdmr("test1")
                 .build();
@@ -427,7 +375,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void liveSvQueryByTransactionDate() throws IOException {
+    void liveSvQueryByTransactionDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
         TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsLastDays(10)
@@ -449,7 +397,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void liveSvQueryByPublicationDate() throws IOException {
+    void liveSvQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
         TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(5)
@@ -473,7 +421,7 @@ public class TransactionQueryTest {
     }
 
     @Test
-    public void noUnknownInstrumentType() throws IOException {
+    void noUnknownInstrumentType() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
         TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(15)
@@ -488,7 +436,7 @@ public class TransactionQueryTest {
     }
 
     @Test
-    public void liveEnQueryByTransactionDate() throws IOException {
+    void liveEnQueryByTransactionDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
         TransactionQuery transactionQuery = TransactionQueryBuilder.transactionsLastDays(10)
@@ -514,7 +462,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void liveEnQueryByPublicationDate() throws IOException {
+    void liveEnQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
         TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(5)
@@ -537,7 +485,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void bigSampleTransaction() throws IOException {
+    void bigSampleTransaction() throws IOException {
         System.setProperty("insynsregistret.parallel", "true");
         Insynsregistret ir = new Insynsregistret();
         System.setProperty("insynsregistret.parallel", "false");
@@ -550,24 +498,26 @@ public class TransactionQueryTest {
     }
 
 
-    @Test(expected = IllegalArgumentException.class)
-    public void publicationsFromAfterToDate() {
+    @Test
+    void publicationsFromAfterToDate() {
         LocalDate from = LocalDate.of(2018, 3,2);
         LocalDate to = LocalDate.of(2018, 3,1);
-        TransactionQueryBuilder.publications(from, to);
-    }
-
-
-    @Test(expected = IllegalArgumentException.class)
-    public void transactionsFromAfterToDate() {
-        LocalDate from = LocalDate.of(2018, 3,2);
-        LocalDate to = LocalDate.of(2018, 3,1);
-        TransactionQueryBuilder.transactions(from, to);
+        assertThrows(IllegalArgumentException.class, () ->
+                TransactionQueryBuilder.publications(from, to));
     }
 
 
     @Test
-    public void urlEncodingWithAmpersand() throws IOException {
+    void transactionsFromAfterToDate() {
+        LocalDate from = LocalDate.of(2018, 3,2);
+        LocalDate to = LocalDate.of(2018, 3,1);
+        assertThrows(IllegalArgumentException.class, () ->
+                TransactionQueryBuilder.transactions(from, to));
+    }
+
+
+    @Test
+    void urlEncodingWithAmpersand() throws IOException {
         Insynsregistret ir = new Insynsregistret();
 
         TransactionQuery query = TransactionQueryBuilder.publicationsLastDays(365 * 2)
@@ -583,7 +533,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void splitLineTest() {
+    void splitLineTest() {
         Insynsregistret ir = new Insynsregistret();
 
         String[] columns = ir.splitLine("Test1;Test2;Test3;Test4;Test5;", 5);
@@ -614,7 +564,7 @@ public class TransactionQueryTest {
 
 
     @Test
-    public void transactionAssignerTest() {
+    void transactionAssignerTest() {
         String[] headerColumns = new String[] {"Hepp1", "Emittent", "ISIN"};
         String[] dataColumns = new String[] {"Test1", "Swedish Match", "SE0000310336"};
 
@@ -626,7 +576,5 @@ public class TransactionQueryTest {
         assertEquals("Swedish Match", transaction.getIssuer());
         assertEquals("SE0000310336", transaction.getIsin());
     }
-
-
 
 }

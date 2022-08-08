@@ -1,15 +1,16 @@
 Insynsregistret
 ===============
 
-[![Build Status](https://travis-ci.com/w3stling/insynsregistret.svg?branch=master)](https://travis-ci.com/w3stling/insynsregistret)
-[![Download](https://api.bintray.com/packages/apptastic/maven-repo/insynsregistret/images/download.svg)](https://bintray.com/apptastic/maven-repo/insynsregistret/_latestVersion)
-[![Javadoc](https://img.shields.io/badge/javadoc-3.0.4-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/3.0.4)
+[![Build](https://github.com/w3stling/insynsregistret/actions/workflows/build.yml/badge.svg)](https://github.com/w3stling/insynsregistret/actions/workflows/build.yml)
+[![Download](https://img.shields.io/badge/download-2.0.0-brightgreen.svg)](https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/2.0.0/jar)
+[![Javadoc](https://img.shields.io/badge/javadoc-4.0.0-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/4.0.0)
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)   
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.apptastic%3Ainsynsregistret)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=coverage)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=Coverage)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=bugs)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=bugs)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=vulnerabilities)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=vulnerabilities)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=com.apptastic%3Ainsynsregistret&metric=code_smells)](https://sonarcloud.io/component_measures?id=com.apptastic%3Ainsynsregistret&metric=code_smells)
+[![CodeQL](https://github.com/w3stling/insynsregistret/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/w3stling/insynsregistret/actions/workflows/codeql-analysis.yml)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=coverage)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=bugs)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
 
 
 [Insynsregistret][1] is a Swedish financial registry maintained by
@@ -118,20 +119,6 @@ Download
 Download [the latest JAR][3] or grab via [Maven][4] or [Gradle][5].
 
 ### Maven setup
-Add JCenter repository for resolving artifact:
-```xml
-<project>
-    ...
-    <repositories>
-        <repository>
-            <id>jcenter</id>
-            <url>https://jcenter.bintray.com</url>
-        </repository>
-    </repositories>
-    ...
-</project>
-```
-
 Add dependency declaration:
 ```xml
 <project>
@@ -140,7 +127,7 @@ Add dependency declaration:
         <dependency>
             <groupId>com.apptasticsoftware</groupId>
             <artifactId>insynsregistret</artifactId>
-            <version>3.0.4</version>
+            <version>4.0.0</version>
         </dependency>
     </dependencies>
     ...
@@ -148,17 +135,10 @@ Add dependency declaration:
 ```
 
 ### Gradle setup
-Add JCenter repository for resolving artifact:
-```groovy
-repositories {
-    jcenter()
-}
-```
-
 Add dependency declaration:
 ```groovy
 dependencies {
-    implementation 'com.apptasticsoftware:insynsregistret:3.0.4'
+    implementation 'com.apptasticsoftware:insynsregistret:4.0.0'
 }
 ```
 
@@ -192,6 +172,6 @@ License
 
 [1]: https://www.fi.se/en/our-registers/pdmr-transactions
 [2]: https://www.fi.se/en
-[3]: https://bintray.com/apptastic/maven-repo/insynsregistret/_latestVersion
+[3]: https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/4.0.0/jar
 [4]: https://maven.apache.org
 [5]: https://gradle.org
