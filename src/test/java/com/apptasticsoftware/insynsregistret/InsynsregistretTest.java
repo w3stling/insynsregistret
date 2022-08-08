@@ -1,6 +1,6 @@
 package com.apptasticsoftware.insynsregistret;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,13 +11,13 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class InsynsregistretTest {
+class InsynsregistretTest {
 
     @Test
-    public void checkColumnsLangSwedishOld() throws ParseException, IOException {
+    void checkColumnsLangSwedishOld() throws ParseException, IOException {
         LocalDate date = LocalDate.of(2018, 3, 11);
         TransactionQuery query = TransactionQueryBuilder.publications(toDate(date), toDate(date))
                                                         .issuer("Empir Group AB")
@@ -40,7 +40,7 @@ public class InsynsregistretTest {
     }
 
     @Test
-    public void checkColumnsLangSwedish() throws ParseException, IOException {
+    void checkColumnsLangSwedish() throws ParseException, IOException {
         LocalDate date = LocalDate.of(2018, 3, 11);
         TransactionQuery query = TransactionQueryBuilder.publications(date, date)
                 .issuer("Empir Group AB")
@@ -63,7 +63,7 @@ public class InsynsregistretTest {
     }
 
     @Test
-    public void checkColumnsLangEnglishOld() throws ParseException, IOException {
+    void checkColumnsLangEnglishOld() throws ParseException, IOException {
         LocalDate date = LocalDate.of(2018, 3, 11);
         TransactionQuery query = TransactionQueryBuilder.publications(toDate(date), toDate(date))
                 .issuer("Empir Group AB")
@@ -87,7 +87,7 @@ public class InsynsregistretTest {
 
 
     @Test
-    public void checkColumnsLangEnglish() throws ParseException, IOException {
+    void checkColumnsLangEnglish() throws ParseException, IOException {
         LocalDate date = LocalDate.of(2018, 3, 11);
         TransactionQuery query = TransactionQueryBuilder.publications(date, date)
                 .issuer("Empir Group AB")

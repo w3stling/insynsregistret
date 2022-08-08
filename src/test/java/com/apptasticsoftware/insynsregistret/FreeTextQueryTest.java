@@ -1,23 +1,22 @@
 package com.apptasticsoftware.insynsregistret;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
+import java.io.*;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
-import org.junit.Test;
 
-import java.io.*;
-import java.util.Optional;
-
-
-public class FreeTextQueryTest {
+class FreeTextQueryTest {
 
 
     @Test
-    public void getIssuer_Leo() throws IOException {
+    void getIssuer_Leo() throws IOException {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("Leo").build();
 
         Insynsregistret ir = new Insynsregistret();
@@ -29,7 +28,7 @@ public class FreeTextQueryTest {
 
 
     @Test
-    public void getIssuer_OresundInvestmentAb() throws IOException {
+    void getIssuer_OresundInvestmentAb() throws IOException {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("Öre").build();
 
         Insynsregistret ir = new Insynsregistret();
@@ -42,7 +41,7 @@ public class FreeTextQueryTest {
 
 
     @Test
-    public void getIssuer_AfAb() throws IOException {
+    void getIssuer_AfAb() throws IOException {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("ÅF").build();
 
         Insynsregistret ir = new Insynsregistret();
@@ -54,7 +53,7 @@ public class FreeTextQueryTest {
 
 
     @Test
-    public void getIssuer_Hm() throws IOException {
+    void getIssuer_Hm() throws IOException {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("Hennes & Mauritz").build();
 
         Insynsregistret ir = new Insynsregistret();
@@ -66,7 +65,7 @@ public class FreeTextQueryTest {
 
 
     @Test
-    public void getIssuer_Ericsson() throws IOException {
+    void getIssuer_Ericsson() throws IOException {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("Ericsson").build();
 
         Insynsregistret ir = new Insynsregistret();
@@ -76,7 +75,7 @@ public class FreeTextQueryTest {
 
 
     @Test
-    public void getIssuer_EmptyString() throws IOException {
+    void getIssuer_EmptyString() throws IOException {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("").build();
 
         Insynsregistret ir = new Insynsregistret();
@@ -84,9 +83,10 @@ public class FreeTextQueryTest {
         assertEquals(0, resultCount);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getIssuer_null() throws UnsupportedEncodingException {
-        FreeTextQueryBuilder.issuer(null).build();
+    @Test
+    public void getIssuer_null() {
+        assertThrows(IllegalArgumentException.class, () ->
+                FreeTextQueryBuilder.issuer(null).build());
     }
 
 
@@ -100,9 +100,10 @@ public class FreeTextQueryTest {
     }
 
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getPDMR_null() throws UnsupportedEncodingException {
-        FreeTextQueryBuilder.pdmr(null).build();
+    @Test
+    public void getPDMR_null() {
+        assertThrows(IllegalArgumentException.class, () ->
+            FreeTextQueryBuilder.pdmr(null).build());
     }
 
 

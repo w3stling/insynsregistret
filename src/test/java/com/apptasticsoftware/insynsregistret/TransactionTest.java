@@ -1,13 +1,14 @@
 package com.apptasticsoftware.insynsregistret;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class TransactionTest {
+class TransactionTest {
     private Transaction getDefaultTransaction() {
         Transaction transaction = new Transaction();
 
@@ -39,7 +40,7 @@ public class TransactionTest {
 
 
     @Test
-    public void equalsTest() {
+    void equalsTest() {
         Transaction transaction1 = getDefaultTransaction();
 
         assertEquals(transaction1, transaction1);
@@ -162,7 +163,7 @@ public class TransactionTest {
 
 
     @Test
-    public void testSort() {
+    void testSort() {
         Transaction transaction1 = getDefaultTransaction();
         transaction1.setTransactionDate("2018-05-02 01:02:03");
 
@@ -182,7 +183,7 @@ public class TransactionTest {
     }
 
     @Test
-    public void testHashMap() {
+    void testHashMap() {
         Map<Transaction, String> transactions = new HashMap<>();
 
         Transaction transaction1 = getDefaultTransaction();
@@ -203,7 +204,7 @@ public class TransactionTest {
     }
 
     @Test
-    public void testTreeMap() {
+    void testTreeMap() {
         Map<Transaction, String> transactions = new TreeMap<>();
 
         Transaction transaction1 = getDefaultTransaction();
@@ -225,7 +226,7 @@ public class TransactionTest {
 
 
     @Test
-    public void testInstrumentType() {
+    void testInstrumentType() {
         Transaction.InstrumentType type;
 
         type = Transaction.InstrumentType.parse("InstrumentTyp1");
