@@ -84,14 +84,14 @@ class FreeTextQueryTest {
     }
 
     @Test
-    public void getIssuer_null() {
+    void getIssuer_null() {
         assertThrows(IllegalArgumentException.class, () ->
                 FreeTextQueryBuilder.issuer(null).build());
     }
 
 
     @Test
-    public void getPDMR_Jo() throws IOException {
+    void getPDMR_Jo() throws IOException {
         FreeTextQuery query = FreeTextQueryBuilder.pdmr("Jo").build();
 
         Insynsregistret ir = new Insynsregistret();
@@ -101,20 +101,20 @@ class FreeTextQueryTest {
 
 
     @Test
-    public void getPDMR_null() {
+    void getPDMR_null() {
         assertThrows(IllegalArgumentException.class, () ->
             FreeTextQueryBuilder.pdmr(null).build());
     }
 
 
     @Test
-    public void freeTestQueryNullParams() throws IOException {
+    void freeTestQueryNullParams() throws IOException {
         FreeTextQuery query = new FreeTextQuery(null, null);
         assertEquals("", query.getUrl());
     }
 
     @Test
-    public void badResponse() throws IOException {
+    void badResponse() throws IOException {
         BufferedReader reader = new BufferedReader(new StringReader("[\"Test1\",\"Test2\",\"Test3]"));
 
         Insynsregistret mock = spy(Insynsregistret.class);
@@ -126,7 +126,7 @@ class FreeTextQueryTest {
     }
 
     @Test
-    public void emptyResponse() throws IOException {
+    void emptyResponse() throws IOException {
         BufferedReader reader = new BufferedReader(new StringReader("[]"));
 
         Insynsregistret mock = spy(Insynsregistret.class);

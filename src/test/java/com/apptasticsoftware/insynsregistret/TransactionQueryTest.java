@@ -60,7 +60,7 @@ class TransactionQueryTest {
         LocalDate to = LocalDate.of(2018, 3,1);
 
         assertThrows(IllegalArgumentException.class, () ->
-                TransactionQueryBuilder.transactions(from, to).build());
+                TransactionQueryBuilder.transactions(from, to));
     }
 
     @Test
@@ -75,7 +75,7 @@ class TransactionQueryTest {
     @Test
     void badTransactionPastDays() {
         assertThrows(IllegalArgumentException.class, () ->
-                TransactionQueryBuilder.transactionsLastDays(-1).build());
+                TransactionQueryBuilder.transactionsLastDays(-1));
     }
 
 

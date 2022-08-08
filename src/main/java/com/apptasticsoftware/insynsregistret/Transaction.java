@@ -607,7 +607,7 @@ public class Transaction implements Comparable<Transaction> {
             else if ("Obligation".equals(instrumentType) || "Bond".equals(instrumentType) || "InstrumentTyp7".equals(instrumentType)) {
                 type = BOND;
             }
-            else if ("Option".equals(instrumentType) || "Option".equals(instrumentType) || "InstrumentTyp8".equals(instrumentType)) {
+            else if ("Option".equals(instrumentType) || "InstrumentTyp8".equals(instrumentType)) {
                 type = OPTION;
             }
             else if ("Teckningsoption".equals(instrumentType) || "Subscription warrant".equals(instrumentType) || "InstrumentTyp11".equals(instrumentType)) {
@@ -619,7 +619,7 @@ public class Transaction implements Comparable<Transaction> {
             else if ("Terminer".equals(instrumentType) || "Future/Forward".equals(instrumentType) || "InstrumentTyp13".equals(instrumentType)) {
                 type = FUTURE_FORWARD;
             }
-            else if ("Warrant".equals(instrumentType) || "Warrant".equals(instrumentType) || "InstrumentTyp14".equals(instrumentType)) {
+            else if ("Warrant".equals(instrumentType) || "InstrumentTyp14".equals(instrumentType)) {
                 type = WARRANT;
             }
             else if ("Övriga derivatkontrakt".equals(instrumentType) || "Other derivative contracts".equals(instrumentType) || "InstrumentTyp15".equals(instrumentType)) {
