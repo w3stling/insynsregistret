@@ -9,8 +9,6 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -45,17 +43,6 @@ class TransactionQueryTest {
 
 
     @Test
-    void queryByTransactionDateOld() throws IOException {
-        Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-        Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-
-        TransactionQuery query = TransactionQueryBuilder.transactions(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
-    }
-
-    @Test
     void queryByTransactionDate() throws IOException {
         LocalDate from = LocalDate.of(2018, 3,1);
         LocalDate to = LocalDate.of(2018, 3,1);
@@ -65,6 +52,7 @@ class TransactionQueryTest {
         long transactionCount = irMock.search(query).count();
         assertEquals(375, transactionCount);
     }
+
 
     @Test
     void badTransactionFromDate() {
@@ -92,18 +80,6 @@ class TransactionQueryTest {
 
 
     @Test
-    void queryByPublicationDateOld() throws IOException {
-        Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-        Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-
-        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
-
-        long transactionCount = irMock.search(query).count();
-        assertEquals(375, transactionCount);
-    }
-
-
-    @Test
     void queryByPublicationDate() throws IOException {
         LocalDate from = LocalDate.of(2018, 3,1);
         LocalDate to = LocalDate.of(2018, 3,1);
@@ -114,6 +90,7 @@ class TransactionQueryTest {
         assertEquals(375, transactionCount);
     }
 
+
     @Test
     void badPublicationFromDate() {
         LocalDate from = null;
@@ -122,6 +99,7 @@ class TransactionQueryTest {
         assertThrows(IllegalArgumentException.class, () ->
                 TransactionQueryBuilder.publications(from, to).build());
     }
+
 
     @Test
     void badPublicationToDate() {
@@ -142,40 +120,6 @@ class TransactionQueryTest {
 
     @Disabled("Investigating")
     @Test
-    void validateTransactionOld() throws IOException {
-        Date from = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-        Date to = new GregorianCalendar(2018, Calendar.MARCH,1).getTime();
-
-        TransactionQuery query = TransactionQueryBuilder.publications(from, to).build();
-
-        Optional<Transaction> firstTransaction = irMock.search(query).findFirst();
-        assertTrue(firstTransaction.isPresent());
-
-        Transaction transaction = firstTransaction.get();
-
-        assertEquals("Empir Group AB", transaction.getIssuer());
-        assertEquals("", transaction.getLeiCode());
-        assertEquals("Alfanode AB", transaction.getNotifier());
-        assertEquals("Alfanode AB", transaction.getPdmr());
-        assertEquals("VD", transaction.getPosition());
-        assertEquals(false, transaction.isCloselyAssociated());
-        assertEquals(false, transaction.isAmendment());
-        assertEquals("", transaction.getDetailsOfAmendment());
-        assertEquals(true, transaction.isInitialNotification());
-        assertEquals(false, transaction.isLinkedToShareOptionProgramme());
-        assertEquals("Förvärv", transaction.getNatureOfTransaction());
-        //assertEquals("Empir Group AB", transaction.getInstrumentName());
-        assertEquals("SE0010769182", transaction.getIsin());
-        assertEquals(28227, transaction.getQuantity(), 0.0);
-        assertEquals("Antal", transaction.getUnit());
-        assertEquals(37.9, transaction.getPrice(), 0.0);
-        assertEquals("SEK", transaction.getCurrency());
-        assertEquals("Utanför handelsplats", transaction.getTradingVenue());
-        assertEquals("Aktuell", transaction.getStatus());
-    }
-
-    @Disabled("Investigating")
-    @Test
     void validateTransaction() throws IOException {
         LocalDate from = LocalDate.of(2018, 3,1);
         LocalDate to = LocalDate.of(2018, 3,1);
@@ -192,11 +136,11 @@ class TransactionQueryTest {
         assertEquals("Alfanode AB", transaction.getNotifier());
         assertEquals("Alfanode AB", transaction.getPdmr());
         assertEquals("VD", transaction.getPosition());
-        assertEquals(false, transaction.isCloselyAssociated());
-        assertEquals(false, transaction.isAmendment());
+        assertFalse(transaction.isCloselyAssociated());
+        assertFalse(transaction.isAmendment());
         assertEquals("", transaction.getDetailsOfAmendment());
-        assertEquals(true, transaction.isInitialNotification());
-        assertEquals(false, transaction.isLinkedToShareOptionProgramme());
+        assertTrue(transaction.isInitialNotification());
+        assertFalse(transaction.isLinkedToShareOptionProgramme());
         assertEquals("Förvärv", transaction.getNatureOfTransaction());
         //assertEquals("Empir Group AB", transaction.getInstrumentName());
         assertEquals("SE0010769182", transaction.getIsin());
@@ -234,11 +178,11 @@ class TransactionQueryTest {
         assertEquals("Alfanode AB", transaction.getNotifier());
         assertEquals("Alfanode AB", transaction.getPdmr());
         assertEquals("VD", transaction.getPosition());
-        assertEquals(false, transaction.isCloselyAssociated());
-        assertEquals(false, transaction.isAmendment());
+        assertFalse(transaction.isCloselyAssociated());
+        assertFalse(transaction.isAmendment());
         assertEquals("", transaction.getDetailsOfAmendment());
-        assertEquals(true, transaction.isInitialNotification());
-        assertEquals(false, transaction.isLinkedToShareOptionProgramme());
+        assertTrue(transaction.isInitialNotification());
+        assertFalse(transaction.isLinkedToShareOptionProgramme());
         assertEquals("Förvärv", transaction.getNatureOfTransaction());
         //assertEquals("Empir Group AB", transaction.getInstrumentName());
         assertEquals("SE0010769182", transaction.getIsin());
