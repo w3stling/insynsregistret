@@ -24,7 +24,7 @@ Nasdaq Stockholm and Nordic Growth Market (NGM) and other trading venues.
 This registry publishes information about the trading activities that have taken place during the day performed by
 the insiders and people close to them. The registry includes information concerning
 the position the insider involved in a certain trading activity has, what kind of activity it is (sell, buy or
-gift etc.), what kind of security that is traded and the quantity. 
+gift etc.), what kind of security that is traded and the quantity.
 
 All insider trading is reported to FI, which publishes the data on a daily basis to this public database.
 
@@ -153,7 +153,7 @@ License
 
     MIT License
     
-    Copyright (c) 2020, Apptastic Software
+    Copyright (c) 2022, Apptastic Software
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
