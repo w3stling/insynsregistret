@@ -109,7 +109,9 @@ public class Transaction implements Comparable<Transaction> {
      */
     public void setPublicationDate(String publicationDate) {
         DateTimeFormatter formatter = getDateTimeFormatter(publicationDate);
-        this.publicationDate = LocalDateTime.parse(publicationDate, formatter);
+        if (formatter != null) {
+            this.publicationDate = LocalDateTime.parse(publicationDate, formatter);
+        }
     }
 
     /**
@@ -375,7 +377,9 @@ public class Transaction implements Comparable<Transaction> {
      */
     public void setTransactionDate(String transactionDate) {
         DateTimeFormatter formatter = getDateTimeFormatter(transactionDate);
-        this.transactionDate = LocalDateTime.parse(transactionDate, formatter);
+        if (formatter != null) {
+            this.transactionDate = LocalDateTime.parse(transactionDate, formatter);
+        }
     }
 
 
@@ -550,10 +554,11 @@ public class Transaction implements Comparable<Transaction> {
         return null;
     }
 
-    @SuppressWarnings("java:S1192")
+
     /**
      * Instrument Type
      */
+    @SuppressWarnings("java:S1192")
     public enum InstrumentType {
         SHARE("InstrumentTyp1", "Share", "Aktie"),
         BTA("InstrumentTyp2", "BTA", "BTA (betald tecknad aktie)"),
@@ -574,11 +579,13 @@ public class Transaction implements Comparable<Transaction> {
         COMMERCIAL_PAPER("InstrumentTyp21", "Commercial paper", "Företagscertifikat"),
         INTERIM_SHARE("InstrumentTyp22", "Interim share", "Interimsaktie"),
         EMISSION_ALLOWANCE("InstrumentTyp23", "Emission allowance", "Utsläppsrätt"),
+        SWAP("InstrumentTyp24", "Swap", "Swap"),
+
         UNKNOWN("", "Unknown", "Okänd");
 
         private String value;
-        private String englishDescription;
-        private String swedishDescription;
+        private final String englishDescription;
+        private final String swedishDescription;
 
         InstrumentType(String instrumentType, String englishDescription, String swedishDescription) {
             this.value = instrumentType;
@@ -646,6 +653,9 @@ public class Transaction implements Comparable<Transaction> {
             }
             else if ("Utsläppsrätt".equals(instrumentType)  || "Emission allowance".equals(instrumentType) || "InstrumentTyp23".equals(instrumentType)) {
                 type = EMISSION_ALLOWANCE;
+            }
+            else if ("Swap".equals(instrumentType)) {
+                type = SWAP;
             }
             else {
                 type = UNKNOWN;
