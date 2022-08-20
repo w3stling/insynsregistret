@@ -2,8 +2,8 @@ Insynsregistret
 ===============
 
 [![Build](https://github.com/w3stling/insynsregistret/actions/workflows/build.yml/badge.svg)](https://github.com/w3stling/insynsregistret/actions/workflows/build.yml)
-[![Download](https://img.shields.io/badge/download-4.0.0-brightgreen.svg)](https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/4.0.0/jar)
-[![Javadoc](https://img.shields.io/badge/javadoc-4.0.0-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/4.0.0)
+[![Download](https://img.shields.io/badge/download-4.1.0-brightgreen.svg)](https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/4.1.0/jar)
+[![Javadoc](https://img.shields.io/badge/javadoc-4.1.0-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/4.1.0)
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)   
 [![CodeQL](https://github.com/w3stling/insynsregistret/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/w3stling/insynsregistret/actions/workflows/codeql-analysis.yml)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=w3stling_insynsregistret&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=w3stling_insynsregistret)
@@ -131,7 +131,7 @@ Add dependency declaration:
         <dependency>
             <groupId>com.apptasticsoftware</groupId>
             <artifactId>insynsregistret</artifactId>
-            <version>4.0.0</version>
+            <version>4.1.0</version>
         </dependency>
     </dependencies>
     ...
@@ -142,7 +142,7 @@ Add dependency declaration:
 Add dependency declaration:
 ```groovy
 dependencies {
-    implementation 'com.apptasticsoftware:insynsregistret:4.0.0'
+    implementation 'com.apptasticsoftware:insynsregistret:4.1.0'
 }
 ```
 
@@ -176,6 +176,6 @@ License
 
 [1]: https://www.fi.se/en/our-registers/pdmr-transactions
 [2]: https://www.fi.se/en
-[3]: https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/4.0.0/jar
+[3]: https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/4.1.0/jar
 [4]: https://maven.apache.org
 [5]: https://gradle.org
