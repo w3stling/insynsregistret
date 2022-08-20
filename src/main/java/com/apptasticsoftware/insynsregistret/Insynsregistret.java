@@ -44,21 +44,20 @@ import java.util.zip.GZIPInputStream;
 
 /**
  * Class makes it easier to automate data extraction from <a href="https://www.fi.se/sv/vara-register/insynsregistret">Insynsregistret</a>.
- *
- *
+ * <p>
  * Insynsregistret is a Swedish financial registry maintained by the <a href="https://www.fi.se">Finansinspektionen</a> (FI).
  * It contains information regarding insider trading on <a href="http://www.nasdaqomxnordic.com">Nasdaq Stockholm</a> and
  * <a href="http://www.ngm.se">Nordic Growth Market</a> (NGM) and other trading venues.
- *
+ * <p>
  * This registry publishes information about the trading activities that have taken place during
  * the day performed by the insiders and people close to them. The registry includes information
  * concerning the position the insider involved in a certain trading activity has, what kind of
  * activity it is (sell, buy or gift etc.), what kind of security that is traded and the quantity.
- *
+ * <p>
  * All insider trading is reported to FI, which publishes the data on a daily basis to this public database.
  */
 public class Insynsregistret {
-    private boolean processTransactionInParallel;
+    private final boolean processTransactionInParallel;
     private static final String HTTP_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
 
     public Insynsregistret() {
@@ -296,7 +295,7 @@ public class Insynsregistret {
 
             try {
                 value = value.replace(',', '.');
-                floatNumber = Double.valueOf(value);
+                floatNumber = Double.parseDouble(value);
             }
             catch (Exception e) {
                 var logger = Logger.getLogger("com.apptastic.insynsregistret");
