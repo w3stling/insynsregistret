@@ -580,7 +580,8 @@ public class Transaction implements Comparable<Transaction> {
         INTERIM_SHARE("InstrumentTyp22", "Interim share", "Interimsaktie"),
         EMISSION_ALLOWANCE("InstrumentTyp23", "Emission allowance", "Utsläppsrätt"),
         SWAP("InstrumentTyp24", "Swap", "Swap"),
-
+        REDEMPTION_RIGHT("-", "Redemption right", "Inlösenrätt"),
+        DEPOSITARY_RECEIPT("-", "Depositary receipt", "Depåbevis"),
         UNKNOWN("", "Unknown", "Okänd");
 
         private String value;
@@ -651,11 +652,17 @@ public class Transaction implements Comparable<Transaction> {
             else if ("Interimsaktie".equals(instrumentType) || "Interim share".equals(instrumentType) || "InstrumentTyp22".equals(instrumentType)) {
                 type = INTERIM_SHARE;
             }
-            else if ("Utsläppsrätt".equals(instrumentType)  || "Emission allowance".equals(instrumentType) || "InstrumentTyp23".equals(instrumentType)) {
+            else if ("Utsläppsrätt".equals(instrumentType) || "Emission allowance".equals(instrumentType) || "InstrumentTyp23".equals(instrumentType)) {
                 type = EMISSION_ALLOWANCE;
             }
             else if ("Swap".equals(instrumentType)) {
                 type = SWAP;
+            }
+            else if ("Inlösenrätt".equals(instrumentType) || "Redemption right".equals(instrumentType)) {
+                type = REDEMPTION_RIGHT;
+            }
+            else if ("Depåbevis".equals(instrumentType) || "Depositary receipt".equals(instrumentType)) {
+                type = DEPOSITARY_RECEIPT;
             }
             else {
                 type = UNKNOWN;
