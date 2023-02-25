@@ -2,7 +2,7 @@ Insynsregistret
 ===============
 
 [![Build](https://github.com/w3stling/insynsregistret/actions/workflows/build.yml/badge.svg)](https://github.com/w3stling/insynsregistret/actions/workflows/build.yml)
-[![Download](https://img.shields.io/badge/download-4.2.0-brightgreen.svg)](https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/4.2.0/jar)
+[![Download](https://img.shields.io/badge/download-4.2.0-brightgreen.svg)](https://central.sonatype.com/artifact/com.apptasticsoftware/insynsregistret/4.2.0/overview)
 [![Javadoc](https://img.shields.io/badge/javadoc-4.2.0-blue.svg)](https://w3stling.github.io/insynsregistret/javadoc/4.2.0)
 [![License](http://img.shields.io/:license-MIT-blue.svg?style=flat-round)](http://apptastic-software.mit-license.org)   
 [![CodeQL](https://github.com/w3stling/insynsregistret/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/w3stling/insynsregistret/actions/workflows/codeql-analysis.yml)
@@ -176,6 +176,6 @@ License
 
 [1]: https://www.fi.se/en/our-registers/pdmr-transactions
 [2]: https://www.fi.se/en
-[3]: https://search.maven.org/artifact/com.apptasticsoftware/insynsregistret/4.2.0/jar
+[3]: https://central.sonatype.com/artifact/com.apptasticsoftware/insynsregistret/4.2.0/overview
 [4]: https://maven.apache.org
 [5]: https://gradle.org
