@@ -50,7 +50,7 @@ jobs:
           echo "year=$(date +%Y)" >> $GITHUB_ENV
 
       - name: Update README.md 📝
-        uses: bluwy/substitute-string-action@v1
+        uses: bluwy/substitute-string-action@v2
         with:
           _input-file: './.github/README-template.md'
           _output-file: ./README.md
@@ -120,7 +120,7 @@ jobs:
         run: ./gradlew javadoc
 
       - name: Deploy Javadoc 📚
-        uses: JamesIves/github-pages-deploy-action@4.2.0
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
         with:
           branch: gh-pages
           folder: build/docs/javadoc
