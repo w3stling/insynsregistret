@@ -11,16 +11,13 @@ plugins {
 group 'com.apptasticsoftware'
 version "${version}"
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(platform('org.junit:junit-bom:5.9.1'))
-    testImplementation('org.junit.jupiter:junit-jupiter:5.9.1')
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation('org.mockito:mockito-core:4.8.0')
 }
 
@@ -32,6 +29,8 @@ test {
 }
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
     withJavadocJar()
     withSourcesJar()
 }
@@ -46,18 +45,17 @@ compileJava {
                 '--module-path', classpath.asPath
         ]
         classpath = files()
-        classpath = files()
     }
 }
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.9"
 }
 
 jacocoTestReport {
     reports {
-        xml.enabled true
-        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        xml.required = true
+        xml.outputLocation = file("${buildDir}/reports/jacoco/report.xml")
     }
 }
 
