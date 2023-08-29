@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"com.apptasticsoftware.insynsregistret"}]
+moduleSearchIndex = [{"l":"com.apptasticsoftware.insynsregistret"}];updateSearchResults();
