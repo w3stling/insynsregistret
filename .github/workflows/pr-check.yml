@@ -20,10 +20,10 @@ jobs:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
-      - name: Setup Java 11 ⚙️
+      - name: Setup Java 17 ⚙️
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
 
       - name: Setup Gradle dependencies cache ⚙️
@@ -42,7 +42,10 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Build and test 🏗
-        run: ./gradlew clean build
+        run: ./gradlew test jacocoTestReport sonar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Archive build and test reports 🗃️
         uses: actions/upload-artifact@v3

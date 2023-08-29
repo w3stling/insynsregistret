@@ -132,7 +132,7 @@ jmh {
     warmupMode = 'INDI' // Warmup mode for warming up selected benchmarks. Warmup modes are: [INDI, BULK, BULK_INDI].
 }
 
-sonarqube {
+sonar {
     properties {
         property "sonar.projectKey", "w3stling_insynsregistret"
         property "sonar.organization", "w3stling"
