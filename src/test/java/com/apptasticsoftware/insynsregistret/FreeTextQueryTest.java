@@ -45,19 +45,19 @@ class FreeTextQueryTest {
         FreeTextQuery query = FreeTextQueryBuilder.issuer("ÅF").build();
 
         Insynsregistret ir = new Insynsregistret();
-        Optional<String> issuer = ir.search(query).findFirst();
+        Optional<String> issuer = ir.search(query).sorted().findFirst();
 
         assertTrue(issuer.isPresent());
-        assertTrue(issuer.get().toLowerCase().contains("åf pöyry ab"));
+        assertTrue(issuer.get().toLowerCase().contains("åf ab"));
     }
 
 
     @Test
     void getIssuer_Hm() throws IOException {
-        FreeTextQuery query = FreeTextQueryBuilder.issuer("Hennes & Mauritz").build();
+        FreeTextQuery query = FreeTextQueryBuilder.issuer("Hennes &").build();
 
         Insynsregistret ir = new Insynsregistret();
-        Optional<String> issuer = ir.search(query).findFirst();
+        Optional<String> issuer = ir.search(query).sorted().findFirst();
 
         assertTrue(issuer.isPresent());
         assertEquals("H & M Hennes & Mauritz AB", issuer.get());
