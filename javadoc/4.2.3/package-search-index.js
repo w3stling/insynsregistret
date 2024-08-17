@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"com.apptasticsoftware.insynsregistret","l":"com.apptasticsoftware.insynsregistret"}];updateSearchResults();
