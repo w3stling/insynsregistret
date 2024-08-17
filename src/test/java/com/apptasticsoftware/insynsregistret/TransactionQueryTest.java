@@ -142,7 +142,7 @@ class TransactionQueryTest {
         assertTrue(transaction.isInitialNotification());
         assertFalse(transaction.isLinkedToShareOptionProgramme());
         assertEquals("Förvärv", transaction.getNatureOfTransaction());
-        //assertEquals("Empir Group AB", transaction.getInstrumentName());
+        assertEquals("Empir Group AB", transaction.getInstrumentName());
         assertEquals("SE0010769182", transaction.getIsin());
         assertEquals(28227, transaction.getQuantity(), 0.0);
         assertEquals("Antal", transaction.getUnit());
@@ -184,7 +184,7 @@ class TransactionQueryTest {
         assertTrue(transaction.isInitialNotification());
         assertFalse(transaction.isLinkedToShareOptionProgramme());
         assertEquals("Förvärv", transaction.getNatureOfTransaction());
-        //assertEquals("Empir Group AB", transaction.getInstrumentName());
+        assertEquals("Empir Group AB", transaction.getInstrumentName());
         assertEquals("SE0010769182", transaction.getIsin());
         assertEquals(28227, transaction.getQuantity(), 0.0);
         assertEquals("Antal", transaction.getUnit());
@@ -435,8 +435,8 @@ class TransactionQueryTest {
         System.setProperty("insynsregistret.parallel", "false");
 
         ClassLoader classLoader = getClass().getClassLoader();
-        BufferedReader reader = TestUtil.getExportedTransactionFile(classLoader, "insynBigSample.csv");
-        long transactionCount = ir.parseTransactionResponse(reader).count();
+        BufferedReader exportedFileReader = TestUtil.getExportedTransactionFile(classLoader, "insynBigSample.csv");
+        long transactionCount = ir.parseTransactionResponse(exportedFileReader).count();
 
         assertEquals(20436, transactionCount);
     }
@@ -469,7 +469,6 @@ class TransactionQueryTest {
                 .build();
 
         long count = ir.search(query)
-                .map(Transaction::getIssuer)
                 .count();
 
         assertTrue(count > 0);
