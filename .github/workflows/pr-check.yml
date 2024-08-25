@@ -12,6 +12,9 @@ jobs:
     name: 🛂 Pull Request Check
     timeout-minutes: 20
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
 
     steps:
       - name: Checkout repository ⚙️
