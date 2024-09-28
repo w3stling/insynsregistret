@@ -54,7 +54,7 @@ class FreeTextQueryTest {
 
     @Test
     void getIssuer_Hm() throws IOException {
-        FreeTextQuery query = FreeTextQueryBuilder.issuer("Hennes &").build();
+        FreeTextQuery query = FreeTextQueryBuilder.issuer("Hennes & M").build();
 
         Insynsregistret ir = new Insynsregistret();
         Optional<String> issuer = ir.search(query).sorted().findFirst();
