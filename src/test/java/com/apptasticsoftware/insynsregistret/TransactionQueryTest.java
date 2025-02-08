@@ -318,6 +318,7 @@ class TransactionQueryTest {
     }
 
 
+    @Disabled("Due to too many requests")
     @Test
     void liveSvQueryByTransactionDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
@@ -362,21 +363,17 @@ class TransactionQueryTest {
             assertNotNull(transaction.getTransactionDate());
             assertEquals(19, transaction.getTransactionDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).length());
         }
+
+        verifyUnknownInstrumentType(transactions);
     }
 
-    @Test
-    void noUnknownInstrumentType() throws IOException {
-        Insynsregistret ir = new Insynsregistret();
-
-        TransactionQuery transactionQuery = TransactionQueryBuilder.publicationsLastDays(15)
-                .build();
-
-        List<Transaction> transactions = ir.search(transactionQuery)
+    private static void verifyUnknownInstrumentType(List<Transaction> transactions) {
+        var unknownInstrumentTypes = transactions.stream()
                 .filter(t -> t.getInstrumentType() != null && !t.getInstrumentType().isBlank())
                 .filter(t -> t.getInstrumentTypeDescription() == Transaction.InstrumentType.UNKNOWN)
                 .collect(Collectors.toList());
 
-        assertEquals(0, transactions.size());
+        assertEquals(0, unknownInstrumentTypes.size());
     }
 
     @Test
@@ -402,9 +399,12 @@ class TransactionQueryTest {
             assertNotNull(transaction.getTransactionDate());
             assertEquals(19, transaction.getTransactionDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).length());
         }
+
+        verifyUnknownInstrumentType(transactions);
     }
 
 
+    @Disabled("Due to too many requests")
     @Test
     void liveEnQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
@@ -460,6 +460,7 @@ class TransactionQueryTest {
     }
 
 
+    @Disabled("Due to too many requests")
     @Test
     void urlEncodingWithAmpersand() throws IOException {
         Insynsregistret ir = new Insynsregistret();

@@ -1,5 +1,6 @@
 package com.apptasticsoftware.insynsregistret;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -36,6 +37,7 @@ class InsynsregistretTest {
         assertEquals(22, headerColumns.length);
     }
 
+    @Disabled("Due to too many requests")
     @Test
     void checkColumnsLangEnglish() throws IOException {
         LocalDate date = LocalDate.of(2018, 3, 11);
