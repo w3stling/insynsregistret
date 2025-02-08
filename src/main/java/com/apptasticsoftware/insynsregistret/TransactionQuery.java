@@ -34,7 +34,7 @@ import java.time.format.DateTimeFormatter;
  * Object of this class is created via {@link TransactionQueryBuilder} class.
  */
 public class TransactionQuery {
-    private static final String INSYNSREGISTERET_URL = "https://marknadssok.fi.se/publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
+    private static final String INSYNSREGISTERET_URL = "https://marknadssok.fi.se/Publiceringsklient/%1$s/Search/Search?SearchFunctionType=Insyn&Utgivare=%2$s&PersonILedandeStällningNamn=%3$s&Transaktionsdatum.From=%4$s&Transaktionsdatum.To=%5$s&Publiceringsdatum.From=%6$s&Publiceringsdatum.To=%7$s&button=export";
     private static final String URL_ENCODING = "UTF-8";
     private final DateTimeFormatter dateFormatter;
     private final String url;
