@@ -619,7 +619,7 @@ public class Transaction implements Comparable<Transaction> {
             else if ("Option".equals(instrumentType) || "InstrumentTyp8".equals(instrumentType)) {
                 type = OPTION;
             }
-            else if ("Teckningsoption".equals(instrumentType) || "Subscription warrant".equals(instrumentType) || "InstrumentTyp11".equals(instrumentType)) {
+            else if ("Teckningsoption".equals(instrumentType) || "Subcription warrant".equals(instrumentType) || "Subscription warrant".equals(instrumentType) || "InstrumentTyp11".equals(instrumentType)) {
                 type = SUBSCRIPTION_WARRANT;
             }
             else if ("Teckningsrätt/Uniträtt".equals(instrumentType) || "Subscription right".equals(instrumentType) || "InstrumentTyp12".equals(instrumentType)) {
