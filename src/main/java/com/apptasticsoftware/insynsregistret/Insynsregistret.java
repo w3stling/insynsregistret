@@ -33,6 +33,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -112,7 +113,7 @@ public class Insynsregistret {
     }
 
     private static String getUserAgent() {
-        return HTTP_USER_AGENTS[new Random().nextInt(HTTP_USER_AGENTS.length)];
+        return HTTP_USER_AGENTS[new SecureRandom().nextInt(HTTP_USER_AGENTS.length)];
     }
 
     /**
