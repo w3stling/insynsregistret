@@ -6,7 +6,7 @@ plugins {
     id 'biz.aQute.bnd.builder' version '7.1.0'
     id 'io.github.gradle-nexus.publish-plugin' version '2.0.0'
     id 'org.sonarqube' version '6.2.0.5505'
-    id 'me.champeau.gradle.jmh' version '0.5.3'
+    id 'me.champeau.jmh' version '0.7.3'
 }
 
 group 'com.apptasticsoftware'
@@ -17,6 +17,10 @@ repositories {
 }
 
 dependencies {
+    jmh 'commons-io:commons-io:2.7'
+    jmh 'org.openjdk.jmh:jmh-core:0.9'
+    jmh 'org.openjdk.jmh:jmh-generator-annprocess:0.9'
+    jmh 'org.openjdk.jmh:jmh-generator-bytecode:0.9'
     testImplementation("org.junit.jupiter:junit-jupiter:5.13.4")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation('org.mockito:mockito-core:5.18.0')
@@ -128,7 +132,7 @@ signing {
 }
 
 jmh {
-    include = ['.*InsynsregistretBenchmark*']
+    includes = ['.*InsynsregistretBenchmark*']
     humanOutputFile = project.file("${project.buildDir}/reports/jmh/human.txt")
     resultsFile = project.file("${project.buildDir}/reports/jmh/results.csv")
 
