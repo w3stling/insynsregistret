@@ -340,7 +340,7 @@ class TransactionQueryTest {
         }
     }
 
-
+    @Disabled("Due to too many requests")
     @Test
     void liveSvQueryByPublicationDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
@@ -376,6 +376,7 @@ class TransactionQueryTest {
         assertEquals(0, unknownInstrumentTypes.size());
     }
 
+    @Disabled("Due to too many requests")
     @Test
     void liveEnQueryByTransactionDate() throws IOException {
         Insynsregistret ir = new Insynsregistret();
