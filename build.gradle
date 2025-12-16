@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    jmh 'commons-io:commons-io:2.7'
+    jmh 'commons-io:commons-io:2.21.0'
     jmh 'org.openjdk.jmh:jmh-core:0.9'
     jmh 'org.openjdk.jmh:jmh-generator-annprocess:0.9'
     jmh 'org.openjdk.jmh:jmh-generator-bytecode:0.9'
