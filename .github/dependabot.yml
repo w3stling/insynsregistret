@@ -9,7 +9,7 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 20
     ignore:
       - dependency-name: "org.junit.jupiter:junit-jupiter"
         versions: [ ">=6.0.0" ]
@@ -19,7 +19,7 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 20
     groups:
       codeql-action:
         patterns:
